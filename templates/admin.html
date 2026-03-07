@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AIマッチング管理画面</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: -apple-system, 'Hiragino Kaku Gothic ProN', sans-serif; }
+    .spin { animation: spin .8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .fade-in { animation: fadeIn .3s ease; }
+    @keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+    .score-bar { transition: width .6s cubic-bezier(.4,0,.2,1); }
+    .modal-bg { background: rgba(0,0,0,.5); backdrop-filter: blur(3px); }
+    .nav-active { background:#eff6ff !important; color:#2563eb !important; }
+    .status-suggested         { background:#eff6ff; color:#1d4ed8; }
+    .status-contacted_candidate { background:#f0fdf4; color:#15803d; }
+    .status-contacted_facility  { background:#fefce8; color:#a16207; }
+    .status-interview_scheduled { background:#fdf4ff; color:#7e22ce; }
+    .status-offered           { background:#fff7ed; color:#c2410c; }
+    .status-placed            { background:#f0fdf4; color:#166534; border:1px solid #bbf7d0; }
+    .status-rejected          { background:#fef2f2; color:#991b1b; }
+  </style>
+</head>
+<body class="bg-slate-50 min-h-screen text-gray-800">
+
+<!-- ========== LOGIN ========== -->
+<div id="loginScreen" class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-600 to-indigo-700">
+  <div class="bg-white w-96 rounded-2xl shadow-2xl p-8">
+    <div class="flex justify-center mb-6">
+      <div class="bg-blue-600 text-white w-14 h-14 rounded-xl flex items-center justify-center text-2xl font-black tracking-tight">AI</div>
+    </div>
+    <h1 class="text-xl font-bold text-center mb-1 text-gray-800">介護人材マッチング</h1>
+    <p class="text-center text-sm text-gray-400 mb-6">管理画面</p>
+    <label class="block text-xs font-semibold text-gray-600 mb-1.5">パスワード</label>
+    <input id="loginPw" type="password" placeholder="パスワードを入力"
+      class="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm mb-4 outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+    <button onclick="login()"
+      class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-lg font-semibold text-sm transition">ログイン</button>
+    <p id="loginErr" class="text-red-500 text-xs mt-2.5 text-center hidden">パスワードが違います</p>
+  </div>
+</div>
+
+<!-- ========== MAIN ========== -->
+<div id="mainScreen" class="hidden flex min-h-screen">
+
+  <!-- Sidebar -->
+  <nav class="w-56 bg-white border-r border-gray-100 fixed h-full z-20 flex flex-col shadow-sm">
+    <div class="px-5 py-4 border-b border-gray-100">
+      <div class="flex items-center gap-2.5">
+        <div class="bg-blue-600 text-white w-8 h-8 rounded-lg flex items-center justify-center font-black text-sm shrink-0">AI</div>
+        <div>
+          <div class="font-bold text-sm leading-tight text-gray-800">AIマッチング</div>
+          <div class="text-xs text-gray-400">管理システム</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex-1 py-3 px-2 space-y-0.5">
+      <button onclick="switchTab('dashboard')" id="nav-dashboard"
+        class="nav-item nav-active w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 transition">
+        <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        ダッシュボード
+      </button>
+      <button onclick="switchTab('results')" id="nav-results"
+        class="nav-item w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 transition">
+        <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+        マッチング結果
+      </button>
+      <button onclick="switchTab('candidates')" id="nav-candidates"
+        class="nav-item w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 transition">
+        <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0"/></svg>
+        候補者一覧
+      </button>
+      <button onclick="switchTab('jobs')" id="nav-jobs"
+        class="nav-item w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 transition">
+        <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+        求人管理
+      </button>
+    </div>
+
+    <div class="px-2 py-3 border-t border-gray-100">
+      <button onclick="logout()"
+        class="w-full flex items-center gap-2 px-3 py-2 text-xs text-gray-500 hover:text-gray-700 rounded-lg hover:bg-gray-50 transition">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+        ログアウト
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main -->
+  <main class="ml-56 flex-1 p-6">
+
+    <!-- ===== DASHBOARD ===== -->
+    <div id="tab-dashboard" class="fade-in">
+      <div class="mb-5">
+        <h2 class="text-xl font-bold text-gray-900">ダッシュボード</h2>
+        <p class="text-sm text-gray-500 mt-0.5">AIマッチングの概況</p>
+      </div>
+
+      <!-- KPI -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-5">
+        <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
+          <div class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">候補者数</div>
+          <div class="text-3xl font-black text-blue-600" id="kpiCandidates">—</div>
+          <div class="text-xs text-gray-400 mt-1">登録済み</div>
+        </div>
+        <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
+          <div class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">掲載求人</div>
+          <div class="text-3xl font-black text-indigo-600" id="kpiJobs">—</div>
+          <div class="text-xs text-gray-400 mt-1">ACTIVE</div>
+        </div>
+        <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
+          <div class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">処理完了</div>
+          <div class="text-3xl font-black text-emerald-600" id="kpiMatched">—</div>
+          <div class="text-xs text-gray-400 mt-1">マッチング済み</div>
+        </div>
+        <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
+          <div class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">未処理</div>
+          <div class="text-3xl font-black text-amber-500" id="kpiPending">—</div>
+          <div class="text-xs text-gray-400 mt-1">アクション待ち</div>
+        </div>
+      </div>
+
+      <!-- Quick Match -->
+      <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-5 mb-5">
+        <h3 class="font-bold text-sm text-gray-800 mb-3">クイックマッチング実行</h3>
+        <div class="flex flex-wrap gap-3 items-end">
+          <div>
+            <label class="block text-xs text-gray-500 mb-1">候補者を選択</label>
+            <select id="quickCandidate"
+              class="border border-gray-200 rounded-lg px-3 py-2 text-sm min-w-[220px] outline-none focus:ring-2 focus:ring-blue-400">
+              <option value="">-- 選択してください --</option>
+            </select>
+          </div>
+          <button onclick="runQuickMatch()" id="quickMatchBtn"
+            class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg text-sm font-semibold transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+            AIマッチング実行
+          </button>
+        </div>
+        <div id="quickMatchResult" class="mt-3 hidden"></div>
+      </div>
+
+      <!-- Progress pipeline -->
+      <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
+        <h3 class="font-bold text-sm text-gray-800 mb-4">進捗パイプライン</h3>
+        <div class="grid grid-cols-4 lg:grid-cols-7 gap-2">
+          <div class="text-center bg-blue-50 rounded-xl p-3">
+            <div class="text-xl font-black text-blue-600" id="pipe-suggested">—</div>
+            <div class="text-xs text-gray-500 mt-1 leading-tight">提案中</div>
+          </div>
+          <div class="text-center bg-green-50 rounded-xl p-3">
+            <div class="text-xl font-black text-green-600" id="pipe-contacted_candidate">—</div>
+            <div class="text-xs text-gray-500 mt-1 leading-tight">候補者<br>連絡済</div>
+          </div>
+          <div class="text-center bg-yellow-50 rounded-xl p-3">
+            <div class="text-xl font-black text-yellow-600" id="pipe-contacted_facility">—</div>
+            <div class="text-xs text-gray-500 mt-1 leading-tight">施設<br>連絡済</div>
+          </div>
+          <div class="text-center bg-purple-50 rounded-xl p-3">
+            <div class="text-xl font-black text-purple-600" id="pipe-interview_scheduled">—</div>
+            <div class="text-xs text-gray-500 mt-1 leading-tight">面接<br>設定</div>
+          </div>
+          <div class="text-center bg-orange-50 rounded-xl p-3">
+            <div class="text-xl font-black text-orange-600" id="pipe-offered">—</div>
+            <div class="text-xs text-gray-500 mt-1 leading-tight">内定</div>
+          </div>
+          <div class="text-center bg-emerald-50 border border-emerald-200 rounded-xl p-3">
+            <div class="text-xl font-black text-emerald-600" id="pipe-placed">—</div>
+            <div class="text-xs text-gray-500 mt-1 leading-tight">成約 ✓</div>
+          </div>
+          <div class="text-center bg-red-50 rounded-xl p-3">
+            <div class="text-xl font-black text-red-400" id="pipe-rejected">—</div>
+            <div class="text-xs text-gray-500 mt-1 leading-tight">不成立</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== RESULTS ===== -->
+    <div id="tab-results" class="hidden fade-in">
+      <div class="flex items-center justify-between mb-5">
+        <div>
+          <h2 class="text-xl font-bold text-gray-900">マッチング結果</h2>
+          <p class="text-sm text-gray-500 mt-0.5">スコア・進捗・推薦文を管理</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <label class="text-sm text-gray-600 shrink-0">候補者:</label>
+          <select id="resultCandidateSel" onchange="loadResults()"
+            class="border border-gray-200 rounded-lg px-3 py-2 text-sm min-w-[220px] outline-none focus:ring-2 focus:ring-blue-400">
+            <option value="">選択してください</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Score legend -->
+      <div class="flex gap-4 mb-4 flex-wrap">
+        <div class="flex items-center gap-1.5 text-xs text-gray-500">
+          <span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span>80点以上：ベストマッチ
+        </div>
+        <div class="flex items-center gap-1.5 text-xs text-gray-500">
+          <span class="w-3 h-3 rounded-full bg-amber-400 inline-block"></span>60〜79点：良好
+        </div>
+        <div class="flex items-center gap-1.5 text-xs text-gray-500">
+          <span class="w-3 h-3 rounded-full bg-red-400 inline-block"></span>60点未満：要検討
+        </div>
+      </div>
+
+      <div id="resultsLoading" class="hidden text-center py-16">
+        <div class="spin w-8 h-8 border-4 border-blue-100 border-t-blue-500 rounded-full mx-auto mb-3"></div>
+        <p class="text-sm text-gray-400">読み込み中...</p>
+      </div>
+      <div id="resultsEmpty" class="bg-white rounded-xl border border-gray-100 p-14 text-center text-gray-400 text-sm">
+        候補者を選択するとマッチング結果が表示されます
+      </div>
+      <div id="resultsContainer" class="space-y-4"></div>
+    </div>
+
+    <!-- ===== CANDIDATES ===== -->
+    <div id="tab-candidates" class="hidden fade-in">
+      <div class="flex items-center justify-between mb-5">
+        <div>
+          <h2 class="text-xl font-bold text-gray-900">候補者一覧</h2>
+          <p class="text-sm text-gray-500 mt-0.5">Googleフォームから自動登録</p>
+        </div>
+        <select id="candidateStatusFilter" onchange="loadCandidates()"
+          class="border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none">
+          <option value="">すべて</option>
+          <option value="PENDING">未処理</option>
+          <option value="COMPLETED">処理済み</option>
+        </select>
+      </div>
+      <div class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+        <table class="w-full text-sm">
+          <thead class="bg-gray-50 border-b border-gray-100 text-xs text-gray-500 uppercase tracking-wide">
+            <tr>
+              <th class="px-4 py-3 text-left font-semibold">ID</th>
+              <th class="px-4 py-3 text-left font-semibold">氏名</th>
+              <th class="px-4 py-3 text-left font-semibold">保有資格</th>
+              <th class="px-4 py-3 text-left font-semibold">経験</th>
+              <th class="px-4 py-3 text-left font-semibold">希望地</th>
+              <th class="px-4 py-3 text-left font-semibold">状態</th>
+              <th class="px-4 py-3 text-left font-semibold">操作</th>
+            </tr>
+          </thead>
+          <tbody id="candidatesTable" class="divide-y divide-gray-50"></tbody>
+        </table>
+        <div id="candidatesEmpty" class="py-12 text-center text-gray-400 text-sm hidden">候補者データがありません</div>
+        <div id="candidatesLoading" class="py-12 text-center">
+          <div class="spin w-6 h-6 border-4 border-blue-100 border-t-blue-500 rounded-full mx-auto"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== JOBS ===== -->
+    <div id="tab-jobs" class="hidden fade-in">
+      <div class="flex items-center justify-between mb-5">
+        <div>
+          <h2 class="text-xl font-bold text-gray-900">求人管理</h2>
+          <p class="text-sm text-gray-500 mt-0.5">施設求人の登録・管理</p>
+        </div>
+        <button onclick="showJobModal()"
+          class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+          </svg>
+          新規求人登録
+        </button>
+      </div>
+      <div class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+        <table class="w-full text-sm">
+          <thead class="bg-gray-50 border-b border-gray-100 text-xs text-gray-500 uppercase tracking-wide">
+            <tr>
+              <th class="px-4 py-3 text-left font-semibold">ID</th>
+              <th class="px-4 py-3 text-left font-semibold">施設名</th>
+              <th class="px-4 py-3 text-left font-semibold">種別</th>
+              <th class="px-4 py-3 text-left font-semibold">所在地</th>
+              <th class="px-4 py-3 text-left font-semibold">職種</th>
+              <th class="px-4 py-3 text-left font-semibold">給与</th>
+              <th class="px-4 py-3 text-left font-semibold">状態</th>
+            </tr>
+          </thead>
+          <tbody id="jobsTable" class="divide-y divide-gray-50"></tbody>
+        </table>
+        <div id="jobsEmpty" class="py-12 text-center text-gray-400 text-sm hidden">求人データがありません</div>
+        <div id="jobsLoading" class="py-12 text-center">
+          <div class="spin w-6 h-6 border-4 border-blue-100 border-t-blue-500 rounded-full mx-auto"></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div><!-- end mainScreen -->
+
+<!-- ===== JOB MODAL ===== -->
+<div id="jobModal" class="fixed inset-0 modal-bg z-50 flex items-center justify-center hidden">
+  <div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto m-4">
+    <div class="sticky top-0 bg-white border-b px-6 py-4 flex justify-between items-center rounded-t-2xl z-10">
+      <h3 class="text-lg font-bold">新規求人登録</h3>
+      <button onclick="hideJobModal()" class="text-gray-400 hover:text-gray-600 text-2xl leading-none">&times;</button>
+    </div>
+    <form id="jobForm" onsubmit="submitJob(event)" class="p-6">
+      <div class="grid grid-cols-2 gap-4">
+        <div class="col-span-2">
+          <label class="block text-xs font-semibold text-gray-600 mb-1">施設名 <span class="text-red-500">*</span></label>
+          <input type="text" name="facility_name" required
+            class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-400">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-600 mb-1">施設形態</label>
+          <select name="facility_type"
+            class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-400">
+            <option value="">選択</option>
+            {% for ft in config.facility_types %}<option value="{{ ft }}">{{ ft }}</option>{% endfor %}
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-600 mb-1">雇用形態</label>
+          <select name="employment_type"
+            class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-400">
+            <option value="">選択</option>
+            {% for et in config.employment_types %}<option value="{{ et }}">{{ et }}</option>{% endfor %}
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-600 mb-1">都道府県</label>
+          <select name="prefecture"
+            class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-400">
+            <option value="">選択</option>
+            {% for p in config.prefectures %}<option value="{{ p }}">{{ p }}</option>{% endfor %}
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-600 mb-1">市区町村</label>
+          <input type="text" name="city"
+            class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-400">
+        </div>
+        <div class="col-span-2">
+          <label class="block text-xs font-semibold text-gray-600 mb-1">所在地（詳細）</label>
+          <input type="text" name="address"
+            class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-400">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-600 mb-1">募集職種</label>
+          <input type="text" name="position" placeholder="介護職"
+            class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-400">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-600 mb-1">必要経験年数</label>
+          <input type="number" name="required_experience" value="0" min="0"
+            class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-400">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-600 mb-1">必須資格</label>
+          <div class="border border-gray-200 rounded-lg p-3 space-y-1 max-h-36 overflow-y-auto bg-gray-50">
+            {% for q in config.qualifications %}
+            <label class="flex items-center gap-2 text-xs cursor-pointer p-0.5 rounded hover:bg-white">
+              <input type="checkbox" name="required_qualifications" value="{{ q }}">{{ q }}
+            </label>{% endfor %}
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-600 mb-1">歓迎資格</label>
+          <div class="border border-gray-200 rounded-lg p-3 space-y-1 max-h-36 overflow-y-auto bg-gray-50">
+            {% for q in config.qualifications %}
+            <label class="flex items-center gap-2 text-xs cursor-pointer p-0.5 rounded hover:bg-white">
+              <input type="checkbox" name="preferred_qualifications" value="{{ q }}">{{ q }}
+            </label>{% endfor %}
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-600 mb-1">給与下限（万円/月）</label>
+          <input type="number" name="salary_min" value="0" min="0"
+            class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-400">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-600 mb-1">給与上限（万円/月）</label>
+          <input type="number" name="salary_max" value="0" min="0"
+            class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-400">
+        </div>
+        <div class="col-span-2">
+          <label class="block text-xs font-semibold text-gray-600 mb-1">シフト</label>
+          <div class="flex flex-wrap gap-3">
+            {% for s in config.shift_patterns %}
+            <label class="flex items-center gap-1.5 text-xs cursor-pointer">
+              <input type="checkbox" name="shifts" value="{{ s }}">{{ s }}
+            </label>{% endfor %}
+          </div>
+        </div>
+        <div class="col-span-2">
+          <label class="block text-xs font-semibold text-gray-600 mb-1">福利厚生</label>
+          <textarea name="benefits" rows="2"
+            class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-400 resize-none"></textarea>
+        </div>
+        <div class="col-span-2">
+          <label class="block text-xs font-semibold text-gray-600 mb-1">施設紹介文</label>
+          <textarea name="description" rows="3"
+            class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-400 resize-none"></textarea>
+        </div>
+        <div class="col-span-2">
+          <label class="block text-xs font-semibold text-gray-600 mb-1">求める人物像</label>
+          <textarea name="ideal_candidate" rows="2"
+            class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-400 resize-none"></textarea>
+        </div>
+        <div class="col-span-2">
+          <label class="block text-xs font-semibold text-gray-600 mb-1">特徴・アピールポイント</label>
+          <textarea name="features" rows="2"
+            class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-400 resize-none"></textarea>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-600 mb-1">担当者名</label>
+          <input type="text" name="contact_name"
+            class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-400">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-600 mb-1">担当者メール</label>
+          <input type="email" name="contact_email"
+            class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-400">
+        </div>
+      </div>
+      <div class="flex justify-end gap-3 mt-6 pt-4 border-t">
+        <button type="button" onclick="hideJobModal()"
+          class="px-4 py-2 border border-gray-200 rounded-lg text-sm hover:bg-gray-50 transition">キャンセル</button>
+        <button type="submit" id="jobSubmitBtn"
+          class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-semibold transition">登録する</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ===== RECOMMEND MODAL ===== -->
+<div id="recommendModal" class="fixed inset-0 modal-bg z-50 flex items-center justify-center hidden">
+  <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[80vh] overflow-y-auto m-4">
+    <div class="sticky top-0 bg-white border-b px-6 py-4 flex justify-between items-center rounded-t-2xl z-10">
+      <h3 class="text-lg font-bold">AI 推薦文生成</h3>
+      <button onclick="hideRecommendModal()" class="text-gray-400 hover:text-gray-600 text-2xl leading-none">&times;</button>
+    </div>
+    <div class="p-6">
+      <div id="recommendLoading" class="text-center py-10">
+        <div class="spin w-8 h-8 border-4 border-emerald-100 border-t-emerald-500 rounded-full mx-auto mb-3"></div>
+        <p class="text-sm text-gray-500">Claude AI が推薦文を生成中...</p>
+      </div>
+      <div id="recommendContent" class="hidden">
+        <div class="bg-slate-50 border border-gray-200 rounded-xl p-5 mb-4">
+          <pre id="recommendText" class="whitespace-pre-wrap text-sm leading-relaxed font-sans text-gray-700"></pre>
+        </div>
+        <div class="flex justify-end gap-3">
+          <button onclick="copyRecommendation()" id="copyBtn"
+            class="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-lg text-sm hover:bg-gray-50 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+            </svg>
+            コピー
+          </button>
+          <button onclick="hideRecommendModal()"
+            class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-semibold transition">閉じる</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// State
+// ============================================================
+let apiKey = '';
+const STATUS_LABELS = {
+  suggested: '提案中',
+  contacted_candidate: '候補者連絡済',
+  contacted_facility: '施設連絡済',
+  interview_scheduled: '面接設定',
+  offered: '内定',
+  placed: '成約',
+  rejected: '不成立'
+};
+
+// ============================================================
+// Auth
+// ============================================================
+async function login() {
+  const pw = document.getElementById('loginPw').value;
+  const err = document.getElementById('loginErr');
+  err.classList.add('hidden');
+  try {
+    const res = await fetch('/api/admin/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: pw })
+    });
+    if (!res.ok) { err.classList.remove('hidden'); return; }
+    const data = await res.json();
+    apiKey = data.api_key || pw;
+    document.getElementById('loginScreen').classList.add('hidden');
+    const ms = document.getElementById('mainScreen');
+    ms.classList.remove('hidden');
+    ms.classList.add('flex');
+    initDashboard();
+  } catch { err.classList.remove('hidden'); }
+}
+document.getElementById('loginPw').addEventListener('keypress', e => e.key === 'Enter' && login());
+
+function logout() {
+  apiKey = '';
+  const ms = document.getElementById('mainScreen');
+  ms.classList.add('hidden'); ms.classList.remove('flex');
+  document.getElementById('loginScreen').classList.remove('hidden');
+  document.getElementById('loginPw').value = '';
+}
+
+// ============================================================
+// API Helper
+// ============================================================
+async function api(path, opts = {}) {
+  const res = await fetch(path, {
+    ...opts,
+    headers: {
+      'Content-Type': 'application/json',
+      'X-API-Key': apiKey,
+      ...(opts.headers || {})
+    }
+  });
+  if (!res.ok) {
+    const e = await res.json().catch(() => ({ detail: 'エラーが発生しました' }));
+    throw new Error(e.detail || 'APIエラー');
+  }
+  return res.json();
+}
+
+// ============================================================
+// Navigation
+// ============================================================
+function switchTab(tab) {
+  ['dashboard', 'results', 'candidates', 'jobs'].forEach(t => {
+    document.getElementById(`tab-${t}`).classList.toggle('hidden', t !== tab);
+    const nav = document.getElementById(`nav-${t}`);
+    nav.classList.toggle('nav-active', t === tab);
+  });
+  if (tab === 'dashboard') initDashboard();
+  if (tab === 'results') loadResultsCandidateOptions();
+  if (tab === 'candidates') loadCandidates();
+  if (tab === 'jobs') loadJobs();
+}
+
+// ============================================================
+// Dashboard
+// ============================================================
+async function initDashboard() {
+  try {
+    const [cData, jData] = await Promise.all([
+      api('/api/candidates?per_page=200'),
+      api('/api/jobs?per_page=200&status=ACTIVE')
+    ]);
+    const candidates = cData.data || [];
+    const completed = candidates.filter(c => c['マッチング状態'] === 'COMPLETED').length;
+    document.getElementById('kpiCandidates').textContent = cData.total || 0;
+    document.getElementById('kpiJobs').textContent = jData.total || 0;
+    document.getElementById('kpiMatched').textContent = completed;
+    document.getElementById('kpiPending').textContent = (cData.total || 0) - completed;
+
+    // Quick match options
+    const sel = document.getElementById('quickCandidate');
+    sel.innerHTML = '<option value="">-- 候補者を選択 --</option>';
+    candidates.forEach(c => {
+      sel.innerHTML += `<option value="${c['候補者ID']}">${c['候補者ID']} — ${c['氏名'] || '名前なし'}</option>`;
+    });
+
+    // Pipeline placeholder
+    document.getElementById('pipe-suggested').textContent = completed;
+    ['contacted_candidate','contacted_facility','interview_scheduled','offered','placed','rejected']
+      .forEach(k => { const el = document.getElementById(`pipe-${k}`); if (el) el.textContent = '—'; });
+  } catch (e) { console.error('Dashboard error:', e); }
+}
+
+async function runQuickMatch() {
+  const cid = document.getElementById('quickCandidate').value;
+  if (!cid) { alert('候補者を選択してください'); return; }
+  const btn = document.getElementById('quickMatchBtn');
+  const resultDiv = document.getElementById('quickMatchResult');
+  btn.disabled = true;
+  btn.innerHTML = '<div class="spin w-4 h-4 border-2 border-white/40 border-t-white rounded-full inline-block mr-2"></div>処理中...';
+  resultDiv.classList.add('hidden');
+  try {
+    const r = await api('/api/match', {
+      method: 'POST',
+      body: JSON.stringify({ candidate_id: cid, top_n: 10, use_ai_scoring: true })
+    });
+    resultDiv.className = 'mt-3 text-sm text-emerald-700 bg-emerald-50 border border-emerald-200 px-4 py-2.5 rounded-lg';
+    resultDiv.textContent = `✓ 完了 — ${r.matches.length}件のマッチング (${r.processing_time_seconds}秒)`;
+    resultDiv.classList.remove('hidden');
+    initDashboard();
+  } catch (e) {
+    resultDiv.className = 'mt-3 text-sm text-red-700 bg-red-50 border border-red-200 px-4 py-2.5 rounded-lg';
+    resultDiv.textContent = `エラー: ${e.message}`;
+    resultDiv.classList.remove('hidden');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<svg class="w-4 h-4 inline mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>AIマッチング実行';
+  }
+}
+
+// ============================================================
+// Results
+// ============================================================
+async function loadResultsCandidateOptions() {
+  try {
+    const data = await api('/api/candidates?per_page=200');
+    const sel = document.getElementById('resultCandidateSel');
+    sel.innerHTML = '<option value="">選択してください</option>';
+    const all = data.data || [];
+    const completed = all.filter(c => c['マッチング状態'] === 'COMPLETED');
+    const pending = all.filter(c => c['マッチング状態'] !== 'COMPLETED');
+    completed.forEach(c => {
+      sel.innerHTML += `<option value="${c['候補者ID']}">${c['候補者ID']} — ${c['氏名'] || '名前なし'}</option>`;
+    });
+    if (pending.length) {
+      sel.innerHTML += `<optgroup label="── 未処理 ──">`;
+      pending.forEach(c => {
+        sel.innerHTML += `<option value="${c['候補者ID']}">${c['候補者ID']} — ${c['氏名'] || '名前なし'}</option>`;
+      });
+      sel.innerHTML += `</optgroup>`;
+    }
+  } catch (e) { console.error(e); }
+}
+
+async function loadResults() {
+  const cid = document.getElementById('resultCandidateSel').value;
+  const container = document.getElementById('resultsContainer');
+  const empty = document.getElementById('resultsEmpty');
+  const loading = document.getElementById('resultsLoading');
+  if (!cid) { container.innerHTML = ''; empty.classList.remove('hidden'); return; }
+  empty.classList.add('hidden');
+  container.innerHTML = '';
+  loading.classList.remove('hidden');
+  try {
+    const data = await api(`/api/match/${cid}/results`);
+    loading.classList.add('hidden');
+    const results = (data.results || []).sort((a, b) => (b['総合スコア'] || 0) - (a['総合スコア'] || 0));
+    if (!results.length) { empty.classList.remove('hidden'); return; }
+    results.forEach((r, idx) => renderResultCard(container, r, idx, cid));
+  } catch (e) {
+    loading.classList.add('hidden');
+    empty.textContent = 'エラー: ' + e.message;
+    empty.classList.remove('hidden');
+  }
+}
+
+function renderResultCard(container, r, idx, cid) {
+  const score = parseFloat(r['総合スコア'] || 0);
+  const ruleScore = parseFloat(r['ルールベーススコア'] || 0);
+  const aiScore = parseFloat(r['AIスコア'] || 0);
+  const comment = r['AI分析コメント'] || '';
+  const concerns = r['懸念事項'] || '';
+  const status = r['ステータス'] || 'suggested';
+  const resultId = r['結果ID'] || `M-${cid}-${r['求人ID']}`;
+  const jobId = r['求人ID'] || '';
+
+  const scoreColor = score >= 80 ? 'text-emerald-600' : score >= 60 ? 'text-amber-500' : 'text-red-500';
+  const scoreBg    = score >= 80 ? 'bg-emerald-50 border-emerald-200' : score >= 60 ? 'bg-amber-50 border-amber-200' : 'bg-red-50 border-red-200';
+
+  let bd = {};
+  try {
+    const raw = r['スコア内訳'] || '{}';
+    bd = typeof raw === 'string' ? JSON.parse(raw) : raw;
+  } catch {}
+
+  const statusOptions = Object.entries(STATUS_LABELS)
+    .map(([v, l]) => `<option value="${v}" ${v === status ? 'selected' : ''}>${l}</option>`)
+    .join('');
+
+  const div = document.createElement('div');
+  div.className = 'bg-white rounded-xl border border-gray-100 shadow-sm p-5 fade-in';
+  div.innerHTML = `
+    <div class="flex items-start gap-4 flex-wrap">
+      <!-- Score badge -->
+      <div class="shrink-0 w-20 h-20 ${scoreBg} border-2 rounded-2xl flex flex-col items-center justify-center">
+        <div class="text-2xl font-black ${scoreColor} leading-none">${score.toFixed(0)}</div>
+        <div class="text-xs text-gray-400 font-medium mt-0.5">/ 100</div>
+      </div>
+
+      <!-- Content -->
+      <div class="flex-1 min-w-0">
+        <div class="flex items-center gap-2 mb-1 flex-wrap">
+          <span class="text-xs text-gray-400 font-bold">#${idx + 1}</span>
+          <span class="font-bold text-base text-gray-900">${jobId}</span>
+          ${score >= 80 ? '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-700">🌟 ベストマッチ</span>' : ''}
+          ${score >= 60 && score < 80 ? '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-700">👍 良好</span>' : ''}
+        </div>
+
+        ${comment ? `<p class="text-sm text-gray-600 mb-2">${comment}</p>` : ''}
+
+        ${concerns ? `
+        <div class="flex items-start gap-2 bg-amber-50 border border-amber-200 px-3 py-2 rounded-lg mb-3 text-xs text-amber-800">
+          <svg class="w-3.5 h-3.5 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+          </svg>
+          <span><strong>懸念:</strong> ${concerns}</span>
+        </div>` : ''}
+
+        <!-- Scores breakdown grid -->
+        <div class="mt-3">
+          <div class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">スコア内訳</div>
+          <div class="grid grid-cols-2 gap-x-6 gap-y-1.5">
+            ${scoreBar('資格マッチ', bd.qualification || 0, 15, 'blue')}
+            ${scoreBar('AI: キャリア', bd.ai_career_fit || 0, 10, 'purple')}
+            ${scoreBar('立地', bd.location || 0, 12, 'blue')}
+            ${scoreBar('AI: 職場環境', bd.ai_culture_fit || 0, 10, 'purple')}
+            ${scoreBar('給与', bd.salary || 0, 12, 'blue')}
+            ${scoreBar('AI: 特技活用', bd.ai_skills_value || 0, 10, 'purple')}
+            ${scoreBar('シフト', bd.shift || 0, 9, 'blue')}
+            ${scoreBar('AI: 成長性', bd.ai_growth_potential || 0, 10, 'purple')}
+            ${scoreBar('経験年数', bd.experience || 0, 6, 'blue')}
+            ${scoreBar('施設形態', bd.facility_type || 0, 6, 'blue')}
+          </div>
+          <!-- Totals -->
+          <div class="flex gap-4 mt-2 pt-2 border-t border-gray-100">
+            <div class="text-xs text-gray-500">ルールベース: <strong class="text-gray-700">${ruleScore.toFixed(1)}/60</strong></div>
+            <div class="text-xs text-gray-500">AI分析: <strong class="text-purple-600">${aiScore.toFixed(1)}/40</strong></div>
+            <div class="text-xs text-gray-500 ml-auto">合計: <strong class="${scoreColor} text-sm">${score.toFixed(1)}/100</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex flex-col gap-2 shrink-0 min-w-[130px]">
+        <label class="block text-xs font-semibold text-gray-500 mb-0.5">進捗ステータス</label>
+        <select onchange="updateStatus('${resultId}', this.value, this)"
+          class="border border-gray-200 rounded-lg px-2.5 py-1.5 text-xs status-${status} font-semibold outline-none focus:ring-2 focus:ring-blue-300 cursor-pointer">
+          ${statusOptions}
+        </select>
+        <button onclick="generateRecommendation('${cid}', '${jobId}')"
+          class="flex items-center justify-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg text-xs font-semibold transition">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+          推薦文を生成
+        </button>
+      </div>
+    </div>`;
+  container.appendChild(div);
+}
+
+function scoreBar(label, val, max, color) {
+  const pct = max > 0 ? Math.min((parseFloat(val) / max) * 100, 100).toFixed(0) : 0;
+  const barCls = color === 'purple' ? 'bg-purple-400' : 'bg-blue-500';
+  return `
+    <div>
+      <div class="flex justify-between mb-0.5">
+        <span class="text-xs text-gray-500">${label}</span>
+        <span class="text-xs font-semibold text-gray-700">${parseFloat(val).toFixed(1)}<span class="text-gray-400 font-normal">/${max}</span></span>
+      </div>
+      <div class="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden">
+        <div class="score-bar ${barCls} h-1.5 rounded-full" style="width:${pct}%"></div>
+      </div>
+    </div>`;
+}
+
+async function updateStatus(resultId, newStatus, selectEl) {
+  const prev = selectEl.dataset.prev || 'suggested';
+  selectEl.dataset.prev = newStatus;
+  try {
+    await api('/api/match/status', {
+      method: 'PATCH',
+      body: JSON.stringify({ result_id: resultId, status: newStatus })
+    });
+    // Update badge color
+    selectEl.className = `border border-gray-200 rounded-lg px-2.5 py-1.5 text-xs status-${newStatus} font-semibold outline-none focus:ring-2 focus:ring-blue-300 cursor-pointer`;
+  } catch (e) {
+    alert('ステータス更新エラー: ' + e.message);
+    selectEl.value = prev;
+  }
+}
+
+// ============================================================
+// Candidates
+// ============================================================
+async function loadCandidates() {
+  const table = document.getElementById('candidatesTable');
+  const empty = document.getElementById('candidatesEmpty');
+  const loading = document.getElementById('candidatesLoading');
+  table.innerHTML = '';
+  empty.classList.add('hidden');
+  loading.classList.remove('hidden');
+  const statusFilter = document.getElementById('candidateStatusFilter').value;
+  const q = statusFilter ? `&status=${statusFilter}` : '';
+  try {
+    const data = await api(`/api/candidates?per_page=200${q}`);
+    loading.classList.add('hidden');
+    if (!data.data?.length) { empty.classList.remove('hidden'); return; }
+    data.data.forEach(c => {
+      const s = c['マッチング状態'] || 'PENDING';
+      const sBadge = s === 'COMPLETED'
+        ? 'bg-emerald-100 text-emerald-700'
+        : s === 'PROCESSING'
+        ? 'bg-yellow-100 text-yellow-700'
+        : 'bg-gray-100 text-gray-500';
+      const quals = (c['保有資格'] || '').split(',').filter(Boolean).slice(0, 2);
+      const qualBadges = quals.map(q =>
+        `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-700">${q.trim()}</span>`
+      ).join('');
+      table.innerHTML += `
+        <tr class="hover:bg-slate-50 transition">
+          <td class="px-4 py-3 text-xs font-mono text-gray-400">${c['候補者ID'] || '—'}</td>
+          <td class="px-4 py-3 font-semibold text-gray-800">${c['氏名'] || '—'}</td>
+          <td class="px-4 py-3"><div class="flex flex-wrap gap-1">${qualBadges || '<span class="text-xs text-gray-400">なし</span>'}</div></td>
+          <td class="px-4 py-3 text-sm text-gray-600">${c['経験年数'] || 0}年</td>
+          <td class="px-4 py-3 text-sm text-gray-600">${(c['希望勤務地_都道府県'] || '—').split(',')[0]}</td>
+          <td class="px-4 py-3">
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold ${sBadge}">${s}</span>
+          </td>
+          <td class="px-4 py-3">
+            <button onclick="runMatchingFromTable('${c['候補者ID']}', this)"
+              class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-lg text-xs font-semibold transition">
+              マッチング実行
+            </button>
+          </td>
+        </tr>`;
+    });
+  } catch (e) {
+    loading.classList.add('hidden');
+    empty.textContent = 'データ取得エラー: ' + e.message;
+    empty.classList.remove('hidden');
+  }
+}
+
+async function runMatchingFromTable(cid, btn) {
+  if (!confirm(`${cid} のマッチングを実行しますか？（AI分析含む、10〜30秒かかります）`)) return;
+  btn.disabled = true;
+  btn.innerHTML = '<div class="spin w-3 h-3 border-2 border-white/40 border-t-white rounded-full inline-block"></div>';
+  try {
+    const r = await api('/api/match', {
+      method: 'POST',
+      body: JSON.stringify({ candidate_id: cid, top_n: 10, use_ai_scoring: true })
+    });
+    btn.className = 'bg-emerald-600 text-white px-3 py-1 rounded-lg text-xs font-semibold cursor-default';
+    btn.textContent = `完了 ${r.matches.length}件`;
+    setTimeout(() => loadCandidates(), 1000);
+  } catch (e) {
+    alert('マッチングエラー: ' + e.message);
+    btn.disabled = false;
+    btn.textContent = 'マッチング実行';
+  }
+}
+
+// ============================================================
+// Jobs
+// ============================================================
+async function loadJobs() {
+  const table = document.getElementById('jobsTable');
+  const empty = document.getElementById('jobsEmpty');
+  const loading = document.getElementById('jobsLoading');
+  table.innerHTML = '';
+  empty.classList.add('hidden');
+  loading.classList.remove('hidden');
+  try {
+    const data = await api('/api/jobs?per_page=200&status=ACTIVE');
+    loading.classList.add('hidden');
+    if (!data.data?.length) { empty.classList.remove('hidden'); return; }
+    data.data.forEach(j => {
+      const sMin = parseInt(j['給与_月額下限']) || 0;
+      const sMax = parseInt(j['給与_月額上限']) || 0;
+      const salary = sMin && sMax ? `${sMin}〜${sMax}万` : sMin ? `${sMin}万〜` : sMax ? `〜${sMax}万` : '—';
+      table.innerHTML += `
+        <tr class="hover:bg-slate-50 transition">
+          <td class="px-4 py-3 text-xs font-mono text-gray-400">${j['求人ID'] || '—'}</td>
+          <td class="px-4 py-3 font-semibold text-gray-800">${j['施設名'] || '—'}</td>
+          <td class="px-4 py-3">
+            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700">
+              ${j['施設形態'] || '—'}
+            </span>
+          </td>
+          <td class="px-4 py-3 text-sm text-gray-600">${j['所在地_都道府県'] || ''} ${j['所在地_市区町村'] || ''}</td>
+          <td class="px-4 py-3 text-sm">${j['募集職種'] || '—'}</td>
+          <td class="px-4 py-3 text-sm font-semibold text-gray-700">${salary}</td>
+          <td class="px-4 py-3">
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700">ACTIVE</span>
+          </td>
+        </tr>`;
+    });
+  } catch (e) {
+    loading.classList.add('hidden');
+    empty.textContent = 'データ取得エラー: ' + e.message;
+    empty.classList.remove('hidden');
+  }
+}
+
+function showJobModal() { document.getElementById('jobModal').classList.remove('hidden'); }
+function hideJobModal() {
+  document.getElementById('jobModal').classList.add('hidden');
+  document.getElementById('jobForm').reset();
+}
+
+async function submitJob(e) {
+  e.preventDefault();
+  const form = e.target;
+  const btn = document.getElementById('jobSubmitBtn');
+  btn.disabled = true; btn.textContent = '登録中...';
+  const getChecked = name =>
+    Array.from(form.querySelectorAll(`input[name="${name}"]:checked`)).map(el => el.value).join(',');
+  const body = {
+    '施設名': form.facility_name.value, '施設形態': form.facility_type.value,
+    '所在地_都道府県': form.prefecture.value, '所在地_市区町村': form.city.value,
+    '所在地_詳細': form.address.value, '募集職種': form.position.value,
+    '必須資格': getChecked('required_qualifications'),
+    '歓迎資格': getChecked('preferred_qualifications'),
+    '必要経験年数': parseInt(form.required_experience.value) || 0,
+    '雇用形態': form.employment_type.value,
+    '給与_月額下限': parseInt(form.salary_min.value) || 0,
+    '給与_月額上限': parseInt(form.salary_max.value) || 0,
+    'シフト': getChecked('shifts'),
+    '福利厚生': form.benefits.value, '施設紹介文': form.description.value,
+    '求める人物像': form.ideal_candidate.value,
+    '特徴・アピールポイント': form.features.value,
+    '担当者名': form.contact_name.value, '担当者メール': form.contact_email.value,
+  };
+  try {
+    await api('/api/jobs', { method: 'POST', body: JSON.stringify(body) });
+    hideJobModal(); loadJobs();
+  } catch (e) { alert('登録エラー: ' + e.message); }
+  finally { btn.disabled = false; btn.textContent = '登録する'; }
+}
+
+// ============================================================
+// Recommendation
+// ============================================================
+function hideRecommendModal() { document.getElementById('recommendModal').classList.add('hidden'); }
+
+async function generateRecommendation(cid, jobId) {
+  document.getElementById('recommendModal').classList.remove('hidden');
+  document.getElementById('recommendLoading').classList.remove('hidden');
+  document.getElementById('recommendContent').classList.add('hidden');
+  try {
+    const d = await api('/api/recommend', {
+      method: 'POST',
+      body: JSON.stringify({ candidate_id: cid, job_id: jobId })
+    });
+    document.getElementById('recommendLoading').classList.add('hidden');
+    document.getElementById('recommendContent').classList.remove('hidden');
+    document.getElementById('recommendText').textContent = d.recommendation_letter;
+  } catch (e) {
+    document.getElementById('recommendLoading').classList.add('hidden');
+    document.getElementById('recommendContent').classList.remove('hidden');
+    document.getElementById('recommendText').textContent = 'エラー: ' + e.message;
+  }
+}
+
+function copyRecommendation() {
+  const text = document.getElementById('recommendText').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = '✓ コピー完了';
+    btn.className = 'px-4 py-2 bg-emerald-50 border border-emerald-300 text-emerald-700 rounded-lg text-sm transition';
+    setTimeout(() => {
+      btn.innerHTML = `<svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>コピー`;
+      btn.className = 'flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-lg text-sm hover:bg-gray-50 transition';
+    }, 2000);
+  });
+}
+</script>
+</body>
+</html>
