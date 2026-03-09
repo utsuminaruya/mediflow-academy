@@ -6,7 +6,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from fastapi import FastAPI, HTTPException, Header, Request, Response
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
 from lib.claude_client import ClaudeClient
@@ -52,6 +52,14 @@ def _get_engine() -> MatchingEngine:
 def _verify_api_key(x_api_key: str | None) -> None:
     if x_api_key != settings.api_secret_key:
         raise HTTPException(status_code=401, detail="Invalid API key")
+
+
+# --- ルートリダイレクト ---
+
+
+@app.get("/")
+async def root():
+    return RedirectResponse(url="/api/admin")
 
 
 # --- ヘルスチェック ---
