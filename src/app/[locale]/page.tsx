@@ -15,7 +15,6 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { LOCALE_FLAGS, LOCALE_LABELS, LOCALES } from "@/constants";
-import type { Locale } from "@/types";
 
 export async function generateMetadata({
   params,
@@ -59,7 +58,7 @@ function HeroSection({ locale }: { locale: string }) {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
             <Link
-              href={`/${locale}/onboarding`}
+              href={`/${locale}/auth/signup`}
               className="bg-white text-primary-600 font-bold px-8 py-4 rounded-2xl hover:bg-gray-50 transition-all shadow-xl text-lg w-full sm:w-auto text-center"
             >
               {nav("signup")} →
@@ -366,7 +365,7 @@ function CTASection({ locale }: { locale: string }) {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href={`/${locale}/onboarding`}
+              href={`/${locale}/auth/signup`}
               className="bg-white text-primary-600 font-bold px-8 py-4 rounded-2xl hover:bg-gray-50 transition-all shadow-xl text-lg"
             >
               {t("freeStart")} →
@@ -443,64 +442,6 @@ function Footer() {
   );
 }
 
-function Navbar({ locale }: { locale: string }) {
-  const nav = useTranslations("nav");
-
-  return (
-    <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
-      <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-        <Link href={`/${locale}`} className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-lg" />
-          <span className="font-bold text-xl text-gray-900">Mediflow Academy</span>
-        </Link>
-
-        <div className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600">
-          <Link href={`/${locale}/courses`} className="hover:text-primary-600 transition-colors">
-            {nav("courses")}
-          </Link>
-          <Link href={`/${locale}/ai-tutor`} className="hover:text-primary-600 transition-colors">
-            {nav("aiTutor")}
-          </Link>
-          <Link href={`/${locale}/career`} className="hover:text-primary-600 transition-colors">
-            {nav("career")}
-          </Link>
-        </div>
-
-        <div className="flex items-center gap-3">
-          {/* Language switcher */}
-          <div className="hidden md:flex items-center gap-1">
-            {LOCALES.slice(0, 3).map((l) => (
-              <Link
-                key={l}
-                href={`/${l}`}
-                className={`px-2 py-1 rounded-lg text-sm transition-colors ${
-                  locale === l
-                    ? "bg-primary-100 text-primary-600 font-medium"
-                    : "text-gray-500 hover:text-gray-700"
-                }`}
-              >
-                {LOCALE_FLAGS[l]}
-              </Link>
-            ))}
-          </div>
-
-          <Link
-            href={`/${locale}/auth/login`}
-            className="text-sm font-medium text-gray-600 hover:text-primary-600 transition-colors"
-          >
-            {nav("login")}
-          </Link>
-          <Link
-            href={`/${locale}/onboarding`}
-            className="btn-primary text-sm py-2"
-          >
-            {nav("signup")}
-          </Link>
-        </div>
-      </div>
-    </nav>
-  );
-}
 
 export default async function HomePage({
   params,
@@ -511,7 +452,7 @@ export default async function HomePage({
 
   return (
     <div className="min-h-screen">
-      <Navbar locale={locale} />
+      {/* Navbar is provided by layout.tsx */}
       <HeroSection locale={locale} />
       <FeaturesSection />
       <CoursesSection locale={locale} />

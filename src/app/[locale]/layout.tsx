@@ -4,6 +4,7 @@ import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/lib/i18n/routing";
 import type { Locale } from "@/types";
+import Navbar from "@/components/layout/Navbar";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -14,6 +15,10 @@ export const metadata: Metadata = {
   description: "日本で医療・介護のプロになる。AIが支える学習から就職まで。",
   keywords: ["JLPT", "介護福祉士", "外国人", "医療", "介護", "日本語学習"],
 };
+
+// Pages that should NOT show the global navbar (they have their own or are immersive)
+// We handle this by having those pages override with their own nav if needed.
+// Layout-level navbar is shown everywhere except we make it opt-out via a data attribute.
 
 export default async function LocaleLayout({
   children,
@@ -42,6 +47,7 @@ export default async function LocaleLayout({
       </head>
       <body className="bg-background text-gray-900 font-sans antialiased">
         <NextIntlClientProvider messages={messages}>
+          <Navbar locale={locale} />
           {children}
         </NextIntlClientProvider>
       </body>
