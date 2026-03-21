@@ -23,6 +23,7 @@ export default function SignupPage({
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [emailSent, setEmailSent] = useState(false);
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,7 +43,7 @@ export default function SignupPage({
 
     try {
       const supabase = createClient();
-      const { error: authError } = await supabase.auth.signUp({
+      const { data, error: authError } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -53,7 +54,20 @@ export default function SignupPage({
       });
 
       if (authError) {
-        setError(authError.message);
+        const lower = authError.message.toLowerCase();
+        if (lower.includes("already registered") || lower.includes("user already exists")) {
+          setError("このメールアドレスはすでに登録されています。ログインしてください。");
+        } else if (lower.includes("password") && lower.includes("weak")) {
+          setError("パスワードが簡単すぎます。英数字を組み合わせた8文字以上にしてください。");
+        } else {
+          setError("登録に失敗しました。もう一度お試しください。");
+        }
+        return;
+      }
+
+      // If email confirmation is required (session is null but user is created)
+      if (data.user && !data.session) {
+        setEmailSent(true);
         return;
       }
 
@@ -74,6 +88,26 @@ export default function SignupPage({
             <span className="font-bold text-2xl text-gray-900">Mediflow Academy</span>
           </Link>
         </div>
+
+        {emailSent ? (
+          <div className="card shadow-xl text-center">
+            <div className="text-6xl mb-4">📧</div>
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">メールを確認してください</h1>
+            <p className="text-muted mb-4">
+              <span className="font-medium text-gray-800">{email}</span> に確認メールを送りました。
+            </p>
+            <p className="text-sm text-muted mb-6">
+              メール内のリンクをクリックして、登録を完了してください。
+              メールが届かない場合は迷惑メールフォルダをご確認ください。
+            </p>
+            <Link
+              href={`/${locale}/auth/login`}
+              className="btn-primary w-full inline-block text-center"
+            >
+              ログインページへ
+            </Link>
+          </div>
+        ) : (
 
         <div className="card shadow-xl">
           <h1 className="text-2xl font-bold text-gray-900 mb-2">{t("signup")}</h1>
@@ -175,6 +209,7 @@ export default function SignupPage({
             </Link>
           </div>
         </div>
+        )} {/* end emailSent conditional */}
       </div>
     </div>
   );

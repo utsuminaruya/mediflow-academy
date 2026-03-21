@@ -1,6 +1,6 @@
 "use client";
 
-import { use } from "react";
+import { use, useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import {
@@ -15,37 +15,49 @@ import {
   Zap,
 } from "lucide-react";
 
-const mockUser = {
-  full_name: "Nguyen Van An",
-  japanese_level: "N4",
-  streak: 7,
-  totalHours: 24.5,
+interface StoredUser {
+  fullName?: string;
+  japaneseLevel?: string;
+  nativeLanguage?: string;
+  nationality?: string;
+  goals?: string[];
+  experience?: string;
+  dailyStudyMinutes?: number;
+}
+
+const LEVEL_LABEL: Record<string, string> = {
+  none: "初級前",
+  n5: "N5",
+  n4: "N4",
+  n3: "N3",
+  n2: "N2",
+  n1: "N1",
 };
 
 const mockCourses = [
   {
-    id: "c1",
+    id: "c1000000-0000-0000-0000-000000000001",
     title: "JLPT N5 完全対策コース",
     category: "JLPT",
-    progress: 40,
-    nextLesson: "第3課: 基本文法「〜てください」",
+    progress: 0,
+    nextLesson: "第1課: ひらがなをマスター",
     emoji: "🎌",
     color: "from-red-400 to-red-600",
   },
   {
-    id: "c2",
+    id: "c2000000-0000-0000-0000-000000000001",
     title: "介護の日本語 基礎コース",
     category: "介護専門",
-    progress: 25,
-    nextLesson: "第2課: 申し送りの書き方",
+    progress: 0,
+    nextLesson: "第1課: 介護施設と職種",
     emoji: "🏥",
     color: "from-blue-400 to-blue-600",
   },
 ];
 
 const mockAchievements = [
-  { type: "streak", label: "7日連続学習", emoji: "🔥", earned: true },
-  { type: "quiz_perfect", label: "クイズ満点", emoji: "⭐", earned: true },
+  { type: "streak", label: "7日連続学習", emoji: "🔥", earned: false },
+  { type: "quiz_perfect", label: "クイズ満点", emoji: "⭐", earned: false },
   { type: "course_completed", label: "コース完了", emoji: "🎓", earned: false },
   { type: "jlpt_passed", label: "JLPT合格", emoji: "🏆", earned: false },
 ];
@@ -63,6 +75,31 @@ export default function DashboardPage({
 }) {
   const t = useTranslations("dashboard");
   const { locale } = use(params);
+  const [user, setUser] = useState<StoredUser>({});
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    try {
+      const raw = localStorage.getItem("mediflow_user");
+      if (raw) {
+        setUser(JSON.parse(raw));
+      }
+    } catch {
+      // ignore parse errors
+    }
+  }, []);
+
+  const displayName = user.fullName || "学習者";
+  const levelLabel = LEVEL_LABEL[user.japaneseLevel || ""] || "N5";
+
+  if (!mounted) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="animate-spin w-8 h-8 border-4 border-primary-500 border-t-transparent rounded-full" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -70,10 +107,10 @@ export default function DashboardPage({
       <div className="bg-gradient-to-r from-primary-600 to-primary-500 text-white px-4 pt-8 pb-20">
         <div className="container mx-auto max-w-5xl">
           <p className="text-white/70 text-sm mb-1">{t("welcome")}、</p>
-          <h1 className="text-2xl font-bold mb-1">{mockUser.full_name} さん</h1>
+          <h1 className="text-2xl font-bold mb-1">{displayName} さん</h1>
           <div className="flex items-center gap-2">
             <span className="bg-white/20 px-3 py-1 rounded-full text-sm font-medium">
-              日本語レベル: {mockUser.japanese_level}
+              日本語レベル: {levelLabel}
             </span>
           </div>
         </div>
@@ -84,12 +121,12 @@ export default function DashboardPage({
         <div className="grid grid-cols-3 gap-3 mb-6">
           <div className="card text-center p-4">
             <Flame className="w-6 h-6 text-orange-500 mx-auto mb-1" />
-            <div className="text-2xl font-bold text-gray-900">{mockUser.streak}</div>
+            <div className="text-2xl font-bold text-gray-900">0</div>
             <div className="text-xs text-muted">{t("streak")}</div>
           </div>
           <div className="card text-center p-4">
             <Clock className="w-6 h-6 text-primary-500 mx-auto mb-1" />
-            <div className="text-2xl font-bold text-gray-900">{mockUser.totalHours}h</div>
+            <div className="text-2xl font-bold text-gray-900">0h</div>
             <div className="text-xs text-muted">{t("totalTime")}</div>
           </div>
           <div className="card text-center p-4">
@@ -108,8 +145,8 @@ export default function DashboardPage({
             <div>
               <p className="font-semibold text-sm mb-1">{t("aiRecommendation")}</p>
               <p className="text-white/80 text-sm leading-relaxed">
-                今日は「て形」の練習が必要です。昨日のクイズで間違いが多かった
-                「動詞のて形」を重点的に学習しましょう。
+                まずは基礎から始めましょう！ひらがな・カタカナをマスターして、
+                介護現場で使える日本語の基礎を固めましょう。
                 Medi先生に質問してみてください！
               </p>
               <Link
@@ -155,6 +192,20 @@ export default function DashboardPage({
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Quick Links */}
+        <div className="card mb-6">
+          <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <BookOpen className="w-5 h-5 text-primary-500" />
+            全コースを見る
+          </h2>
+          <Link
+            href={`/${locale}/courses`}
+            className="btn-primary w-full text-center block"
+          >
+            コース一覧へ →
+          </Link>
         </div>
 
         {/* Weak Points */}

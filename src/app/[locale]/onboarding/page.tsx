@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, use } from "react";
+import { useState, use, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { CheckCircle, ChevronRight, ChevronLeft, Loader2 } from "lucide-react";
@@ -36,6 +36,15 @@ const JAPANESE_LEVELS = [
   { id: "n2", label: "N2以上", description: "ビジネス日本語も話せます" },
 ];
 
+// AIプラン生成のステップ表示（アニメーション付き）
+const GENERATION_STEPS = [
+  "✅ プロフィール分析完了",
+  "✅ 目標に合わせた教材選定",
+  "✅ 週間スケジュール生成完了",
+  "✅ おすすめコースを選択しました",
+  "🎉 学習プラン完成！",
+];
+
 interface OnboardingData {
   fullName: string;
   nationality: string;
@@ -56,6 +65,8 @@ export default function OnboardingPage({
   const { locale } = use(params);
   const [step, setStep] = useState(1);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [generationStep, setGenerationStep] = useState(0);
+  const [generationDone, setGenerationDone] = useState(false);
   const [data, setData] = useState<OnboardingData>({
     fullName: "",
     nationality: "",
@@ -68,14 +79,44 @@ export default function OnboardingPage({
 
   const totalSteps = 4;
 
-  const handleNext = async () => {
+  // Step 4 に来たら自動的にAI生成アニメーションを開始
+  useEffect(() => {
+    if (step === 4) {
+      setIsGenerating(true);
+      setGenerationStep(0);
+      setGenerationDone(false);
+
+      // ステップを順番に表示
+      const stepDelay = 600;
+      GENERATION_STEPS.forEach((_, idx) => {
+        setTimeout(() => {
+          setGenerationStep(idx + 1);
+          if (idx === GENERATION_STEPS.length - 1) {
+            // 最後のステップ後に完了
+            setTimeout(() => {
+              setGenerationDone(true);
+              // ユーザーデータをlocalStorageに保存
+              if (typeof window !== "undefined") {
+                localStorage.setItem("mediflow_user", JSON.stringify({
+                  fullName: data.fullName,
+                  nationality: data.nationality,
+                  nativeLanguage: data.nativeLanguage,
+                  japaneseLevel: data.japaneseLevel,
+                  experience: data.experience,
+                  goals: data.goals,
+                  dailyStudyMinutes: data.dailyStudyMinutes,
+                }));
+              }
+            }, 600);
+          }
+        }, stepDelay * (idx + 1));
+      });
+    }
+  }, [step]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const handleNext = () => {
     if (step < totalSteps) {
       setStep(step + 1);
-    } else {
-      // Step 4: Generate plan and redirect
-      setIsGenerating(true);
-      await new Promise((r) => setTimeout(r, 2500)); // Simulate AI generation
-      router.push(`/${locale}/dashboard`);
     }
   };
 
@@ -141,7 +182,7 @@ export default function OnboardingPage({
                     value={data.fullName}
                     onChange={(e) => setData({ ...data, fullName: e.target.value })}
                     className="input"
-                    placeholder="Nguyen Van An"
+                    placeholder="例: Nguyen Van An"
                   />
                 </div>
 
@@ -305,58 +346,73 @@ export default function OnboardingPage({
             </div>
           )}
 
-          {/* Step 4: AI Plan Generation */}
+          {/* Step 4: AI Plan Generation - 自動アニメーション */}
           {step === 4 && (
-            <div className="text-center py-8">
-              {isGenerating ? (
+            <div className="text-center py-6">
+              {!generationDone ? (
                 <>
                   <Loader2 className="w-16 h-16 text-primary-500 animate-spin mx-auto mb-6" />
-                  <h2 className="text-2xl font-bold text-gray-900 mb-3">
-                    {t("step4.generating")}
+                  <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                    {data.fullName ? `${data.fullName}さん専用の` : "あなた専用の"}
+                    <br />学習プランを作成中...
                   </h2>
-                  <p className="text-muted">
-                    {data.fullName}さん専用の学習プランを作成中...
+                  <p className="text-muted mb-6 text-sm">
+                    AIがプロフィールを分析しています。少々お待ちください。
                   </p>
-                  <div className="mt-6 space-y-2 text-left max-w-xs mx-auto">
-                    {[
-                      "✅ プロフィール分析完了",
-                      "✅ 目標に合わせた教材選定",
-                      "🔄 週間スケジュール生成中...",
-                    ].map((item, idx) => (
-                      <p key={idx} className="text-sm text-gray-600">{item}</p>
+                  <div className="mt-4 space-y-3 text-left max-w-xs mx-auto">
+                    {GENERATION_STEPS.map((item, idx) => (
+                      <p
+                        key={idx}
+                        className={`text-sm transition-all duration-300 ${
+                          idx < generationStep
+                            ? "text-gray-800 font-medium"
+                            : "text-gray-300"
+                        }`}
+                      >
+                        {item}
+                      </p>
                     ))}
                   </div>
                 </>
               ) : (
                 <>
-                  <div className="w-24 h-24 bg-gradient-to-br from-primary-400 to-secondary-400 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <span className="text-5xl">🤖</span>
+                  <div className="w-24 h-24 bg-gradient-to-br from-green-400 to-primary-500 rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce">
+                    <span className="text-5xl">🎉</span>
                   </div>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-3">
-                    {t("step4.title")}
+                  <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                    学習プラン完成！
                   </h2>
                   <p className="text-muted mb-6">
-                    AIがあなたのプロフィールを分析して、最適な学習プランを作成します。
+                    {data.fullName ? `${data.fullName}さん、` : ""}さっそく学習を始めましょう！
                   </p>
-                  <div className="grid grid-cols-3 gap-4 mb-6">
+                  <div className="grid grid-cols-3 gap-4 mb-8">
                     {[
                       { label: "目標", value: `${data.goals.length}個` },
                       { label: "学習時間", value: `${data.dailyStudyMinutes}分/日` },
                       { label: "言語", value: LOCALE_LABELS[data.nativeLanguage] },
                     ].map((item) => (
-                      <div key={item.label} className="bg-gray-50 rounded-xl p-3 text-center">
+                      <div key={item.label} className="bg-green-50 rounded-xl p-3 text-center">
                         <div className="font-bold text-gray-900">{item.value}</div>
                         <div className="text-xs text-muted">{item.label}</div>
                       </div>
                     ))}
                   </div>
+                  <button
+                    onClick={() => router.push(`/${locale}/courses`)}
+                    className="btn-primary w-full text-center text-lg py-4"
+                  >
+                    コース一覧へ進む 🚀
+                  </button>
+                  <p className="text-xs text-muted mt-4">
+                    いつでもAI家庭教師「Medi先生」に質問できます
+                  </p>
                 </>
               )}
             </div>
           )}
 
-          {/* Navigation */}
-          {!isGenerating && (
+          {/* Navigation (Step 1〜3のみ表示) */}
+          {step < 4 && (
             <div className="flex gap-3 mt-8">
               {step > 1 && (
                 <button
@@ -372,21 +428,21 @@ export default function OnboardingPage({
                 disabled={!canProceed()}
                 className="flex-1 flex items-center justify-center gap-2 btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {step === totalSteps ? "学習を始める 🚀" : t("next")}
-                {step < totalSteps && <ChevronRight className="w-5 h-5" />}
+                {step === 3 ? "プランを作成する ✨" : t("next")}
+                {step < 3 && <ChevronRight className="w-5 h-5" />}
               </button>
             </div>
           )}
         </div>
 
-        {/* Skip */}
+        {/* Skip (Step 1〜3のみ) */}
         {step < 4 && (
           <div className="text-center mt-4">
             <button
-              onClick={() => router.push(`/${locale}/dashboard`)}
+              onClick={() => router.push(`/${locale}/courses`)}
               className="text-sm text-muted hover:text-gray-600 transition-colors"
             >
-              {t("skip")} →
+              スキップしてコース一覧へ →
             </button>
           </div>
         )}

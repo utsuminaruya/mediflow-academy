@@ -23,6 +23,26 @@ export default function LoginPage({
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
+  const translateAuthError = (message: string): string => {
+    const lower = message.toLowerCase();
+    if (lower.includes("invalid login credentials") || lower.includes("invalid credentials")) {
+      return "メールアドレスまたはパスワードが正しくありません。";
+    }
+    if (lower.includes("email not confirmed")) {
+      return "メールアドレスの確認が完了していません。受信したメールのリンクをクリックしてください。";
+    }
+    if (lower.includes("too many requests") || lower.includes("rate limit")) {
+      return "試行回数が多すぎます。しばらく時間をおいてから再度お試しください。";
+    }
+    if (lower.includes("user not found")) {
+      return "このメールアドレスは登録されていません。";
+    }
+    if (lower.includes("network") || lower.includes("fetch")) {
+      return "通信エラーが発生しました。インターネット接続を確認してください。";
+    }
+    return "ログインに失敗しました。もう一度お試しください。";
+  };
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
@@ -36,11 +56,11 @@ export default function LoginPage({
       });
 
       if (authError) {
-        setError(authError.message);
+        setError(translateAuthError(authError.message));
         return;
       }
 
-      router.push(`/${locale}/dashboard`);
+      router.push(`/${locale}/courses`);
     } catch {
       setError("ログインに失敗しました。もう一度お試しください。");
     } finally {
