@@ -437,12 +437,23 @@ function JobCard({ job, locale }: { job: typeof JOBS[0]; locale: string }) {
 
       {/* Apply Button */}
       <a
-        href={"applyUrl" in job && job.applyUrl ? job.applyUrl : (process.env.NEXT_PUBLIC_LINE_JOBSEEKER || "#")}
-        target="_blank"
-        rel="noopener noreferrer"
+        href={`mailto:mediflow1002@gmail.com?subject=${encodeURIComponent(
+          `【求人応募】${job.facilityName}「${job.jobTitle}」`
+        )}&body=${encodeURIComponent(
+          `Mediflow Academy 就職支援チーム御中\n\n以下の求人に応募を希望します。\n\n` +
+          `【施設名】${job.facilityName}\n` +
+          `【職種】${job.jobTitle}\n` +
+          `【勤務地】${job.location}\n\n` +
+          `---\n` +
+          `お名前：\n` +
+          `現在のビザ種別：\n` +
+          `日本語レベル（JLPT）：\n` +
+          `希望就労時期：\n` +
+          `メッセージ（自由記入）：\n`
+        )}`}
         className="btn-primary w-full text-center flex items-center justify-center gap-2"
       >
-        {t("apply")} 💬
+        {t("apply")} ✉️
         <ChevronRight className="w-4 h-4" />
       </a>
     </div>

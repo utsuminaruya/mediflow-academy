@@ -90,6 +90,12 @@ export default function Navbar({ locale }: NavbarProps) {
           <Link href={`/${locale}/career`} className="hover:text-primary-600 transition-colors">
             {nav("career")}
           </Link>
+          <Link
+            href={`/${locale}/pricing`}
+            className="flex items-center gap-1 text-yellow-600 hover:text-yellow-700 font-semibold transition-colors"
+          >
+            ✨ 有料プラン
+          </Link>
         </div>
 
         {/* Right side: lang switcher + auth */}
@@ -229,6 +235,13 @@ export default function Navbar({ locale }: NavbarProps) {
             className="block px-4 py-3 rounded-xl text-gray-700 hover:bg-gray-50 font-medium transition-colors"
           >
             {nav("career")}
+          </Link>
+          <Link
+            href={`/${locale}/pricing`}
+            onClick={() => setMobileOpen(false)}
+            className="block px-4 py-3 rounded-xl text-yellow-600 hover:bg-yellow-50 font-semibold transition-colors"
+          >
+            ✨ 有料プラン
           </Link>
 
           <div className="pt-2 border-t border-gray-100 mt-2">
