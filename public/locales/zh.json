@@ -1,0 +1,187 @@
+{
+  "nav": {
+    "home": "首页",
+    "courses": "课程",
+    "dashboard": "学习面板",
+    "aiTutor": "AI家教",
+    "career": "就职支持",
+    "profile": "个人资料",
+    "login": "登录",
+    "signup": "免费开始",
+    "logout": "退出登录"
+  },
+  "hero": {
+    "badge": "AI × 医疗护理 × 就职",
+    "title": "在日本成为医疗护理专业人士。",
+    "subtitle": "从这里开始您的梦想。",
+    "description": "AI个性化定制学习方案，从通过JLPT、护理福祉士国家考试到在最佳职场就职，全程一站式支持。",
+    "startFree": "免费开始",
+    "learnMore": "了解更多",
+    "stats": {
+      "learners": "学习人数",
+      "learnersValue": "2,000+",
+      "languages": "支持语言",
+      "languagesValue": "6种语言",
+      "jobSuccess": "就职成功率",
+      "jobSuccessValue": "92%"
+    }
+  },
+  "features": {
+    "title": "三步实现梦想",
+    "learn": {
+      "title": "学习",
+      "description": "AI生成最优学习方案。从日语到JLPT备考、护理专业术语，提供全面支持。"
+    },
+    "qualify": {
+      "title": "取得资格",
+      "description": "AI家教全力支持JLPT、护理福祉士、特定技能等考试备考。"
+    },
+    "work": {
+      "title": "就职",
+      "description": "AI根据您的技能和期望条件匹配最适合的职场。Mediflow全程支持直到成功就职。"
+    }
+  },
+  "courses": {
+    "title": "热门课程",
+    "subtitle": "选择适合您目标的课程",
+    "viewAll": "查看全部课程",
+    "free": "免费",
+    "lessons": "课时",
+    "hours": "小时",
+    "beginners": "适合初学者",
+    "intermediate": "中级",
+    "advanced": "高级",
+    "start": "开始学习"
+  },
+  "cta": {
+    "title": "立即免费开始",
+    "description": "通过LINE轻松注册。AI今天就为您推荐最优学习方案。",
+    "lineRegister": "通过LINE注册",
+    "formRegister": "通过表单注册",
+    "freeStart": "免费开始"
+  },
+  "dashboard": {
+    "welcome": "欢迎回来",
+    "todayGoal": "今日目标",
+    "streak": "连续学习天数",
+    "totalTime": "累计学习时间",
+    "continueCourse": "继续课程",
+    "nextLesson": "下一课",
+    "weeklyWeakness": "本周弱点",
+    "recentAchievements": "近期成就",
+    "aiRecommendation": "AI推荐",
+    "startAiTutor": "向AI家教提问"
+  },
+  "lesson": {
+    "vocabulary": "词汇",
+    "grammar": "语法",
+    "listening": "听力",
+    "speaking": "会话练习",
+    "quiz": "测验",
+    "knew": "已记住",
+    "again": "再来一次",
+    "playAudio": "播放音频",
+    "showTranslation": "显示翻译",
+    "hideTranslation": "隐藏翻译",
+    "showScript": "显示文本",
+    "hideScript": "隐藏文本",
+    "nextLesson": "下一课",
+    "complete": "完成"
+  },
+  "aiTutor": {
+    "title": "AI家教 Medi老师",
+    "subtitle": "可以询问任何关于日语和医疗护理的问题",
+    "placeholder": "输入消息...",
+    "send": "发送",
+    "quickActions": {
+      "vocabQuiz": "今日词汇测验",
+      "grammar": "语法讲解",
+      "careTerms": "护理术语测验",
+      "conversation": "会话练习",
+      "question": "我有问题"
+    },
+    "thinking": "思考中..."
+  },
+  "career": {
+    "title": "就职支持",
+    "subtitle": "找到最适合您的职场",
+    "aiMatch": "AI匹配",
+    "matchScore": "匹配度",
+    "matchReasons": "匹配原因",
+    "gaps": "不足条件",
+    "apply": "申请",
+    "filters": {
+      "location": "工作地点",
+      "facilityType": "设施类型",
+      "qualification": "所需资格",
+      "salary": "薪资"
+    },
+    "jobCard": {
+      "visaSupport": "签证支持",
+      "housingSupport": "住房支持",
+      "salaryRange": "薪资范围"
+    }
+  },
+  "onboarding": {
+    "step1": {
+      "title": "请告诉我们您的基本信息",
+      "name": "您的姓名",
+      "nationality": "国籍",
+      "nativeLanguage": "母语"
+    },
+    "step2": {
+      "title": "测试您当前的日语水平",
+      "test": "快速测试",
+      "experience": "护理/医疗经验"
+    },
+    "step3": {
+      "title": "设定您的目标",
+      "goal": "目标",
+      "deadline": "达成期限"
+    },
+    "step4": {
+      "title": "正在为您生成专属学习方案...",
+      "generating": "AI正在生成最优方案",
+      "ready": "准备好了！开始学习吧"
+    },
+    "next": "下一步",
+    "back": "返回",
+    "skip": "跳过"
+  },
+  "auth": {
+    "login": "登录",
+    "signup": "注册",
+    "email": "电子邮件地址",
+    "password": "密码",
+    "confirmPassword": "确认密码",
+    "forgotPassword": "忘记密码",
+    "noAccount": "还没有账号",
+    "hasAccount": "已有账号",
+    "loginHere": "在此登录",
+    "signupHere": "在此注册",
+    "fullName": "全名"
+  },
+  "common": {
+    "loading": "加载中...",
+    "error": "发生错误",
+    "retry": "重试",
+    "save": "保存",
+    "cancel": "取消",
+    "delete": "删除",
+    "edit": "编辑",
+    "close": "关闭",
+    "search": "搜索",
+    "filter": "筛选",
+    "days": "天",
+    "hours": "小时",
+    "minutes": "分钟",
+    "percent": "%"
+  },
+  "footer": {
+    "company": "Mediflow株式会社",
+    "license": "有偿职业介绍事业许可证号: 14-ユ-302174",
+    "privacy": "隐私政策",
+    "terms": "使用条款",
+    "contact": "联系我们"
+  }
+}

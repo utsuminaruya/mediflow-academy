@@ -1,0 +1,187 @@
+{
+  "nav": {
+    "home": "ホーム",
+    "courses": "コース",
+    "dashboard": "ダッシュボード",
+    "aiTutor": "AI家庭教師",
+    "career": "就職支援",
+    "profile": "プロフィール",
+    "login": "ログイン",
+    "signup": "無料で始める",
+    "logout": "ログアウト"
+  },
+  "hero": {
+    "badge": "AI × 医療・介護 × 就職",
+    "title": "日本で医療・介護のプロになる。",
+    "subtitle": "あなたの夢、ここから始まる。",
+    "description": "AIが個別最適化した学習プランで、JLPT合格から介護福祉士国家試験、そして最高の職場への就職まで一気通貫でサポート。",
+    "startFree": "無料で始める",
+    "learnMore": "詳しく見る",
+    "stats": {
+      "learners": "学習者数",
+      "learnersValue": "2,000+",
+      "languages": "対応言語",
+      "languagesValue": "6言語",
+      "jobSuccess": "就職成功率",
+      "jobSuccessValue": "92%"
+    }
+  },
+  "features": {
+    "title": "3ステップで夢を実現",
+    "learn": {
+      "title": "学ぶ",
+      "description": "AIが最適な学習プランを生成。日本語からJLPT対策、介護専門用語まで完全サポート。"
+    },
+    "qualify": {
+      "title": "資格を取る",
+      "description": "JLPT・介護福祉士・特定技能の試験対策を、AI家庭教師が徹底的にサポート。"
+    },
+    "work": {
+      "title": "就職する",
+      "description": "あなたのスキルと希望条件に最適な職場をAIがマッチング。Mediflowが就職までサポート。"
+    }
+  },
+  "courses": {
+    "title": "人気コース",
+    "subtitle": "あなたの目標に合わせたコースを選んでください",
+    "viewAll": "全コースを見る",
+    "free": "無料",
+    "lessons": "レッスン",
+    "hours": "時間",
+    "beginners": "初心者向け",
+    "intermediate": "中級者向け",
+    "advanced": "上級者向け",
+    "start": "学習を始める"
+  },
+  "cta": {
+    "title": "今すぐ無料で始めよう",
+    "description": "LINEで簡単登録。AIが今日から最適な学習プランを提案します。",
+    "lineRegister": "LINEで登録する",
+    "formRegister": "フォームで登録する",
+    "freeStart": "無料で始める"
+  },
+  "dashboard": {
+    "welcome": "おかえりなさい",
+    "todayGoal": "今日の目標",
+    "streak": "連続学習日数",
+    "totalTime": "総学習時間",
+    "continueCourse": "コースを続ける",
+    "nextLesson": "次のレッスン",
+    "weeklyWeakness": "今週の弱点",
+    "recentAchievements": "最近の実績",
+    "aiRecommendation": "AIからのおすすめ",
+    "startAiTutor": "AI家庭教師に質問する"
+  },
+  "lesson": {
+    "vocabulary": "語彙",
+    "grammar": "文法",
+    "listening": "リスニング",
+    "speaking": "会話練習",
+    "quiz": "テスト",
+    "knew": "覚えた",
+    "again": "もう一度",
+    "playAudio": "音声を再生",
+    "showTranslation": "翻訳を表示",
+    "hideTranslation": "翻訳を隠す",
+    "showScript": "スクリプトを表示",
+    "hideScript": "スクリプトを隠す",
+    "nextLesson": "次のレッスンへ",
+    "complete": "完了"
+  },
+  "aiTutor": {
+    "title": "AI家庭教師 Medi先生",
+    "subtitle": "日本語・医療介護の質問はなんでも聞いてください",
+    "placeholder": "メッセージを入力...",
+    "send": "送信",
+    "quickActions": {
+      "vocabQuiz": "今日の単語テスト",
+      "grammar": "文法を教えて",
+      "careTerms": "介護用語クイズ",
+      "conversation": "会話練習",
+      "question": "質問がある"
+    },
+    "thinking": "考え中..."
+  },
+  "career": {
+    "title": "就職支援",
+    "subtitle": "あなたに最適な職場を見つけましょう",
+    "aiMatch": "AIマッチング",
+    "matchScore": "マッチ度",
+    "matchReasons": "マッチ理由",
+    "gaps": "不足要件",
+    "apply": "応募する",
+    "filters": {
+      "location": "勤務地",
+      "facilityType": "施設種別",
+      "qualification": "資格要件",
+      "salary": "給与"
+    },
+    "jobCard": {
+      "visaSupport": "ビザサポートあり",
+      "housingSupport": "住居支援あり",
+      "salaryRange": "給与"
+    }
+  },
+  "onboarding": {
+    "step1": {
+      "title": "基本情報を教えてください",
+      "name": "お名前",
+      "nationality": "国籍",
+      "nativeLanguage": "母語"
+    },
+    "step2": {
+      "title": "現在の日本語レベルを確認します",
+      "test": "簡易テスト",
+      "experience": "介護・医療の経験"
+    },
+    "step3": {
+      "title": "目標を設定しましょう",
+      "goal": "目標",
+      "deadline": "達成期限"
+    },
+    "step4": {
+      "title": "あなた専用の学習プランを作成中...",
+      "generating": "AIが最適なプランを生成しています",
+      "ready": "準備完了！学習を始めましょう"
+    },
+    "next": "次へ",
+    "back": "戻る",
+    "skip": "スキップ"
+  },
+  "auth": {
+    "login": "ログイン",
+    "signup": "新規登録",
+    "email": "メールアドレス",
+    "password": "パスワード",
+    "confirmPassword": "パスワードを確認",
+    "forgotPassword": "パスワードを忘れた方",
+    "noAccount": "アカウントをお持ちでない方",
+    "hasAccount": "すでにアカウントをお持ちの方",
+    "loginHere": "ログインはこちら",
+    "signupHere": "登録はこちら",
+    "fullName": "フルネーム"
+  },
+  "common": {
+    "loading": "読み込み中...",
+    "error": "エラーが発生しました",
+    "retry": "再試行",
+    "save": "保存",
+    "cancel": "キャンセル",
+    "delete": "削除",
+    "edit": "編集",
+    "close": "閉じる",
+    "search": "検索",
+    "filter": "フィルター",
+    "days": "日",
+    "hours": "時間",
+    "minutes": "分",
+    "percent": "%"
+  },
+  "footer": {
+    "company": "Mediflow株式会社",
+    "license": "有料職業紹介事業 許可番号: 14-ユ-302174",
+    "privacy": "プライバシーポリシー",
+    "terms": "利用規約",
+    "contact": "お問い合わせ"
+  }
+}

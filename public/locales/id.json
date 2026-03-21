@@ -1,0 +1,187 @@
+{
+  "nav": {
+    "home": "Beranda",
+    "courses": "Kursus",
+    "dashboard": "Dasbor",
+    "aiTutor": "Tutor AI",
+    "career": "Dukungan Karier",
+    "profile": "Profil",
+    "login": "Masuk",
+    "signup": "Mulai Gratis",
+    "logout": "Keluar"
+  },
+  "hero": {
+    "badge": "AI × Kesehatan & Perawatan × Karier",
+    "title": "Jadilah profesional kesehatan dan perawatan di Jepang.",
+    "subtitle": "Impianmu dimulai dari sini.",
+    "description": "Rencana belajar yang dipersonalisasi oleh AI, mendukung dari lulus JLPT hingga ujian nasional Perawat Kesejahteraan, dan mendapatkan pekerjaan terbaik.",
+    "startFree": "Mulai Gratis",
+    "learnMore": "Pelajari Lebih Lanjut",
+    "stats": {
+      "learners": "Jumlah Pelajar",
+      "learnersValue": "2.000+",
+      "languages": "Bahasa Didukung",
+      "languagesValue": "6 Bahasa",
+      "jobSuccess": "Tingkat Keberhasilan Kerja",
+      "jobSuccessValue": "92%"
+    }
+  },
+  "features": {
+    "title": "Wujudkan Impian dalam 3 Langkah",
+    "learn": {
+      "title": "Belajar",
+      "description": "AI membuat rencana belajar optimal. Dukungan penuh dari bahasa Jepang hingga persiapan JLPT dan kosakata spesialis perawatan."
+    },
+    "qualify": {
+      "title": "Dapatkan Kualifikasi",
+      "description": "Tutor AI mendukung sepenuhnya persiapan ujian JLPT, Perawat Kesejahteraan, dan Keterampilan Spesifik."
+    },
+    "work": {
+      "title": "Bekerja",
+      "description": "AI mencocokkan tempat kerja terbaik sesuai keterampilan dan kondisi yang diinginkan. Mediflow mendukung hingga kamu mendapat pekerjaan."
+    }
+  },
+  "courses": {
+    "title": "Kursus Populer",
+    "subtitle": "Pilih kursus yang sesuai dengan tujuanmu",
+    "viewAll": "Lihat Semua Kursus",
+    "free": "Gratis",
+    "lessons": "pelajaran",
+    "hours": "jam",
+    "beginners": "Untuk Pemula",
+    "intermediate": "Tingkat Menengah",
+    "advanced": "Tingkat Lanjut",
+    "start": "Mulai Belajar"
+  },
+  "cta": {
+    "title": "Mulai Gratis Sekarang",
+    "description": "Daftar mudah melalui LINE. AI akan mengusulkan rencana belajar optimal mulai hari ini.",
+    "lineRegister": "Daftar via LINE",
+    "formRegister": "Daftar via Formulir",
+    "freeStart": "Mulai Gratis"
+  },
+  "dashboard": {
+    "welcome": "Selamat Datang Kembali",
+    "todayGoal": "Target Hari Ini",
+    "streak": "Hari Belajar Berturut-turut",
+    "totalTime": "Total Waktu Belajar",
+    "continueCourse": "Lanjutkan Kursus",
+    "nextLesson": "Pelajaran Berikutnya",
+    "weeklyWeakness": "Kelemahan Minggu Ini",
+    "recentAchievements": "Pencapaian Terbaru",
+    "aiRecommendation": "Rekomendasi AI",
+    "startAiTutor": "Tanya Tutor AI"
+  },
+  "lesson": {
+    "vocabulary": "Kosakata",
+    "grammar": "Tata Bahasa",
+    "listening": "Mendengarkan",
+    "speaking": "Latihan Percakapan",
+    "quiz": "Kuis",
+    "knew": "Sudah Tahu",
+    "again": "Ulangi",
+    "playAudio": "Putar Audio",
+    "showTranslation": "Tampilkan Terjemahan",
+    "hideTranslation": "Sembunyikan Terjemahan",
+    "showScript": "Tampilkan Skrip",
+    "hideScript": "Sembunyikan Skrip",
+    "nextLesson": "Pelajaran Berikutnya",
+    "complete": "Selesai"
+  },
+  "aiTutor": {
+    "title": "Tutor AI Sensei Medi",
+    "subtitle": "Tanyakan apa saja tentang bahasa Jepang dan perawatan kesehatan",
+    "placeholder": "Masukkan pesan...",
+    "send": "Kirim",
+    "quickActions": {
+      "vocabQuiz": "Kuis Kosakata Hari Ini",
+      "grammar": "Penjelasan Tata Bahasa",
+      "careTerms": "Kuis Istilah Perawatan",
+      "conversation": "Latihan Percakapan",
+      "question": "Saya Punya Pertanyaan"
+    },
+    "thinking": "Sedang berpikir..."
+  },
+  "career": {
+    "title": "Dukungan Karier",
+    "subtitle": "Temukan tempat kerja terbaik untukmu",
+    "aiMatch": "Pencocokan AI",
+    "matchScore": "Skor Kesesuaian",
+    "matchReasons": "Alasan Kesesuaian",
+    "gaps": "Persyaratan yang Kurang",
+    "apply": "Lamar",
+    "filters": {
+      "location": "Lokasi Kerja",
+      "facilityType": "Jenis Fasilitas",
+      "qualification": "Kualifikasi yang Diperlukan",
+      "salary": "Gaji"
+    },
+    "jobCard": {
+      "visaSupport": "Dukungan Visa",
+      "housingSupport": "Dukungan Perumahan",
+      "salaryRange": "Rentang Gaji"
+    }
+  },
+  "onboarding": {
+    "step1": {
+      "title": "Beritahu Kami Informasi Dasarmu",
+      "name": "Namamu",
+      "nationality": "Kewarganegaraan",
+      "nativeLanguage": "Bahasa Ibu"
+    },
+    "step2": {
+      "title": "Periksa Level Bahasa Jepangmu Saat Ini",
+      "test": "Tes Singkat",
+      "experience": "Pengalaman Perawatan/Kesehatan"
+    },
+    "step3": {
+      "title": "Tentukan Tujuanmu",
+      "goal": "Tujuan",
+      "deadline": "Tenggat Waktu"
+    },
+    "step4": {
+      "title": "Membuat Rencana Belajar Khusus Untukmu...",
+      "generating": "AI sedang membuat rencana optimal",
+      "ready": "Siap! Mari mulai belajar"
+    },
+    "next": "Berikutnya",
+    "back": "Kembali",
+    "skip": "Lewati"
+  },
+  "auth": {
+    "login": "Masuk",
+    "signup": "Daftar",
+    "email": "Alamat Email",
+    "password": "Kata Sandi",
+    "confirmPassword": "Konfirmasi Kata Sandi",
+    "forgotPassword": "Lupa Kata Sandi",
+    "noAccount": "Belum punya akun",
+    "hasAccount": "Sudah punya akun",
+    "loginHere": "Masuk di sini",
+    "signupHere": "Daftar di sini",
+    "fullName": "Nama Lengkap"
+  },
+  "common": {
+    "loading": "Memuat...",
+    "error": "Terjadi kesalahan",
+    "retry": "Coba Lagi",
+    "save": "Simpan",
+    "cancel": "Batal",
+    "delete": "Hapus",
+    "edit": "Edit",
+    "close": "Tutup",
+    "search": "Cari",
+    "filter": "Filter",
+    "days": "hari",
+    "hours": "jam",
+    "minutes": "menit",
+    "percent": "%"
+  },
+  "footer": {
+    "company": "Perusahaan Mediflow",
+    "license": "Izin Penempatan Tenaga Kerja Berbayar: 14-ユ-302174",
+    "privacy": "Kebijakan Privasi",
+    "terms": "Syarat dan Ketentuan",
+    "contact": "Hubungi Kami"
+  }
+}

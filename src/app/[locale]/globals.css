@@ -1,0 +1,100 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-primary: #0066CC;
+    --color-secondary: #00B894;
+    --color-accent: #FF6B6B;
+    --color-background: #F8FAFC;
+    --color-text: #1A202C;
+    --color-muted: #718096;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-text);
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary-500 text-white font-semibold px-6 py-3 rounded-xl hover:bg-primary-600 transition-colors duration-200 shadow-md;
+  }
+
+  .btn-secondary {
+    @apply bg-secondary-500 text-white font-semibold px-6 py-3 rounded-xl hover:bg-secondary-600 transition-colors duration-200;
+  }
+
+  .btn-outline {
+    @apply border-2 border-primary-500 text-primary-500 font-semibold px-6 py-3 rounded-xl hover:bg-primary-50 transition-colors duration-200;
+  }
+
+  .card {
+    @apply bg-white rounded-2xl shadow-sm border border-gray-100 p-6;
+  }
+
+  .input {
+    @apply w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-300 focus:border-primary-500 transition-all;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium;
+  }
+
+  .badge-primary {
+    @apply badge bg-primary-50 text-primary-600;
+  }
+
+  .badge-secondary {
+    @apply badge bg-secondary-50 text-secondary-600;
+  }
+
+  .badge-accent {
+    @apply badge bg-red-50 text-red-600;
+  }
+
+  .section-title {
+    @apply text-3xl font-bold text-gray-900 mb-4;
+  }
+
+  .section-subtitle {
+    @apply text-lg text-muted mb-8;
+  }
+
+  .progress-bar {
+    @apply w-full bg-gray-100 rounded-full h-2;
+  }
+
+  .progress-fill {
+    @apply bg-primary-500 h-2 rounded-full transition-all duration-500;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary-500 to-secondary-500 bg-clip-text text-transparent;
+  }
+
+  .glass {
+    @apply bg-white/80 backdrop-blur-md;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}

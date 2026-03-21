@@ -1,0 +1,187 @@
+{
+  "nav": {
+    "home": "Trang chủ",
+    "courses": "Khóa học",
+    "dashboard": "Bảng điều khiển",
+    "aiTutor": "Gia sư AI",
+    "career": "Hỗ trợ việc làm",
+    "profile": "Hồ sơ",
+    "login": "Đăng nhập",
+    "signup": "Bắt đầu miễn phí",
+    "logout": "Đăng xuất"
+  },
+  "hero": {
+    "badge": "AI × Y tế & Điều dưỡng × Việc làm",
+    "title": "Trở thành chuyên gia y tế và điều dưỡng tại Nhật Bản.",
+    "subtitle": "Ước mơ của bạn bắt đầu từ đây.",
+    "description": "Kế hoạch học tập được AI tối ưu hóa cá nhân, hỗ trợ toàn diện từ đậu JLPT, kỳ thi Hộ lý phúc lợi quốc gia đến tìm việc làm tại nơi tốt nhất.",
+    "startFree": "Bắt đầu miễn phí",
+    "learnMore": "Tìm hiểu thêm",
+    "stats": {
+      "learners": "Số học viên",
+      "learnersValue": "2,000+",
+      "languages": "Ngôn ngữ hỗ trợ",
+      "languagesValue": "6 ngôn ngữ",
+      "jobSuccess": "Tỷ lệ tìm được việc",
+      "jobSuccessValue": "92%"
+    }
+  },
+  "features": {
+    "title": "Hiện thực hóa ước mơ qua 3 bước",
+    "learn": {
+      "title": "Học tập",
+      "description": "AI tạo kế hoạch học tập tối ưu. Hỗ trợ toàn diện từ tiếng Nhật đến luyện thi JLPT và thuật ngữ điều dưỡng chuyên ngành."
+    },
+    "qualify": {
+      "title": "Lấy chứng chỉ",
+      "description": "Gia sư AI hỗ trợ toàn diện việc luyện thi JLPT, Hộ lý phúc lợi và Kỹ năng đặc định."
+    },
+    "work": {
+      "title": "Tìm việc làm",
+      "description": "AI ghép cặp nơi làm việc phù hợp nhất với kỹ năng và điều kiện mong muốn của bạn. Mediflow hỗ trợ đến khi bạn có việc làm."
+    }
+  },
+  "courses": {
+    "title": "Khóa học phổ biến",
+    "subtitle": "Chọn khóa học phù hợp với mục tiêu của bạn",
+    "viewAll": "Xem tất cả khóa học",
+    "free": "Miễn phí",
+    "lessons": "bài học",
+    "hours": "giờ",
+    "beginners": "Dành cho người mới bắt đầu",
+    "intermediate": "Trình độ trung cấp",
+    "advanced": "Trình độ nâng cao",
+    "start": "Bắt đầu học"
+  },
+  "cta": {
+    "title": "Bắt đầu miễn phí ngay hôm nay",
+    "description": "Đăng ký dễ dàng qua LINE. AI sẽ đề xuất kế hoạch học tập tối ưu ngay hôm nay.",
+    "lineRegister": "Đăng ký qua LINE",
+    "formRegister": "Đăng ký qua Form",
+    "freeStart": "Bắt đầu miễn phí"
+  },
+  "dashboard": {
+    "welcome": "Chào mừng trở lại",
+    "todayGoal": "Mục tiêu hôm nay",
+    "streak": "Ngày học liên tiếp",
+    "totalTime": "Tổng thời gian học",
+    "continueCourse": "Tiếp tục khóa học",
+    "nextLesson": "Bài học tiếp theo",
+    "weeklyWeakness": "Điểm yếu tuần này",
+    "recentAchievements": "Thành tích gần đây",
+    "aiRecommendation": "Đề xuất từ AI",
+    "startAiTutor": "Hỏi gia sư AI"
+  },
+  "lesson": {
+    "vocabulary": "Từ vựng",
+    "grammar": "Ngữ pháp",
+    "listening": "Nghe",
+    "speaking": "Luyện hội thoại",
+    "quiz": "Bài kiểm tra",
+    "knew": "Đã thuộc",
+    "again": "Học lại",
+    "playAudio": "Phát âm thanh",
+    "showTranslation": "Hiển thị bản dịch",
+    "hideTranslation": "Ẩn bản dịch",
+    "showScript": "Hiển thị kịch bản",
+    "hideScript": "Ẩn kịch bản",
+    "nextLesson": "Bài học tiếp theo",
+    "complete": "Hoàn thành"
+  },
+  "aiTutor": {
+    "title": "Gia sư AI Thầy Medi",
+    "subtitle": "Hỏi bất kỳ câu hỏi nào về tiếng Nhật và chăm sóc y tế",
+    "placeholder": "Nhập tin nhắn...",
+    "send": "Gửi",
+    "quickActions": {
+      "vocabQuiz": "Kiểm tra từ vựng hôm nay",
+      "grammar": "Giải thích ngữ pháp",
+      "careTerms": "Quiz thuật ngữ điều dưỡng",
+      "conversation": "Luyện hội thoại",
+      "question": "Tôi có câu hỏi"
+    },
+    "thinking": "Đang suy nghĩ..."
+  },
+  "career": {
+    "title": "Hỗ trợ việc làm",
+    "subtitle": "Tìm nơi làm việc phù hợp nhất với bạn",
+    "aiMatch": "AI Ghép cặp",
+    "matchScore": "Độ phù hợp",
+    "matchReasons": "Lý do phù hợp",
+    "gaps": "Yêu cầu còn thiếu",
+    "apply": "Ứng tuyển",
+    "filters": {
+      "location": "Nơi làm việc",
+      "facilityType": "Loại cơ sở",
+      "qualification": "Yêu cầu chứng chỉ",
+      "salary": "Lương"
+    },
+    "jobCard": {
+      "visaSupport": "Hỗ trợ visa",
+      "housingSupport": "Hỗ trợ chỗ ở",
+      "salaryRange": "Lương"
+    }
+  },
+  "onboarding": {
+    "step1": {
+      "title": "Cho chúng tôi biết thông tin cơ bản của bạn",
+      "name": "Tên của bạn",
+      "nationality": "Quốc tịch",
+      "nativeLanguage": "Tiếng mẹ đẻ"
+    },
+    "step2": {
+      "title": "Kiểm tra trình độ tiếng Nhật hiện tại",
+      "test": "Bài kiểm tra nhanh",
+      "experience": "Kinh nghiệm điều dưỡng/y tế"
+    },
+    "step3": {
+      "title": "Hãy đặt mục tiêu",
+      "goal": "Mục tiêu",
+      "deadline": "Thời hạn đạt được"
+    },
+    "step4": {
+      "title": "Đang tạo kế hoạch học tập cho riêng bạn...",
+      "generating": "AI đang tạo kế hoạch tối ưu",
+      "ready": "Sẵn sàng! Hãy bắt đầu học thôi"
+    },
+    "next": "Tiếp theo",
+    "back": "Quay lại",
+    "skip": "Bỏ qua"
+  },
+  "auth": {
+    "login": "Đăng nhập",
+    "signup": "Đăng ký",
+    "email": "Địa chỉ email",
+    "password": "Mật khẩu",
+    "confirmPassword": "Xác nhận mật khẩu",
+    "forgotPassword": "Quên mật khẩu",
+    "noAccount": "Chưa có tài khoản",
+    "hasAccount": "Đã có tài khoản",
+    "loginHere": "Đăng nhập tại đây",
+    "signupHere": "Đăng ký tại đây",
+    "fullName": "Họ và tên"
+  },
+  "common": {
+    "loading": "Đang tải...",
+    "error": "Đã xảy ra lỗi",
+    "retry": "Thử lại",
+    "save": "Lưu",
+    "cancel": "Hủy",
+    "delete": "Xóa",
+    "edit": "Chỉnh sửa",
+    "close": "Đóng",
+    "search": "Tìm kiếm",
+    "filter": "Lọc",
+    "days": "ngày",
+    "hours": "giờ",
+    "minutes": "phút",
+    "percent": "%"
+  },
+  "footer": {
+    "company": "Công ty Mediflow",
+    "license": "Giấy phép giới thiệu việc làm có phí: 14-ユ-302174",
+    "privacy": "Chính sách bảo mật",
+    "terms": "Điều khoản sử dụng",
+    "contact": "Liên hệ"
+  }
+}

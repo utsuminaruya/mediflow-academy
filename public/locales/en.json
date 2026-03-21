@@ -1,0 +1,187 @@
+{
+  "nav": {
+    "home": "Home",
+    "courses": "Courses",
+    "dashboard": "Dashboard",
+    "aiTutor": "AI Tutor",
+    "career": "Career Support",
+    "profile": "Profile",
+    "login": "Login",
+    "signup": "Start Free",
+    "logout": "Logout"
+  },
+  "hero": {
+    "badge": "AI × Healthcare × Career",
+    "title": "Become a Healthcare Professional in Japan.",
+    "subtitle": "Your dream starts here.",
+    "description": "AI-personalized learning plans support you all the way from JLPT certification and National Care Worker exam to landing the best job.",
+    "startFree": "Start Free",
+    "learnMore": "Learn More",
+    "stats": {
+      "learners": "Learners",
+      "learnersValue": "2,000+",
+      "languages": "Languages",
+      "languagesValue": "6 Languages",
+      "jobSuccess": "Job Success Rate",
+      "jobSuccessValue": "92%"
+    }
+  },
+  "features": {
+    "title": "Achieve Your Dream in 3 Steps",
+    "learn": {
+      "title": "Learn",
+      "description": "AI generates your optimal learning plan. Full support from Japanese language to JLPT prep and specialized healthcare terminology."
+    },
+    "qualify": {
+      "title": "Get Certified",
+      "description": "AI tutor thoroughly supports JLPT, Care Worker, and Specified Skilled Worker exam preparation."
+    },
+    "work": {
+      "title": "Find Work",
+      "description": "AI matches you with the best workplace for your skills and preferences. Mediflow supports you until you're employed."
+    }
+  },
+  "courses": {
+    "title": "Popular Courses",
+    "subtitle": "Choose the course that matches your goal",
+    "viewAll": "View All Courses",
+    "free": "Free",
+    "lessons": "lessons",
+    "hours": "hours",
+    "beginners": "For Beginners",
+    "intermediate": "Intermediate",
+    "advanced": "Advanced",
+    "start": "Start Learning"
+  },
+  "cta": {
+    "title": "Start Free Today",
+    "description": "Easy registration via LINE. AI will suggest your optimal learning plan starting today.",
+    "lineRegister": "Register via LINE",
+    "formRegister": "Register via Form",
+    "freeStart": "Start Free"
+  },
+  "dashboard": {
+    "welcome": "Welcome back",
+    "todayGoal": "Today's Goal",
+    "streak": "Day Streak",
+    "totalTime": "Total Study Time",
+    "continueCourse": "Continue Course",
+    "nextLesson": "Next Lesson",
+    "weeklyWeakness": "This Week's Weakness",
+    "recentAchievements": "Recent Achievements",
+    "aiRecommendation": "AI Recommendation",
+    "startAiTutor": "Ask AI Tutor"
+  },
+  "lesson": {
+    "vocabulary": "Vocabulary",
+    "grammar": "Grammar",
+    "listening": "Listening",
+    "speaking": "Conversation Practice",
+    "quiz": "Quiz",
+    "knew": "Got it",
+    "again": "Again",
+    "playAudio": "Play Audio",
+    "showTranslation": "Show Translation",
+    "hideTranslation": "Hide Translation",
+    "showScript": "Show Script",
+    "hideScript": "Hide Script",
+    "nextLesson": "Next Lesson",
+    "complete": "Complete"
+  },
+  "aiTutor": {
+    "title": "AI Tutor - Medi Sensei",
+    "subtitle": "Ask anything about Japanese or healthcare",
+    "placeholder": "Type your message...",
+    "send": "Send",
+    "quickActions": {
+      "vocabQuiz": "Today's Vocabulary Quiz",
+      "grammar": "Explain Grammar",
+      "careTerms": "Care Terms Quiz",
+      "conversation": "Conversation Practice",
+      "question": "I have a question"
+    },
+    "thinking": "Thinking..."
+  },
+  "career": {
+    "title": "Career Support",
+    "subtitle": "Find your perfect workplace",
+    "aiMatch": "AI Matching",
+    "matchScore": "Match Score",
+    "matchReasons": "Match Reasons",
+    "gaps": "Missing Requirements",
+    "apply": "Apply",
+    "filters": {
+      "location": "Location",
+      "facilityType": "Facility Type",
+      "qualification": "Qualification",
+      "salary": "Salary"
+    },
+    "jobCard": {
+      "visaSupport": "Visa Support Available",
+      "housingSupport": "Housing Support Available",
+      "salaryRange": "Salary"
+    }
+  },
+  "onboarding": {
+    "step1": {
+      "title": "Tell us about yourself",
+      "name": "Your name",
+      "nationality": "Nationality",
+      "nativeLanguage": "Native language"
+    },
+    "step2": {
+      "title": "Check your current Japanese level",
+      "test": "Quick Test",
+      "experience": "Healthcare/Care experience"
+    },
+    "step3": {
+      "title": "Set your goals",
+      "goal": "Goal",
+      "deadline": "Target deadline"
+    },
+    "step4": {
+      "title": "Creating your personalized learning plan...",
+      "generating": "AI is generating your optimal plan",
+      "ready": "Ready! Let's start learning"
+    },
+    "next": "Next",
+    "back": "Back",
+    "skip": "Skip"
+  },
+  "auth": {
+    "login": "Login",
+    "signup": "Sign Up",
+    "email": "Email address",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "forgotPassword": "Forgot password",
+    "noAccount": "Don't have an account",
+    "hasAccount": "Already have an account",
+    "loginHere": "Login here",
+    "signupHere": "Sign up here",
+    "fullName": "Full name"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Retry",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "search": "Search",
+    "filter": "Filter",
+    "days": "days",
+    "hours": "hours",
+    "minutes": "minutes",
+    "percent": "%"
+  },
+  "footer": {
+    "company": "Mediflow Co., Ltd.",
+    "license": "Employment Placement License: 14-ユ-302174",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "contact": "Contact"
+  }
+}
