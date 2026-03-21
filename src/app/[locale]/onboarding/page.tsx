@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { CheckCircle, ChevronRight, ChevronLeft, Loader2 } from "lucide-react";
 import { LOCALE_FLAGS, LOCALE_LABELS, LOCALES } from "@/constants";
 import type { Locale } from "@/types";
+import { createClient } from "@/lib/supabase/client";
 
 const NATIONALITIES = [
   "ベトナム", "フィリピン", "インドネシア", "ミャンマー",
@@ -93,9 +94,10 @@ export default function OnboardingPage({
           setGenerationStep(idx + 1);
           if (idx === GENERATION_STEPS.length - 1) {
             // 最後のステップ後に完了
-            setTimeout(() => {
+            setTimeout(async () => {
               setGenerationDone(true);
-              // ユーザーデータをlocalStorageに保存
+
+              // localStorageに保存（ダッシュボード等で使用）
               if (typeof window !== "undefined") {
                 localStorage.setItem("mediflow_user", JSON.stringify({
                   fullName: data.fullName,
@@ -106,6 +108,28 @@ export default function OnboardingPage({
                   goals: data.goals,
                   dailyStudyMinutes: data.dailyStudyMinutes,
                 }));
+              }
+
+              // Supabaseのusersテーブルにも保存（永続化）
+              try {
+                const supabase = createClient();
+                const { data: { user } } = await supabase.auth.getUser();
+                if (user) {
+                  await supabase
+                    .from("users")
+                    .update({
+                      full_name: data.fullName,
+                      nationality: data.nationality,
+                      native_language: data.nativeLanguage,
+                      japanese_level: data.japaneseLevel,
+                      goals: data.goals,
+                      daily_study_minutes: data.dailyStudyMinutes,
+                      onboarding_completed: true,
+                    })
+                    .eq("id", user.id);
+                }
+              } catch {
+                // Supabase保存失敗はlocalStorageで代替するため無視
               }
             }, 600);
           }

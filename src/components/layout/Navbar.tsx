@@ -1,19 +1,73 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { Globe, Menu, X } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Globe, Menu, X, User, LogOut, LayoutDashboard } from "lucide-react";
 import { LOCALES, LOCALE_FLAGS, LOCALE_LABELS } from "@/constants";
+import { createClient } from "@/lib/supabase/client";
+import type { Locale } from "@/types";
 
 interface NavbarProps {
   locale: string;
 }
 
+interface AuthUser {
+  name: string;
+  email: string;
+}
+
 export default function Navbar({ locale }: NavbarProps) {
   const nav = useTranslations("nav");
+  const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [authUser, setAuthUser] = useState<AuthUser | null>(null);
+
+  useEffect(() => {
+    const supabase = createClient();
+
+    // 初回セッション確認
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (user) {
+        setAuthUser({
+          name: user.user_metadata?.full_name || user.email || "ユーザー",
+          email: user.email || "",
+        });
+      }
+    });
+
+    // auth状態の変化を監視（ログイン・ログアウト）
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session?.user) {
+        setAuthUser({
+          name:
+            session.user.user_metadata?.full_name ||
+            session.user.email ||
+            "ユーザー",
+          email: session.user.email || "",
+        });
+      } else {
+        setAuthUser(null);
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    setAuthUser(null);
+    setUserMenuOpen(false);
+    setMobileOpen(false);
+    router.push(`/${locale}`);
+    router.refresh();
+  };
 
   return (
     <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 shadow-sm">
@@ -38,7 +92,7 @@ export default function Navbar({ locale }: NavbarProps) {
           </Link>
         </div>
 
-        {/* Right side: lang switcher + auth buttons */}
+        {/* Right side: lang switcher + auth */}
         <div className="flex items-center gap-2">
           {/* Language switcher */}
           <div className="relative">
@@ -70,8 +124,8 @@ export default function Navbar({ locale }: NavbarProps) {
                         locale === l ? "text-primary-600 font-semibold bg-primary-50" : "text-gray-700"
                       }`}
                     >
-                      <span className="text-lg">{LOCALE_FLAGS[l]}</span>
-                      <span>{LOCALE_LABELS[l]}</span>
+                      <span className="text-lg">{LOCALE_FLAGS[l as Locale]}</span>
+                      <span>{LOCALE_LABELS[l as Locale]}</span>
                     </Link>
                   ))}
                 </div>
@@ -79,19 +133,67 @@ export default function Navbar({ locale }: NavbarProps) {
             )}
           </div>
 
-          {/* Auth links - desktop */}
-          <Link
-            href={`/${locale}/auth/login`}
-            className="hidden sm:block text-sm font-medium text-gray-600 hover:text-primary-600 transition-colors px-2 py-1.5"
-          >
-            {nav("login")}
-          </Link>
-          <Link
-            href={`/${locale}/auth/signup`}
-            className="btn-primary text-sm py-2 hidden sm:block"
-          >
-            {nav("signup")}
-          </Link>
+          {/* Auth area (desktop) */}
+          {authUser ? (
+            /* ログイン済み: ユーザー名 + ドロップダウン */
+            <div className="relative hidden sm:block">
+              <button
+                onClick={() => setUserMenuOpen(!userMenuOpen)}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors text-sm font-medium"
+              >
+                <div className="w-7 h-7 bg-primary-100 rounded-full flex items-center justify-center flex-shrink-0">
+                  <User className="w-4 h-4 text-primary-600" />
+                </div>
+                <span className="max-w-[120px] truncate">{authUser.name}</span>
+              </button>
+
+              {userMenuOpen && (
+                <>
+                  <div
+                    className="fixed inset-0 z-10"
+                    onClick={() => setUserMenuOpen(false)}
+                  />
+                  <div className="absolute right-0 top-full mt-1 bg-white border border-gray-100 rounded-2xl shadow-xl z-20 py-2 min-w-[180px]">
+                    <div className="px-4 py-2 border-b border-gray-100 mb-1">
+                      <p className="text-xs font-semibold text-gray-900 truncate">{authUser.name}</p>
+                      <p className="text-xs text-gray-400 truncate">{authUser.email}</p>
+                    </div>
+                    <Link
+                      href={`/${locale}/dashboard`}
+                      onClick={() => setUserMenuOpen(false)}
+                      className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                    >
+                      <LayoutDashboard className="w-4 h-4" />
+                      ダッシュボード
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors"
+                    >
+                      <LogOut className="w-4 h-4" />
+                      ログアウト
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+          ) : (
+            /* 未ログイン: ログイン・登録ボタン */
+            <>
+              <Link
+                href={`/${locale}/auth/login`}
+                className="hidden sm:block text-sm font-medium text-gray-600 hover:text-primary-600 transition-colors px-2 py-1.5"
+              >
+                {nav("login")}
+              </Link>
+              <Link
+                href={`/${locale}/auth/signup`}
+                className="btn-primary text-sm py-2 hidden sm:block"
+              >
+                {nav("signup")}
+              </Link>
+            </>
+          )}
 
           {/* Mobile hamburger */}
           <button
@@ -128,21 +230,50 @@ export default function Navbar({ locale }: NavbarProps) {
           >
             {nav("career")}
           </Link>
-          <div className="pt-2 border-t border-gray-100 mt-2 flex gap-2">
-            <Link
-              href={`/${locale}/auth/login`}
-              onClick={() => setMobileOpen(false)}
-              className="flex-1 text-center px-4 py-2.5 rounded-xl border border-gray-200 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
-            >
-              {nav("login")}
-            </Link>
-            <Link
-              href={`/${locale}/auth/signup`}
-              onClick={() => setMobileOpen(false)}
-              className="flex-1 btn-primary text-sm py-2.5 text-center"
-            >
-              {nav("signup")}
-            </Link>
+
+          <div className="pt-2 border-t border-gray-100 mt-2">
+            {authUser ? (
+              /* ログイン済み (モバイル) */
+              <div className="space-y-1">
+                <div className="px-4 py-2">
+                  <p className="text-sm font-semibold text-gray-900">{authUser.name}</p>
+                  <p className="text-xs text-gray-400">{authUser.email}</p>
+                </div>
+                <Link
+                  href={`/${locale}/dashboard`}
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-700 hover:bg-gray-50 font-medium transition-colors"
+                >
+                  <LayoutDashboard className="w-4 h-4" />
+                  ダッシュボード
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-red-600 hover:bg-red-50 font-medium transition-colors"
+                >
+                  <LogOut className="w-4 h-4" />
+                  ログアウト
+                </button>
+              </div>
+            ) : (
+              /* 未ログイン (モバイル) */
+              <div className="flex gap-2">
+                <Link
+                  href={`/${locale}/auth/login`}
+                  onClick={() => setMobileOpen(false)}
+                  className="flex-1 text-center px-4 py-2.5 rounded-xl border border-gray-200 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+                >
+                  {nav("login")}
+                </Link>
+                <Link
+                  href={`/${locale}/auth/signup`}
+                  onClick={() => setMobileOpen(false)}
+                  className="flex-1 btn-primary text-sm py-2.5 text-center"
+                >
+                  {nav("signup")}
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       )}
