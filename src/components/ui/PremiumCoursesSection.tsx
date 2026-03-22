@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Crown, Lock, Video, Users, BookOpen, Star, Check, Sparkles } from "lucide-react";
+import { Crown, Lock, Video, Users, BookOpen, Star, Check, Sparkles, FileText } from "lucide-react";
 import { useSubscription } from "@/hooks/useSubscription";
 import { Paywall } from "@/components/ui/Paywall";
 
@@ -22,6 +22,36 @@ interface CourseItem {
   features: string[];
   tags?: string[];
 }
+
+// ── スタンダードプラン：過去問コース ──────────────────────
+const STANDARD_COURSES: CourseItem[] = [
+  {
+    emoji: "📝",
+    title: "特定技能「介護」試験 過去問コース",
+    subtitle: "技能試験・日本語試験 5年分完全収録",
+    description: "特定技能「介護」の技能試験と日本語試験の全過去問をAI解説付きで収録。出題傾向を把握し、弱点分野を集中強化。合格率向上を目指す実践型コース。",
+    color: "from-teal-500 to-cyan-600",
+    bgColor: "bg-teal-50",
+    textColor: "text-teal-700",
+    badge: "Standard以上",
+    badgeColor: "bg-teal-100 text-teal-700",
+    features: ["5年分・全問収録", "AI解説 ＋ 弱点分析", "模擬試験モード"],
+    tags: ["過去問", "AI解説", "模擬試験"],
+  },
+  {
+    emoji: "🏅",
+    title: "介護福祉士国家試験 過去問コース",
+    subtitle: "125問 × 5年分・多言語解説付き",
+    description: "介護福祉士国家試験の過去問125問を5年分、母語解説付きで完全収録。出題傾向とキーワードを押さえ、苦手分野を分野別ランダム出題で着実に克服できます。",
+    color: "from-emerald-500 to-green-600",
+    bgColor: "bg-emerald-50",
+    textColor: "text-emerald-700",
+    badge: "Standard以上",
+    badgeColor: "bg-emerald-100 text-emerald-700",
+    features: ["125問 × 5年分", "多言語解説（ベトナム語ほか）", "分野別ランダム出題"],
+    tags: ["介護福祉士", "過去問", "多言語"],
+  },
+];
 
 const PRO_COURSES: CourseItem[] = [
   {
@@ -151,16 +181,19 @@ function CourseCard({
   );
 }
 
-function LockedOverlay({ locale, requiredPlan }: { locale: string; requiredPlan: "pro" | "premium" }) {
-  const label = requiredPlan === "premium" ? "プレミアム" : "プロ";
-  const priceLabel = requiredPlan === "premium" ? "¥9,800/月〜" : "¥5,980/月〜";
+function LockedOverlay({ locale, requiredPlan }: { locale: string; requiredPlan: "standard" | "pro" | "premium" }) {
+  const labelMap = { standard: "スタンダード", pro: "プロ", premium: "プレミアム" };
+  const priceMap = { standard: "¥2,980/月〜", pro: "¥5,980/月〜", premium: "¥9,800/月〜" };
+  const colorMap = { standard: "text-teal-600", pro: "text-purple-600", premium: "text-yellow-600" };
+  const label = labelMap[requiredPlan];
+  const priceLabel = priceMap[requiredPlan];
   return (
     <div className="relative">
       {/* 薄くロック表示 */}
       <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-white/85 backdrop-blur-sm rounded-3xl border-2 border-dashed border-gray-200">
         <Lock className="w-8 h-8 text-gray-400 mb-2" />
         <p className="text-sm font-bold text-gray-700">
-          <span className={requiredPlan === "premium" ? "text-yellow-600" : "text-purple-600"}>{label}プラン</span>
+          <span className={colorMap[requiredPlan]}>{label}プラン</span>
           で解放
         </p>
         <p className="text-xs text-gray-400 mb-3">{priceLabel} · 7日間無料体験あり</p>
@@ -196,11 +229,80 @@ export function PremiumCoursesSection({ locale }: PremiumCoursesSectionProps) {
     );
   }
 
+  const hasStandardAccess = canAccess("standard");
   const hasProAccess = canAccess("pro");
   const hasPremiumAccess = canAccess("premium");
 
   return (
     <div className="space-y-12">
+      {/* ── Standard セクション：過去問コース ── */}
+      <section>
+        <div className="flex items-center gap-3 mb-6">
+          <div className="flex items-center gap-2 bg-teal-100 text-teal-700 text-sm font-bold px-4 py-2 rounded-full">
+            <FileText className="w-4 h-4" />
+            スタンダードプラン 過去問コース
+          </div>
+          <div className="flex-1 h-px bg-gray-100" />
+          <div className="flex items-center gap-1 text-xs text-gray-400">
+            <BookOpen className="w-3.5 h-3.5" />
+            <span>AI解説 + 模擬試験</span>
+          </div>
+        </div>
+
+        {/* 過去問バナー */}
+        <div className="bg-gradient-to-r from-teal-600 to-emerald-700 rounded-3xl p-5 mb-6 text-white">
+          <div className="flex items-start gap-4">
+            <div className="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0">
+              📝
+            </div>
+            <div>
+              <p className="font-bold text-sm mb-1">過去問5年分 × AI解説 × 多言語対応</p>
+              <p className="text-white/80 text-xs leading-relaxed">
+                特定技能「介護」と介護福祉士国家試験の過去問を完全収録。
+                <strong className="text-white">スタッフLinhが実際に使った勉強法</strong>で、
+                苦手分野を効率よく克服できます。
+              </p>
+              <div className="flex items-center gap-3 mt-2">
+                <span className="bg-white/20 text-xs px-2 py-1 rounded-lg">¥2,980/月〜</span>
+                <span className="bg-white/20 text-xs px-2 py-1 rounded-lg">7日間無料体験あり</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {hasStandardAccess ? (
+          <div className="grid md:grid-cols-2 gap-6">
+            {STANDARD_COURSES.map((course, i) => (
+              <CourseCard key={i} course={course} />
+            ))}
+          </div>
+        ) : (
+          <div className="grid md:grid-cols-2 gap-6">
+            {STANDARD_COURSES.map((course, i) => (
+              i === 0 ? (
+                <Paywall key={i} requiredPlan="standard" locale={locale} inline>
+                  <CourseCard course={course} />
+                </Paywall>
+              ) : (
+                <LockedOverlay key={i} locale={locale} requiredPlan="standard" />
+              )
+            ))}
+          </div>
+        )}
+
+        {!hasStandardAccess && (
+          <div className="mt-4 text-center">
+            <Link
+              href={`/${locale}/pricing`}
+              className="inline-flex items-center gap-2 border border-teal-200 text-teal-700 text-sm font-medium px-5 py-2.5 rounded-xl hover:bg-teal-50 transition-colors"
+            >
+              <FileText className="w-4 h-4" />
+              スタンダードプラン（¥2,980/月）を7日間無料で試す →
+            </Link>
+          </div>
+        )}
+      </section>
+
       {/* Pro セクション */}
       <section>
         <div className="flex items-center gap-3 mb-6">

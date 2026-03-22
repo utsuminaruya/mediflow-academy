@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import { BookOpen, Clock, Users, ChevronRight, Star } from "lucide-react";
 import { PremiumCoursesSection } from "@/components/ui/PremiumCoursesSection";
+import { StaffStorySection } from "@/components/ui/StaffStorySection";
 
 // Per-locale course content translations
 const COURSE_L10N: Record<string, Array<{
@@ -504,8 +505,13 @@ export default async function CoursesPage({
           </div>
         </div>
 
-        {/* ── Pro / Premium 限定コース ── */}
-        <div className="border-t border-gray-100 pt-12">
+        {/* ── スタッフ実体験ストーリー ── */}
+        <div className="border-t border-gray-100 pt-12 mb-0">
+          <StaffStorySection locale={locale} />
+        </div>
+
+        {/* ── Standard / Pro / Premium 限定コース ── */}
+        <div>
           <PremiumCoursesSection locale={locale} />
         </div>
       </div>
