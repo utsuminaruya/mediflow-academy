@@ -99,8 +99,7 @@ export function StaffStorySection({ locale }: StaffStorySectionProps) {
           </div>
           <div className="flex-1">
             <div className="flex flex-wrap items-center gap-2 mb-2">
-              <span className="font-bold text-gray-900 text-lg">Linh（メディフロースタッフ）</span>
-              {/* ※ 実際のお名前に変更してください */}
+              <span className="font-bold text-gray-900 text-lg">ズン（メディフロースタッフ）</span>
               <span className="text-xs bg-primary-100 text-primary-700 px-2 py-0.5 rounded-full font-medium">
                 現役医療通訳
               </span>
@@ -180,7 +179,7 @@ export function StaffStorySection({ locale }: StaffStorySectionProps) {
         <div className="bg-gradient-to-r from-primary-600 to-secondary-600 rounded-2xl p-5 text-white text-center">
           <p className="font-bold text-base mb-1">あなたも同じ道を歩けます</p>
           <p className="text-white/75 text-xs mb-4">
-            Linhが実際に使った勉強法・乗り越え方をMediflowのコースに詰め込みました
+            ズンが実際に使った勉強法・乗り越え方をMediflowのコースに詰め込みました
           </p>
           <Link
             href={`/${locale}/courses`}

@@ -15,18 +15,17 @@ const MAX_MESSAGES = 40;
 export async function POST(request: NextRequest) {
   try {
     // ===========================
-    // 認証チェック
+    // 認証チェック（オプション）
+    // AI家庭教師は無料プランでも利用可能（5回/日制限はアプリ層で管理）
+    // Supabase 未設定時はゲスト扱いで続行
     // ===========================
-    const supabase = await createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    if (!user) {
-      return new Response(
-        JSON.stringify({ error: "認証が必要です。ログインしてください。" }),
-        { status: 401, headers: { "Content-Type": "application/json" } }
-      );
+    let _userId: string | null = null;
+    try {
+      const supabase = await createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      _userId = user?.id ?? null;
+    } catch {
+      _userId = null;
     }
 
     // ===========================

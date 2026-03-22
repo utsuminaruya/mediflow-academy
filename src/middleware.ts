@@ -6,7 +6,8 @@ import { routing } from "./lib/i18n/routing";
 const intlMiddleware = createIntlMiddleware(routing);
 
 // ログイン必須ルート（ロケールプレフィックス除いたパス）
-const PROTECTED_PATHS = ["/dashboard", "/ai-tutor", "/onboarding"];
+// ※ ai-tutor は無料プランでも使えるため除外（free: 5回/日制限はアプリ層で制御）
+const PROTECTED_PATHS = ["/dashboard", "/onboarding"];
 
 /** /ja/dashboard や /vi/ai-tutor など、ロケール付きの保護ルートかどうか判定 */
 function isProtectedPath(pathname: string): boolean {

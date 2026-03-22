@@ -259,7 +259,7 @@ export function PremiumCoursesSection({ locale }: PremiumCoursesSectionProps) {
               <p className="font-bold text-sm mb-1">過去問5年分 × AI解説 × 多言語対応</p>
               <p className="text-white/80 text-xs leading-relaxed">
                 特定技能「介護」と介護福祉士国家試験の過去問を完全収録。
-                <strong className="text-white">スタッフLinhが実際に使った勉強法</strong>で、
+                <strong className="text-white">スタッフズンが実際に使った勉強法</strong>で、
                 苦手分野を効率よく克服できます。
               </p>
               <div className="flex items-center gap-3 mt-2">
