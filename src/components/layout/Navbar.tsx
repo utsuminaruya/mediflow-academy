@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Globe, Menu, X, User, LogOut, LayoutDashboard } from "lucide-react";
+import Image from "next/image";
+import { Globe, Menu, X, User, LogOut, LayoutDashboard, Crown } from "lucide-react";
 import { LOCALES, LOCALE_FLAGS, LOCALE_LABELS } from "@/constants";
 import { createClient } from "@/lib/supabase/client";
 import type { Locale } from "@/types";
@@ -29,7 +30,6 @@ export default function Navbar({ locale }: NavbarProps) {
   useEffect(() => {
     const supabase = createClient();
 
-    // 初回セッション確認
     supabase.auth.getUser().then(({ data: { user } }) => {
       if (user) {
         setAuthUser({
@@ -39,7 +39,6 @@ export default function Navbar({ locale }: NavbarProps) {
       }
     });
 
-    // auth状態の変化を監視（ログイン・ログアウト）
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
@@ -73,14 +72,20 @@ export default function Navbar({ locale }: NavbarProps) {
     <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 shadow-sm">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         {/* Logo */}
-        <Link href={`/${locale}`} className="flex items-center gap-2 flex-shrink-0">
-          <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-lg" />
+        <Link href={`/${locale}`} className="flex items-center gap-2.5 flex-shrink-0">
+          <Image
+            src="/images/mediflow-logo.png"
+            alt="Mediflow Academy"
+            width={36}
+            height={36}
+            className="object-contain"
+          />
           <span className="font-bold text-lg text-gray-900 hidden sm:block">Mediflow Academy</span>
           <span className="font-bold text-lg text-gray-900 sm:hidden">Mediflow</span>
         </Link>
 
         {/* Desktop nav links */}
-        <div className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600">
+        <div className="hidden md:flex items-center gap-5 text-sm font-medium text-gray-600">
           <Link href={`/${locale}/courses`} className="hover:text-primary-600 transition-colors">
             {nav("courses")}
           </Link>
@@ -90,11 +95,13 @@ export default function Navbar({ locale }: NavbarProps) {
           <Link href={`/${locale}/career`} className="hover:text-primary-600 transition-colors">
             {nav("career")}
           </Link>
+          {/* プレミアム体験CTA */}
           <Link
             href={`/${locale}/pricing`}
-            className="flex items-center gap-1 text-yellow-600 hover:text-yellow-700 font-semibold transition-colors"
+            className="flex items-center gap-1.5 bg-gradient-to-r from-amber-400 to-orange-400 text-white text-xs font-bold px-3.5 py-1.5 rounded-full shadow-sm hover:opacity-90 transition-opacity whitespace-nowrap"
           >
-            ✨ 有料プラン
+            <Crown className="w-3.5 h-3.5" />
+            7日間 無料体験
           </Link>
         </div>
 
@@ -114,12 +121,7 @@ export default function Navbar({ locale }: NavbarProps) {
 
             {langOpen && (
               <>
-                {/* Backdrop */}
-                <div
-                  className="fixed inset-0 z-10"
-                  onClick={() => setLangOpen(false)}
-                />
-                {/* Dropdown */}
+                <div className="fixed inset-0 z-10" onClick={() => setLangOpen(false)} />
                 <div className="absolute right-0 top-full mt-1 bg-white border border-gray-100 rounded-2xl shadow-xl z-20 py-2 min-w-[180px]">
                   {LOCALES.map((l) => (
                     <Link
@@ -155,10 +157,7 @@ export default function Navbar({ locale }: NavbarProps) {
 
               {userMenuOpen && (
                 <>
-                  <div
-                    className="fixed inset-0 z-10"
-                    onClick={() => setUserMenuOpen(false)}
-                  />
+                  <div className="fixed inset-0 z-10" onClick={() => setUserMenuOpen(false)} />
                   <div className="absolute right-0 top-full mt-1 bg-white border border-gray-100 rounded-2xl shadow-xl z-20 py-2 min-w-[180px]">
                     <div className="px-4 py-2 border-b border-gray-100 mb-1">
                       <p className="text-xs font-semibold text-gray-900 truncate">{authUser.name}</p>
@@ -236,12 +235,14 @@ export default function Navbar({ locale }: NavbarProps) {
           >
             {nav("career")}
           </Link>
+          {/* プレミアム体験CTA (モバイル) */}
           <Link
             href={`/${locale}/pricing`}
             onClick={() => setMobileOpen(false)}
-            className="block px-4 py-3 rounded-xl text-yellow-600 hover:bg-yellow-50 font-semibold transition-colors"
+            className="flex items-center gap-2 px-4 py-3 rounded-xl bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 text-amber-700 font-semibold transition-colors"
           >
-            ✨ 有料プラン
+            <Crown className="w-4 h-4" />
+            7日間 無料体験（プレミアム）
           </Link>
 
           <div className="pt-2 border-t border-gray-100 mt-2">

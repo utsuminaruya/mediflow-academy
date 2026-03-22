@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import { BookOpen, Clock, Users, ChevronRight, Star } from "lucide-react";
+import { PremiumCoursesSection } from "@/components/ui/PremiumCoursesSection";
 
 // Per-locale course content translations
 const COURSE_L10N: Record<string, Array<{
@@ -455,9 +456,14 @@ export default async function CoursesPage({
           </div>
         </div>
 
-        {/* All Courses */}
-        <div>
-          <h2 className="text-xl font-bold text-gray-900 mb-6">{headers.all}</h2>
+        {/* All Free Courses */}
+        <div className="mb-16">
+          <div className="flex items-center gap-3 mb-6">
+            <h2 className="text-xl font-bold text-gray-900">{headers.all}</h2>
+            <span className="text-xs bg-green-100 text-green-700 font-semibold px-2.5 py-1 rounded-full">
+              無料で受講できます
+            </span>
+          </div>
           <div className="grid md:grid-cols-3 gap-6">
             {all.map((course) => (
               <Link
@@ -496,6 +502,11 @@ export default async function CoursesPage({
               </Link>
             ))}
           </div>
+        </div>
+
+        {/* ── Pro / Premium 限定コース ── */}
+        <div className="border-t border-gray-100 pt-12">
+          <PremiumCoursesSection locale={locale} />
         </div>
       </div>
     </div>
