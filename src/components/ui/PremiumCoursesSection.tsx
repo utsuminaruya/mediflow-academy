@@ -1,7 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { Crown, Lock, Video, Users, BookOpen, Star, Check, Sparkles, FileText } from "lucide-react";
+import {
+  Crown, Lock, Video, Users, BookOpen, Star, Check, Sparkles, FileText,
+  ClipboardList, Award, Stethoscope, Target, Languages, UserCheck, PenLine,
+  Briefcase, type LucideIcon,
+} from "lucide-react";
 import { useSubscription } from "@/hooks/useSubscription";
 import { Paywall } from "@/components/ui/Paywall";
 
@@ -10,7 +14,7 @@ interface PremiumCoursesSectionProps {
 }
 
 interface CourseItem {
-  emoji: string;
+  Icon: LucideIcon;
   title: string;
   subtitle: string;
   description: string;
@@ -26,7 +30,7 @@ interface CourseItem {
 // ── スタンダードプラン：過去問コース ──────────────────────
 const STANDARD_COURSES: CourseItem[] = [
   {
-    emoji: "📝",
+    Icon: ClipboardList,
     title: "特定技能「介護」試験 過去問コース",
     subtitle: "技能試験・日本語試験 5年分完全収録",
     description: "特定技能「介護」の技能試験と日本語試験の全過去問をAI解説付きで収録。出題傾向を把握し、弱点分野を集中強化。合格率向上を目指す実践型コース。",
@@ -39,7 +43,7 @@ const STANDARD_COURSES: CourseItem[] = [
     tags: ["過去問", "AI解説", "模擬試験"],
   },
   {
-    emoji: "🏅",
+    Icon: Award,
     title: "介護福祉士国家試験 過去問コース",
     subtitle: "125問 × 5年分・多言語解説付き",
     description: "介護福祉士国家試験の過去問125問を5年分、母語解説付きで完全収録。出題傾向とキーワードを押さえ、苦手分野を分野別ランダム出題で着実に克服できます。",
@@ -55,7 +59,7 @@ const STANDARD_COURSES: CourseItem[] = [
 
 const PRO_COURSES: CourseItem[] = [
   {
-    emoji: "👨‍⚕️",
+    Icon: Stethoscope,
     title: "うつみ先生のライブ講座",
     subtitle: "現役看護師13年・現場の実例で学ぶ",
     description: "病院・特養・訪問で実際に使う申し送り、バイタル報告、ナースコール対応を毎月4回ライブで学ぶ。録画アーカイブもすべて閲覧できます。",
@@ -68,7 +72,7 @@ const PRO_COURSES: CourseItem[] = [
     tags: ["ライブ", "録画アーカイブ", "質問あり"],
   },
   {
-    emoji: "📋",
+    Icon: Target,
     title: "介護福祉士 試験集中対策",
     subtitle: "AI弱点分析 × うつみ先生の直前対策",
     description: "AIが過去問分析で苦手分野を特定→集中演習。試験1ヶ月前は週2回の直前対策ライブ。プレミアムは不合格時の合格保証付き。",
@@ -81,7 +85,7 @@ const PRO_COURSES: CourseItem[] = [
     tags: ["試験対策", "模擬試験", "AI分析"],
   },
   {
-    emoji: "🎓",
+    Icon: Languages,
     title: "ベトナム語で学ぶ介護福祉士講座",
     subtitle: "EPA出身・N1取得・介護福祉士のバイリンガル講師",
     description: "日本語の壁を越えて、母語で本質を理解する。EPA経験者が合格者の勉強法を惜しみなく解説。N2〜N1レベルの専門用語もマスター。",
@@ -97,7 +101,7 @@ const PRO_COURSES: CourseItem[] = [
 
 const PREMIUM_COURSES: CourseItem[] = [
   {
-    emoji: "🤝",
+    Icon: UserCheck,
     title: "マンツーマン指導（月2回・30分）",
     subtitle: "うつみ先生との1on1セッション",
     description: "苦手な単元の集中指導、試験前の最終確認、学習プランの見直しを個別セッションで。録画URLをあとで復習できます。",
@@ -109,7 +113,7 @@ const PREMIUM_COURSES: CourseItem[] = [
     features: ["月2回・30分/回", "録画URL共有", "24時間以内にフィードバック"],
   },
   {
-    emoji: "📝",
+    Icon: PenLine,
     title: "履歴書添削・面接練習",
     subtitle: "介護施設に刺さる日本語の書き方",
     description: "外国人ならではの強みを活かした履歴書の書き方と、施設の採用担当者が実際に見るポイントを講師が直接レビュー。模擬面接も実施。",
@@ -121,7 +125,7 @@ const PREMIUM_COURSES: CourseItem[] = [
     features: ["履歴書・職務経歴書の添削", "模擬面接 + フィードバック", "多言語テンプレート付き"],
   },
   {
-    emoji: "💼",
+    Icon: Briefcase,
     title: "Mediflow 就職保証プログラム",
     subtitle: "合格 → 就職まで完全サポート",
     description: "介護福祉士試験合格後、提携施設への優先紹介。ビザ手続きから入職準備まで専任担当がサポート。（有料職業紹介事業 許可番号: 14-ユ-302174）",
@@ -146,8 +150,8 @@ function CourseCard({
       <div className={`h-2 bg-gradient-to-r ${course.color}`} />
       <div className="p-5">
         <div className="flex items-start justify-between gap-3 mb-3">
-          <div className={`w-12 h-12 bg-gradient-to-br ${course.color} rounded-2xl flex items-center justify-center text-2xl flex-shrink-0`}>
-            {course.emoji}
+          <div className={`w-12 h-12 bg-gradient-to-br ${course.color} rounded-2xl flex items-center justify-center flex-shrink-0`}>
+            <course.Icon className="w-6 h-6 text-white" />
           </div>
           <span className={`text-xs font-bold px-2 py-1 rounded-lg flex-shrink-0 ${course.badgeColor}`}>
             {isPremium ? <><Crown className="w-3 h-3 inline mr-0.5" />{course.badge}</> : course.badge}

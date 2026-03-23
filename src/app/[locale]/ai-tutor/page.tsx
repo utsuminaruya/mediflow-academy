@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useTranslations } from "next-intl";
-import { Send, BookOpen, MessageCircle, Zap, HelpCircle, X } from "lucide-react";
+import { Send, BookOpen, MessageCircle, HelpCircle, PenLine, HeartPulse, type LucideIcon } from "lucide-react";
 
 interface Message {
   role: "user" | "assistant";
@@ -10,12 +10,12 @@ interface Message {
   timestamp: string;
 }
 
-const QUICK_ACTIONS = [
-  { key: "vocabQuiz", icon: "📚", color: "bg-blue-50 text-blue-700 border-blue-200" },
-  { key: "grammar", icon: "📝", color: "bg-green-50 text-green-700 border-green-200" },
-  { key: "careTerms", icon: "🏥", color: "bg-red-50 text-red-700 border-red-200" },
-  { key: "conversation", icon: "💬", color: "bg-purple-50 text-purple-700 border-purple-200" },
-  { key: "question", icon: "❓", color: "bg-yellow-50 text-yellow-700 border-yellow-200" },
+const QUICK_ACTIONS: { key: string; Icon: LucideIcon; color: string }[] = [
+  { key: "vocabQuiz", Icon: BookOpen, color: "bg-blue-50 text-blue-700 border-blue-200" },
+  { key: "grammar", Icon: PenLine, color: "bg-green-50 text-green-700 border-green-200" },
+  { key: "careTerms", Icon: HeartPulse, color: "bg-red-50 text-red-700 border-red-200" },
+  { key: "conversation", Icon: MessageCircle, color: "bg-purple-50 text-purple-700 border-purple-200" },
+  { key: "question", Icon: HelpCircle, color: "bg-yellow-50 text-yellow-700 border-yellow-200" },
 ];
 
 const INITIAL_MESSAGE: Message = {
@@ -238,7 +238,7 @@ export default function AITutorPage() {
                   onClick={() => handleQuickAction(action.key)}
                   className={`flex items-center gap-2 px-3 py-2 rounded-xl border text-sm font-medium whitespace-nowrap transition-all hover:scale-105 ${action.color}`}
                 >
-                  <span>{action.icon}</span>
+                  <action.Icon className="w-4 h-4" />
                   {t(`quickActions.${action.key}` as any)}
                 </button>
               ))}

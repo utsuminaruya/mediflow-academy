@@ -1,13 +1,17 @@
 import Link from "next/link";
+import { Plane, Building2, GraduationCap, Stethoscope, Trophy, Globe, type LucideIcon } from "lucide-react";
 
 interface StaffStorySectionProps {
   locale: string;
 }
 
 // ── タイムラインステップ ──────────────────────────────────
-const JOURNEY_STEPS = [
+const JOURNEY_STEPS: {
+  Icon: LucideIcon; year: string; label: string; quote: string;
+  color: string; textColor: string; bgLight: string;
+}[] = [
   {
-    emoji: "✈️",
+    Icon: Plane,
     year: "Day 1",
     label: "EPA経由で来日",
     quote: "「日本語はN4レベル。現場の会話が半分もわからなかった」",
@@ -16,7 +20,7 @@ const JOURNEY_STEPS = [
     bgLight: "bg-blue-50",
   },
   {
-    emoji: "🏥",
+    Icon: Building2,
     year: "Year 1–3",
     label: "介護現場で奮闘",
     quote: "「毎日知らない専門用語だらけ。でも利用者さんの笑顔が支えに」",
@@ -25,7 +29,7 @@ const JOURNEY_STEPS = [
     bgLight: "bg-teal-50",
   },
   {
-    emoji: "🎓",
+    Icon: GraduationCap,
     year: "合格",
     label: "介護福祉士 国家試験 合格",
     quote: "「日本語と専門知識の壁を同時に乗り越えた。諦めなくてよかった」",
@@ -34,7 +38,7 @@ const JOURNEY_STEPS = [
     bgLight: "bg-green-50",
   },
   {
-    emoji: "👩‍⚕️",
+    Icon: Stethoscope,
     year: "合格",
     label: "看護師 国家試験 合格",
     quote: "「一度不合格。でもその経験が一番の教科書になった」",
@@ -43,7 +47,7 @@ const JOURNEY_STEPS = [
     bgLight: "bg-purple-50",
   },
   {
-    emoji: "🏆",
+    Icon: Trophy,
     year: "N1",
     label: "JLPT N1 取得",
     quote: "「専門書が辞書なしで読める。日本語の壁を完全に突破した」",
@@ -52,7 +56,7 @@ const JOURNEY_STEPS = [
     bgLight: "bg-orange-50",
   },
   {
-    emoji: "🌟",
+    Icon: Globe,
     year: "現在",
     label: "医療通訳として活躍中",
     quote: "「外国人患者さんと医療者の架け橋として、今日も現場に立っています」",
@@ -63,12 +67,12 @@ const JOURNEY_STEPS = [
 ];
 
 // ── 資格・実績バッジ ──────────────────────────────────────
-const ACHIEVEMENTS = [
-  { label: "EPA候補者", icon: "✈️" },
-  { label: "介護福祉士", icon: "🎓" },
-  { label: "看護師", icon: "👩‍⚕️" },
-  { label: "JLPT N1", icon: "🏆" },
-  { label: "医療通訳", icon: "🌐" },
+const ACHIEVEMENTS: { label: string; Icon: LucideIcon }[] = [
+  { label: "EPA候補者", Icon: Plane },
+  { label: "介護福祉士", Icon: GraduationCap },
+  { label: "看護師", Icon: Stethoscope },
+  { label: "JLPT N1", Icon: Trophy },
+  { label: "医療通訳", Icon: Globe },
 ];
 
 export function StaffStorySection({ locale }: StaffStorySectionProps) {
@@ -111,7 +115,7 @@ export function StaffStorySection({ locale }: StaffStorySectionProps) {
                   key={i}
                   className="flex items-center gap-1 text-xs bg-gray-100 text-gray-700 px-2.5 py-1 rounded-full font-medium"
                 >
-                  <span>{a.icon}</span>
+                  <a.Icon className="w-3.5 h-3.5" />
                   {a.label}
                 </span>
               ))}
@@ -139,8 +143,8 @@ export function StaffStorySection({ locale }: StaffStorySectionProps) {
               <div key={i} className={`relative ${step.bgLight} rounded-2xl p-4`}>
                 {/* ステップ番号 */}
                 <div className="flex items-center gap-3 mb-2">
-                  <div className={`w-9 h-9 ${step.color} rounded-xl flex items-center justify-center text-lg text-white flex-shrink-0 shadow-sm`}>
-                    {step.emoji}
+                  <div className={`w-9 h-9 ${step.color} rounded-xl flex items-center justify-center text-white flex-shrink-0 shadow-sm`}>
+                    <step.Icon className="w-5 h-5" />
                   </div>
                   <div>
                     <span className={`text-xs font-bold ${step.textColor}`}>{step.year}</span>

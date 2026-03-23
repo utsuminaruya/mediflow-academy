@@ -1,8 +1,18 @@
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
-import { BookOpen, Clock, Users, ChevronRight, Star } from "lucide-react";
+import { BookOpen, Clock, Users, Star, ChevronRight, Languages, HeartPulse, ClipboardList, GraduationCap, Home, Target } from "lucide-react";
 import { PremiumCoursesSection } from "@/components/ui/PremiumCoursesSection";
 import { StaffStorySection } from "@/components/ui/StaffStorySection";
+
+// コースIDごとのアイコンマッピング（絵文字の代わりにLucideアイコンを使用）
+const COURSE_ICON_MAP: Record<string, React.ReactNode> = {
+  "c1000000-0000-0000-0000-000000000001": <Languages className="w-7 h-7 text-white" />,
+  "c2000000-0000-0000-0000-000000000001": <HeartPulse className="w-7 h-7 text-white" />,
+  "c3000000-0000-0000-0000-000000000001": <ClipboardList className="w-7 h-7 text-white" />,
+  "c4000000-0000-0000-0000-000000000001": <GraduationCap className="w-7 h-7 text-white" />,
+  "c5000000-0000-0000-0000-000000000001": <Home className="w-7 h-7 text-white" />,
+  "c6000000-0000-0000-0000-000000000001": <Target className="w-7 h-7 text-white" />,
+};
 
 // Per-locale course content translations
 const COURSE_L10N: Record<string, Array<{
@@ -413,8 +423,8 @@ export default async function CoursesPage({
                 className="card hover:shadow-lg transition-all group"
               >
                 <div className="flex items-start gap-4">
-                  <div className={`w-16 h-16 bg-gradient-to-br ${course.color} rounded-2xl flex items-center justify-center text-3xl flex-shrink-0 group-hover:scale-105 transition-transform`}>
-                    {course.emoji}
+                  <div className={`w-16 h-16 bg-gradient-to-br ${course.color} rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform`}>
+                    {COURSE_ICON_MAP[course.id] ?? <BookOpen className="w-7 h-7 text-white" />}
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
@@ -472,8 +482,8 @@ export default async function CoursesPage({
                 href={`/${locale}/courses/${course.id}`}
                 className="card hover:shadow-lg transition-all group"
               >
-                <div className={`w-12 h-12 bg-gradient-to-br ${course.color} rounded-xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform`}>
-                  {course.emoji}
+                <div className={`w-12 h-12 bg-gradient-to-br ${course.color} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
+                  {COURSE_ICON_MAP[course.id] ?? <BookOpen className="w-6 h-6 text-white" />}
                 </div>
                 <div className="flex items-center gap-2 mb-2">
                   <span className={`badge ${course.bgColor} ${course.textColor} text-xs`}>
