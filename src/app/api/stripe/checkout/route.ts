@@ -78,9 +78,10 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ url: session.url });
   } catch (error) {
-    console.error("Stripe checkout error:", error);
+    const message = error instanceof Error ? error.message : String(error);
+    console.error("Stripe checkout error:", message);
     return NextResponse.json(
-      { error: "決済の開始に失敗しました" },
+      { error: message },
       { status: 500 }
     );
   }
