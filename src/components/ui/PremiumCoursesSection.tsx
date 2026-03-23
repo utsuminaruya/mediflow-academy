@@ -183,7 +183,7 @@ function CourseCard({
 
 function LockedOverlay({ locale, requiredPlan }: { locale: string; requiredPlan: "standard" | "pro" | "premium" }) {
   const labelMap = { standard: "スタンダード", pro: "プロ", premium: "プレミアム" };
-  const priceMap = { standard: "¥2,980/月〜", pro: "¥5,980/月〜", premium: "¥9,800/月〜" };
+  const priceMap = { standard: "¥980/月〜", pro: "¥1,980/月〜", premium: "¥3,980/月〜" };
   const colorMap = { standard: "text-teal-600", pro: "text-purple-600", premium: "text-yellow-600" };
   const label = labelMap[requiredPlan];
   const priceLabel = priceMap[requiredPlan];
@@ -263,7 +263,7 @@ export function PremiumCoursesSection({ locale }: PremiumCoursesSectionProps) {
                 苦手分野を効率よく克服できます。
               </p>
               <div className="flex items-center gap-3 mt-2">
-                <span className="bg-white/20 text-xs px-2 py-1 rounded-lg">¥2,980/月〜</span>
+                <span className="bg-white/20 text-xs px-2 py-1 rounded-lg">¥980/月〜</span>
                 <span className="bg-white/20 text-xs px-2 py-1 rounded-lg">7日間無料体験あり</span>
               </div>
             </div>
@@ -297,7 +297,7 @@ export function PremiumCoursesSection({ locale }: PremiumCoursesSectionProps) {
               className="inline-flex items-center gap-2 border border-teal-200 text-teal-700 text-sm font-medium px-5 py-2.5 rounded-xl hover:bg-teal-50 transition-colors"
             >
               <FileText className="w-4 h-4" />
-              スタンダードプラン（¥2,980/月）を7日間無料で試す →
+              スタンダードプラン（¥980/月）を7日間無料で試す →
             </Link>
           </div>
         )}
@@ -368,7 +368,7 @@ export function PremiumCoursesSection({ locale }: PremiumCoursesSectionProps) {
               className="inline-flex items-center gap-2 border border-purple-200 text-purple-700 text-sm font-medium px-5 py-2.5 rounded-xl hover:bg-purple-50 transition-colors"
             >
               <Crown className="w-4 h-4" />
-              プロプラン（¥5,980/月）を7日間無料で試す →
+              プロプラン（¥1,980/月）を7日間無料で試す →
             </Link>
           </div>
         )}
@@ -439,7 +439,7 @@ export function PremiumCoursesSection({ locale }: PremiumCoursesSectionProps) {
               className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-400 to-orange-500 text-white text-sm font-bold px-6 py-3 rounded-xl hover:opacity-90 transition-opacity shadow-md"
             >
               <Crown className="w-4 h-4" />
-              プレミアムプラン（¥9,800/月）を7日間無料で試す →
+              プレミアムプラン（¥3,980/月）を7日間無料で試す →
             </Link>
           </div>
         )}
