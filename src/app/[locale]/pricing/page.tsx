@@ -172,12 +172,7 @@ export default function PricingPage({
     const priceId = isYearly ? plan.priceIdYearly : plan.priceIdMonthly;
 
     if (!priceId) {
-      // Stripe未設定の場合はメールで問い合わせ
-      window.location.href = `mailto:mediflow1002@gmail.com?subject=${encodeURIComponent(
-        `【プラン申込】${plan.label}プランについて`
-      )}&body=${encodeURIComponent(
-        `${plan.label}プラン（${isYearly ? "年払い" : "月払い"}）への申し込みを希望します。\n\nお名前:\nメールアドレス:\n`
-      )}`;
+      alert("年払いは現在準備中です。月払いをご利用ください。");
       return;
     }
 
@@ -204,15 +199,12 @@ export default function PricingPage({
       if (data.url) {
         window.location.href = data.url;
       } else {
-        // Stripe未設定などのフォールバック
-        window.location.href = `mailto:mediflow1002@gmail.com?subject=${encodeURIComponent(
-          `【プラン申込】${plan.label}プランについて`
-        )}`;
+        console.error("Checkout error:", data.error);
+        alert(`決済の開始に失敗しました。\n${data.error ?? "しばらく経ってから再度お試しください。"}`);
       }
-    } catch {
-      window.location.href = `mailto:mediflow1002@gmail.com?subject=${encodeURIComponent(
-        `【プラン申込】${plan.label}プランについて`
-      )}`;
+    } catch (err) {
+      console.error("Checkout fetch error:", err);
+      alert("通信エラーが発生しました。インターネット接続を確認してください。");
     } finally {
       setLoadingPlan(null);
     }
