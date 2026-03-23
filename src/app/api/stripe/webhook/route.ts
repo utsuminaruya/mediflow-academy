@@ -19,12 +19,12 @@ async function getSupabasePlanId(
 /** Stripe Price IDからプラン名を解決 */
 function resolvePlanName(priceId: string): string {
   const map: Record<string, string> = {
-    [process.env.STRIPE_PRICE_STANDARD_MONTHLY ?? ""]: "standard",
-    [process.env.STRIPE_PRICE_STANDARD_YEARLY ?? ""]: "standard",
-    [process.env.STRIPE_PRICE_PRO_MONTHLY ?? ""]: "pro",
-    [process.env.STRIPE_PRICE_PRO_YEARLY ?? ""]: "pro",
-    [process.env.STRIPE_PRICE_PREMIUM_MONTHLY ?? ""]: "premium",
-    [process.env.STRIPE_PRICE_PREMIUM_YEARLY ?? ""]: "premium",
+    [process.env.NEXT_PUBLIC_STRIPE_PRICE_STANDARD_MONTHLY ?? ""]: "standard",
+    [process.env.NEXT_PUBLIC_STRIPE_PRICE_STANDARD_YEARLY  ?? ""]: "standard",
+    [process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO_MONTHLY      ?? ""]: "pro",
+    [process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO_YEARLY       ?? ""]: "pro",
+    [process.env.NEXT_PUBLIC_STRIPE_PRICE_PREMIUM_MONTHLY  ?? ""]: "premium",
+    [process.env.NEXT_PUBLIC_STRIPE_PRICE_PREMIUM_YEARLY   ?? ""]: "premium",
   };
   return map[priceId] ?? "standard";
 }

@@ -3,6 +3,7 @@
 import { use, useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import {
   BookOpen,
   MessageCircle,
@@ -13,6 +14,8 @@ import {
   Award,
   TrendingUp,
   Zap,
+  PartyPopper,
+  X,
 } from "lucide-react";
 
 interface StoredUser {
@@ -75,11 +78,21 @@ export default function DashboardPage({
 }) {
   const t = useTranslations("dashboard");
   const { locale } = use(params);
+  const searchParams = useSearchParams();
   const [user, setUser] = useState<StoredUser>({});
   const [mounted, setMounted] = useState(false);
+  const [showUpgradeSuccess, setShowUpgradeSuccess] = useState(false);
 
   useEffect(() => {
     setMounted(true);
+    if (searchParams.get("upgraded") === "true") {
+      setShowUpgradeSuccess(true);
+      // URLからパラメータを除去
+      const url = new URL(window.location.href);
+      url.searchParams.delete("upgraded");
+      url.searchParams.delete("session_id");
+      window.history.replaceState({}, "", url.toString());
+    }
     try {
       const raw = localStorage.getItem("mediflow_user");
       if (raw) {
@@ -103,6 +116,24 @@ export default function DashboardPage({
 
   return (
     <div className="min-h-screen bg-background">
+      {/* 🎉 決済成功バナー */}
+      {showUpgradeSuccess && (
+        <div className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white px-4 py-3">
+          <div className="container mx-auto max-w-5xl flex items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <PartyPopper className="w-5 h-5 flex-shrink-0" />
+              <div>
+                <p className="font-bold text-sm">プランへのアップグレードが完了しました！🎉</p>
+                <p className="text-white/80 text-xs">コースのロックが解除されました。<Link href={`/${locale}/courses`} className="underline">コース一覧を見る →</Link></p>
+              </div>
+            </div>
+            <button onClick={() => setShowUpgradeSuccess(false)} className="flex-shrink-0 hover:bg-white/20 rounded-lg p-1">
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Header */}
       <div className="bg-gradient-to-r from-primary-600 to-primary-500 text-white px-4 pt-8 pb-20">
         <div className="container mx-auto max-w-5xl">

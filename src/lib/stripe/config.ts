@@ -2,18 +2,19 @@
 // Stripeダッシュボードで作成したPrice IDをここに設定する
 // 未設定の場合は環境変数から取得、それも未設定なら空文字（Checkout時にエラー）
 
+// NEXT_PUBLIC_ プレフィックス付き → クライアント・サーバー両方で参照可能
 export const STRIPE_PLANS = {
   standard: {
-    monthly: process.env.STRIPE_PRICE_STANDARD_MONTHLY ?? "",  // ¥2,980/月
-    yearly: process.env.STRIPE_PRICE_STANDARD_YEARLY ?? "",    // ¥29,800/年
+    monthly: process.env.NEXT_PUBLIC_STRIPE_PRICE_STANDARD_MONTHLY ?? "",
+    yearly:  process.env.NEXT_PUBLIC_STRIPE_PRICE_STANDARD_YEARLY  ?? "",
   },
   pro: {
-    monthly: process.env.STRIPE_PRICE_PRO_MONTHLY ?? "",       // ¥5,980/月
-    yearly: process.env.STRIPE_PRICE_PRO_YEARLY ?? "",         // ¥59,800/年
+    monthly: process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO_MONTHLY ?? "",
+    yearly:  process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO_YEARLY  ?? "",
   },
   premium: {
-    monthly: process.env.STRIPE_PRICE_PREMIUM_MONTHLY ?? "",   // ¥9,800/月
-    yearly: process.env.STRIPE_PRICE_PREMIUM_YEARLY ?? "",     // ¥98,000/年
+    monthly: process.env.NEXT_PUBLIC_STRIPE_PRICE_PREMIUM_MONTHLY ?? "",
+    yearly:  process.env.NEXT_PUBLIC_STRIPE_PRICE_PREMIUM_YEARLY  ?? "",
   },
 } as const;
 
