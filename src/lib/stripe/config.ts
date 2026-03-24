@@ -6,15 +6,15 @@
 // 環境変数が未設定の場合はStripeダッシュボードで作成済みのPrice IDをフォールバックとして使用
 export const STRIPE_PLANS = {
   standard: {
-    monthly: process.env.NEXT_PUBLIC_STRIPE_PRICE_STANDARD_MONTHLY ?? "price_1TE40JRvKWeX2rf3eaSklKfO",
+    monthly: process.env.NEXT_PUBLIC_STRIPE_PRICE_STANDARD_MONTHLY ?? "price_1TELbdRvKWeX2rf354AbfYhq",
     yearly:  process.env.NEXT_PUBLIC_STRIPE_PRICE_STANDARD_YEARLY  ?? "",
   },
   pro: {
-    monthly: process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO_MONTHLY ?? "price_1TE40jRvKWeX2rf3hufY7mZT",
+    monthly: process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO_MONTHLY ?? "price_1TELbiRvKWeX2rf3Ab4NWRfy",
     yearly:  process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO_YEARLY  ?? "",
   },
   premium: {
-    monthly: process.env.NEXT_PUBLIC_STRIPE_PRICE_PREMIUM_MONTHLY ?? "price_1TE40oRvKWeX2rf3edlWOTVo",
+    monthly: process.env.NEXT_PUBLIC_STRIPE_PRICE_PREMIUM_MONTHLY ?? "price_1TELboRvKWeX2rf3DbPOggcz",
     yearly:  process.env.NEXT_PUBLIC_STRIPE_PRICE_PREMIUM_YEARLY  ?? "",
   },
 } as const;
