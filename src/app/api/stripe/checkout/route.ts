@@ -50,7 +50,9 @@ export async function POST(request: NextRequest) {
       customerId = customer.id;
     }
 
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://mediflow-academy.vercel.app";
+    // リクエストのOriginヘッダーからURLを自動取得（env var設定ミスを防ぐ）
+    const origin = request.headers.get("origin");
+    const appUrl = origin ?? process.env.NEXT_PUBLIC_APP_URL ?? "https://mediflow-academy.vercel.app";
 
     // Stripe Checkoutセッション作成
     const session = await stripe.checkout.sessions.create({
