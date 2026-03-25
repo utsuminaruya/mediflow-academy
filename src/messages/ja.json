@@ -1,0 +1,161 @@
+{
+  "nav": {
+    "home": "ホーム",
+    "courses": "コース",
+    "aiTutor": "AI家庭教師",
+    "pricing": "料金プラン",
+    "dashboard": "ダッシュボード",
+    "login": "ログイン",
+    "signup": "無料で始める"
+  },
+  "hero": {
+    "title": "日本語を学んで、キャリアを作ろう",
+    "subtitle": "AI家庭教師「Medi先生」が、あなたの日本語学習とキャリアをサポートします",
+    "cta": "無料で始める",
+    "ctaSub": "クレジットカード不要"
+  },
+  "features": {
+    "ai": { "title": "AI家庭教師", "desc": "あなたのレベルに合わせた個別指導" },
+    "jlpt": { "title": "JLPT対策", "desc": "N5からN1まで体系的に学べる" },
+    "career": { "title": "就職支援", "desc": "資格取得から転職まで一気通貫" }
+  },
+  "pricing": {
+    "title": "料金プラン",
+    "free": "無料",
+    "basic": "ベーシック",
+    "pro": "プロ",
+    "month": "/月",
+    "getStarted": "始める",
+    "upgrade": "アップグレード",
+    "mostPopular": "人気No.1",
+    "plans": {
+      "free": {
+        "name": "無料",
+        "price": "¥0",
+        "features": [
+          "N5コース",
+          "AI家庭教師 5回/日",
+          "基本的な単語学習"
+        ]
+      },
+      "basic": {
+        "name": "ベーシック",
+        "price": "¥980",
+        "features": [
+          "N5・N4コース",
+          "AI家庭教師 無制限",
+          "文法・読解練習",
+          "学習進捗管理"
+        ]
+      },
+      "pro": {
+        "name": "プロ",
+        "price": "¥1,980",
+        "features": [
+          "N5〜N1全コース",
+          "AI家庭教師 無制限",
+          "介護の専門日本語",
+          "キャリアAI相談",
+          "就職紹介サービス"
+        ]
+      }
+    }
+  },
+  "dashboard": {
+    "streak": "連続学習日数",
+    "xp": "経験値",
+    "todayLesson": "今日のおすすめレッスン",
+    "careerBanner": "日本語を活かして転職しませんか？",
+    "careerCta": "無料で相談する",
+    "continueLearning": "学習を続ける",
+    "viewAll": "すべて見る",
+    "progress": "進捗",
+    "days": "日",
+    "welcome": "おかえりなさい",
+    "level": "レベル",
+    "completedLessons": "完了レッスン"
+  },
+  "onboarding": {
+    "step1": "あなたの国籍と母語を教えてください",
+    "step2": "現在の日本語レベルは？",
+    "step3": "学習の目標は何ですか？",
+    "next": "次へ",
+    "complete": "始める",
+    "skip": "スキップ",
+    "nationality": "国籍",
+    "nativeLanguage": "母語",
+    "selectNationality": "国籍を選択",
+    "selectLanguage": "母語を選択",
+    "goals": {
+      "jlpt": "JLPT合格",
+      "care": "介護の仕事",
+      "daily": "日常会話",
+      "qualification": "資格取得"
+    },
+    "levels": {
+      "none": "初めて学ぶ",
+      "N5": "N5（入門）",
+      "N4": "N4（基礎）",
+      "N3": "N3（中級）",
+      "N2": "N2（上級）",
+      "N1": "N1（最上級）"
+    },
+    "title": "プロフィール設定",
+    "subtitle": "より良い学習体験のために、あなたについて教えてください"
+  },
+  "aiTutor": {
+    "title": "AI家庭教師 Medi先生",
+    "placeholder": "質問を入力してください...",
+    "send": "送信",
+    "limitReached": "本日の無料利用回数（5回）に達しました",
+    "upgrade": "プランをアップグレード",
+    "quickQ1": "この文法を説明して",
+    "quickQ2": "例文を作って",
+    "quickQ3": "介護の言葉を教えて",
+    "welcome": "こんにちは！Medi先生です。日本語について何でも聞いてください。",
+    "thinking": "考え中..."
+  },
+  "courses": {
+    "title": "コース一覧",
+    "subtitle": "あなたのレベルに合わせたコースを選んでください",
+    "free": "無料",
+    "premium": "プレミアム",
+    "locked": "ロック中",
+    "start": "開始する",
+    "continue": "続ける",
+    "completed": "完了",
+    "lessons": "レッスン",
+    "level": "レベル",
+    "category": {
+      "vocabulary": "語彙",
+      "grammar": "文法",
+      "reading": "読解",
+      "listening": "リスニング",
+      "conversation": "会話"
+    }
+  },
+  "lesson": {
+    "quiz": "クイズ",
+    "check": "答え合わせ",
+    "next": "次のレッスン",
+    "complete": "完了",
+    "xpEarned": "XP獲得",
+    "correct": "正解！",
+    "incorrect": "残念、もう一度",
+    "explanation": "解説",
+    "example": "例文",
+    "translation": "翻訳",
+    "practice": "練習"
+  },
+  "common": {
+    "loading": "読み込み中...",
+    "error": "エラーが発生しました",
+    "retry": "もう一度",
+    "close": "閉じる",
+    "save": "保存",
+    "cancel": "キャンセル",
+    "confirm": "確認",
+    "back": "戻る",
+    "or": "または"
+  }
+}

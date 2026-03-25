@@ -1,0 +1,161 @@
+{
+  "nav": {
+    "home": "Trang chủ",
+    "courses": "Khóa học",
+    "aiTutor": "Gia sư AI",
+    "pricing": "Bảng giá",
+    "dashboard": "Bảng điều khiển",
+    "login": "Đăng nhập",
+    "signup": "Bắt đầu miễn phí"
+  },
+  "hero": {
+    "title": "Học tiếng Nhật, xây dựng sự nghiệp",
+    "subtitle": "Gia sư AI 'Medi-sensei' hỗ trợ việc học tiếng Nhật và sự nghiệp của bạn",
+    "cta": "Bắt đầu miễn phí",
+    "ctaSub": "Không cần thẻ tín dụng"
+  },
+  "features": {
+    "ai": { "title": "Gia sư AI", "desc": "Hướng dẫn cá nhân phù hợp với trình độ của bạn" },
+    "jlpt": { "title": "Luyện thi JLPT", "desc": "Học có hệ thống từ N5 đến N1" },
+    "career": { "title": "Hỗ trợ việc làm", "desc": "Từ lấy bằng đến chuyển việc" }
+  },
+  "pricing": {
+    "title": "Bảng giá",
+    "free": "Miễn phí",
+    "basic": "Cơ bản",
+    "pro": "Chuyên nghiệp",
+    "month": "/tháng",
+    "getStarted": "Bắt đầu",
+    "upgrade": "Nâng cấp",
+    "mostPopular": "Phổ biến nhất",
+    "plans": {
+      "free": {
+        "name": "Miễn phí",
+        "price": "¥0",
+        "features": [
+          "Khóa học N5",
+          "Gia sư AI 5 lần/ngày",
+          "Học từ vựng cơ bản"
+        ]
+      },
+      "basic": {
+        "name": "Cơ bản",
+        "price": "¥980",
+        "features": [
+          "Khóa học N5 & N4",
+          "Gia sư AI không giới hạn",
+          "Luyện ngữ pháp & đọc hiểu",
+          "Theo dõi tiến độ học tập"
+        ]
+      },
+      "pro": {
+        "name": "Chuyên nghiệp",
+        "price": "¥1,980",
+        "features": [
+          "Tất cả khóa học N5~N1",
+          "Gia sư AI không giới hạn",
+          "Tiếng Nhật điều dưỡng chuyên ngành",
+          "Tư vấn sự nghiệp AI",
+          "Dịch vụ giới thiệu việc làm"
+        ]
+      }
+    }
+  },
+  "dashboard": {
+    "streak": "Ngày học liên tiếp",
+    "xp": "Điểm kinh nghiệm",
+    "todayLesson": "Bài học gợi ý hôm nay",
+    "careerBanner": "Bạn có muốn chuyển việc với tiếng Nhật không?",
+    "careerCta": "Tư vấn miễn phí",
+    "continueLearning": "Tiếp tục học",
+    "viewAll": "Xem tất cả",
+    "progress": "Tiến độ",
+    "days": "ngày",
+    "welcome": "Chào mừng trở lại",
+    "level": "Trình độ",
+    "completedLessons": "Bài học hoàn thành"
+  },
+  "onboarding": {
+    "step1": "Cho chúng tôi biết quốc tịch và ngôn ngữ mẹ đẻ của bạn",
+    "step2": "Trình độ tiếng Nhật hiện tại của bạn?",
+    "step3": "Mục tiêu học tập của bạn là gì?",
+    "next": "Tiếp theo",
+    "complete": "Bắt đầu",
+    "skip": "Bỏ qua",
+    "nationality": "Quốc tịch",
+    "nativeLanguage": "Ngôn ngữ mẹ đẻ",
+    "selectNationality": "Chọn quốc tịch",
+    "selectLanguage": "Chọn ngôn ngữ",
+    "goals": {
+      "jlpt": "Thi đậu JLPT",
+      "care": "Làm điều dưỡng",
+      "daily": "Giao tiếp hàng ngày",
+      "qualification": "Lấy bằng cấp"
+    },
+    "levels": {
+      "none": "Mới bắt đầu",
+      "N5": "N5 (Nhập môn)",
+      "N4": "N4 (Cơ bản)",
+      "N3": "N3 (Trung cấp)",
+      "N2": "N2 (Nâng cao)",
+      "N1": "N1 (Cao cấp nhất)"
+    },
+    "title": "Thiết lập hồ sơ",
+    "subtitle": "Hãy cho chúng tôi biết về bạn để có trải nghiệm học tập tốt hơn"
+  },
+  "aiTutor": {
+    "title": "Gia sư AI Medi-sensei",
+    "placeholder": "Nhập câu hỏi của bạn...",
+    "send": "Gửi",
+    "limitReached": "Bạn đã đạt giới hạn miễn phí hôm nay (5 lần)",
+    "upgrade": "Nâng cấp gói",
+    "quickQ1": "Giải thích ngữ pháp này",
+    "quickQ2": "Tạo ví dụ",
+    "quickQ3": "Dạy từ ngữ điều dưỡng",
+    "welcome": "Xin chào! Tôi là Medi-sensei. Hãy hỏi tôi bất cứ điều gì về tiếng Nhật.",
+    "thinking": "Đang suy nghĩ..."
+  },
+  "courses": {
+    "title": "Danh sách khóa học",
+    "subtitle": "Chọn khóa học phù hợp với trình độ của bạn",
+    "free": "Miễn phí",
+    "premium": "Cao cấp",
+    "locked": "Đã khóa",
+    "start": "Bắt đầu",
+    "continue": "Tiếp tục",
+    "completed": "Hoàn thành",
+    "lessons": "Bài học",
+    "level": "Trình độ",
+    "category": {
+      "vocabulary": "Từ vựng",
+      "grammar": "Ngữ pháp",
+      "reading": "Đọc hiểu",
+      "listening": "Nghe",
+      "conversation": "Hội thoại"
+    }
+  },
+  "lesson": {
+    "quiz": "Bài kiểm tra",
+    "check": "Kiểm tra đáp án",
+    "next": "Bài học tiếp theo",
+    "complete": "Hoàn thành",
+    "xpEarned": "XP nhận được",
+    "correct": "Đúng rồi!",
+    "incorrect": "Tiếc quá, thử lại",
+    "explanation": "Giải thích",
+    "example": "Ví dụ",
+    "translation": "Dịch",
+    "practice": "Luyện tập"
+  },
+  "common": {
+    "loading": "Đang tải...",
+    "error": "Đã xảy ra lỗi",
+    "retry": "Thử lại",
+    "close": "Đóng",
+    "save": "Lưu",
+    "cancel": "Hủy",
+    "confirm": "Xác nhận",
+    "back": "Quay lại",
+    "or": "hoặc"
+  }
+}
