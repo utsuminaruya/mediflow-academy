@@ -51,7 +51,8 @@
     "beginners": "初心者向け",
     "intermediate": "中級者向け",
     "advanced": "上級者向け",
-    "start": "学習を始める"
+    "start": "学習を始める",
+    "freeAccess": "無料で受講できます"
   },
   "cta": {
     "title": "今すぐ無料で始めよう",
@@ -93,12 +94,23 @@
     "subtitle": "日本語・医療介護の質問はなんでも聞いてください",
     "placeholder": "メッセージを入力...",
     "send": "送信",
+    "online": "オンライン",
+    "quickActionsLabel": "クイックアクション",
+    "initialMessage": "こんにちは！Medi先生です😊\n\n日本で医療・介護の夢を持つあなたを全力でサポートします！\n\n今日は何を練習しますか？\n\n🎯 **できること:**\n• 語彙・文法の練習\n• 介護用語クイズ\n• JLPT模擬問題\n• 介護記録の添削\n• 会話練習\n\n下のボタンから選んでも、自由に質問してもOKです！",
+    "errorMessage": "申し訳ありません。エラーが発生しました。もう一度お試しください。",
     "quickActions": {
       "vocabQuiz": "今日の単語テスト",
       "grammar": "文法を教えて",
       "careTerms": "介護用語クイズ",
       "conversation": "会話練習",
       "question": "質問がある"
+    },
+    "quickActionMessages": {
+      "vocabQuiz": "今日の単語テストをしてください。介護の語彙で5問出題してください。",
+      "grammar": "「〜てください」の文法を教えてください。例文もお願いします。",
+      "careTerms": "介護用語クイズを10問出題してください。",
+      "conversation": "食事介助の場面で利用者さんとの会話練習をしてください。",
+      "question": "質問があります。"
     },
     "thinking": "考え中..."
   },

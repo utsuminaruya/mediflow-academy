@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { Send, BookOpen, MessageCircle, HelpCircle, PenLine, HeartPulse, type LucideIcon } from "lucide-react";
 
 interface Message {
@@ -17,26 +17,6 @@ const QUICK_ACTIONS: { key: string; Icon: LucideIcon; color: string }[] = [
   { key: "conversation", Icon: MessageCircle, color: "bg-purple-50 text-purple-700 border-purple-200" },
   { key: "question", Icon: HelpCircle, color: "bg-yellow-50 text-yellow-700 border-yellow-200" },
 ];
-
-const INITIAL_MESSAGE: Message = {
-  role: "assistant",
-  content: `こんにちは！Medi先生です😊
-
-日本で医療・介護の夢を持つあなたを全力でサポートします！
-
-今日は何を練習しますか？
-
-🎯 **できること:**
-• 語彙・文法の練習
-• 介護用語クイズ
-• JLPT模擬問題
-• 介護記録の添削
-• 会話練習
-
-下のボタンから選んでも、自由に質問してもOKです！
-Xin hãy cứ hỏi tôi bất cứ điều gì! 😊`,
-  timestamp: new Date().toISOString(),
-};
 
 function MessageBubble({ message }: { message: Message }) {
   const isUser = message.role === "user";
@@ -69,7 +49,15 @@ function MessageBubble({ message }: { message: Message }) {
 
 export default function AITutorPage() {
   const t = useTranslations("aiTutor");
-  const [messages, setMessages] = useState<Message[]>([INITIAL_MESSAGE]);
+  const locale = useLocale();
+
+  const [messages, setMessages] = useState<Message[]>(() => [
+    {
+      role: "assistant",
+      content: t("initialMessage"),
+      timestamp: new Date().toISOString(),
+    },
+  ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showQuickActions, setShowQuickActions] = useState(true);
@@ -103,7 +91,7 @@ export default function AITutorPage() {
             content: m.content,
           })),
           userProfile: {
-            nativeLanguage: "vi",
+            nativeLanguage: locale,
             japaneseLevel: "N4",
           },
         }),
@@ -156,7 +144,7 @@ export default function AITutorPage() {
     } catch (error) {
       const errorMessage: Message = {
         role: "assistant",
-        content: "申し訳ありません。エラーが発生しました。もう一度お試しください。\nXin lỗi, đã xảy ra lỗi. Vui lòng thử lại.",
+        content: t("errorMessage"),
         timestamp: new Date().toISOString(),
       };
       setMessages((prev) => [...prev, errorMessage]);
@@ -166,14 +154,8 @@ export default function AITutorPage() {
   };
 
   const handleQuickAction = (key: string) => {
-    const actions: Record<string, string> = {
-      vocabQuiz: "今日の単語テストをしてください。介護の語彙で5問出題してください。",
-      grammar: "「〜てください」の文法を教えてください。例文もお願いします。",
-      careTerms: "介護用語クイズを10問出題してください。",
-      conversation: "食事介助の場面で利用者さんとの会話練習をしてください。",
-      question: "質問があります。",
-    };
-    sendMessage(actions[key] || key);
+    const msg = t(`quickActionMessages.${key}` as any);
+    sendMessage(msg || key);
   };
 
   return (
@@ -190,7 +172,7 @@ export default function AITutorPage() {
           </div>
           <div className="ml-auto flex items-center gap-1">
             <div className="w-2 h-2 bg-green-500 rounded-full" />
-            <span className="text-xs text-gray-500">オンライン</span>
+            <span className="text-xs text-gray-500">{t("online")}</span>
           </div>
         </div>
       </div>
@@ -230,7 +212,7 @@ export default function AITutorPage() {
       {showQuickActions && (
         <div className="bg-white border-t border-gray-100 px-4 py-3">
           <div className="container mx-auto max-w-2xl">
-            <p className="text-xs text-muted mb-2">クイックアクション</p>
+            <p className="text-xs text-muted mb-2">{t("quickActionsLabel")}</p>
             <div className="flex gap-2 overflow-x-auto scrollbar-hide">
               {QUICK_ACTIONS.map((action) => (
                 <button

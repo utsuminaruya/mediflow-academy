@@ -51,7 +51,8 @@
     "beginners": "For Beginners",
     "intermediate": "Intermediate",
     "advanced": "Advanced",
-    "start": "Start Learning"
+    "start": "Start Learning",
+    "freeAccess": "Free to take"
   },
   "cta": {
     "title": "Start Free Today",
@@ -93,12 +94,23 @@
     "subtitle": "Ask anything about Japanese or healthcare",
     "placeholder": "Type your message...",
     "send": "Send",
+    "online": "Online",
+    "quickActionsLabel": "Quick Actions",
+    "initialMessage": "Hello! I'm Medi Sensei 😊\n\nI'm here to fully support your dream of working in healthcare and nursing in Japan!\n\nWhat would you like to practice today?\n\n🎯 **What I can do:**\n• Vocabulary & grammar practice\n• Care terminology quiz\n• JLPT mock questions\n• Care record review\n• Conversation practice\n\nChoose from the buttons below or ask freely!",
+    "errorMessage": "Sorry, an error occurred. Please try again.",
     "quickActions": {
       "vocabQuiz": "Today's Vocabulary Quiz",
       "grammar": "Explain Grammar",
       "careTerms": "Care Terms Quiz",
       "conversation": "Conversation Practice",
       "question": "I have a question"
+    },
+    "quickActionMessages": {
+      "vocabQuiz": "Please give me today's vocabulary quiz. Give me 5 questions about care vocabulary.",
+      "grammar": "Please explain the grammar 「〜てください」. Include example sentences.",
+      "careTerms": "Please give me a 10-question quiz on care terminology.",
+      "conversation": "Please practice a conversation with me about assisting with meals.",
+      "question": "I have a question."
     },
     "thinking": "Thinking..."
   },

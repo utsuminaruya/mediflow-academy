@@ -51,7 +51,8 @@
     "beginners": "Dành cho người mới bắt đầu",
     "intermediate": "Trình độ trung cấp",
     "advanced": "Trình độ nâng cao",
-    "start": "Bắt đầu học"
+    "start": "Bắt đầu học",
+    "freeAccess": "Có thể học miễn phí"
   },
   "cta": {
     "title": "Bắt đầu miễn phí ngay hôm nay",
@@ -93,12 +94,23 @@
     "subtitle": "Hỏi bất kỳ câu hỏi nào về tiếng Nhật và chăm sóc y tế",
     "placeholder": "Nhập tin nhắn...",
     "send": "Gửi",
+    "online": "Trực tuyến",
+    "quickActionsLabel": "Hành động nhanh",
+    "initialMessage": "Xin chào! Tôi là Thầy Medi 😊\n\nTôi sẽ hết mình hỗ trợ bạn đang có ước mơ về y tế và điều dưỡng tại Nhật Bản!\n\nHôm nay bạn muốn luyện tập gì?\n\n🎯 **Tôi có thể giúp:**\n• Luyện từ vựng và ngữ pháp\n• Quiz thuật ngữ điều dưỡng\n• Bài thi thử JLPT\n• Sửa hồ sơ điều dưỡng\n• Luyện hội thoại\n\nBạn có thể chọn nút bên dưới hoặc tự do đặt câu hỏi nhé!",
+    "errorMessage": "Xin lỗi, đã xảy ra lỗi. Vui lòng thử lại.",
     "quickActions": {
       "vocabQuiz": "Kiểm tra từ vựng hôm nay",
       "grammar": "Giải thích ngữ pháp",
       "careTerms": "Quiz thuật ngữ điều dưỡng",
       "conversation": "Luyện hội thoại",
       "question": "Tôi có câu hỏi"
+    },
+    "quickActionMessages": {
+      "vocabQuiz": "Hãy cho tôi làm bài kiểm tra từ vựng hôm nay. Ra 5 câu hỏi về từ vựng điều dưỡng nhé.",
+      "grammar": "Hãy giải thích ngữ pháp 「〜てください」. Cho ví dụ cụ thể nhé.",
+      "careTerms": "Ra 10 câu quiz về thuật ngữ điều dưỡng nhé.",
+      "conversation": "Hãy luyện hội thoại trong cảnh hỗ trợ ăn uống với người dùng dịch vụ.",
+      "question": "Tôi có câu hỏi."
     },
     "thinking": "Đang suy nghĩ..."
   },

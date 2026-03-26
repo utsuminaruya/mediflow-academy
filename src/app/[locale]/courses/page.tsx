@@ -472,7 +472,7 @@ export default async function CoursesPage({
           <div className="flex items-center gap-3 mb-6">
             <h2 className="text-xl font-bold text-gray-900">{headers.all}</h2>
             <span className="text-xs bg-green-100 text-green-700 font-semibold px-2.5 py-1 rounded-full">
-              無料で受講できます
+              {t("freeAccess")}
             </span>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
