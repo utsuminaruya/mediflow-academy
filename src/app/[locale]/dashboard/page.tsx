@@ -19,7 +19,7 @@ const mockUser = {
   totalXp: 340,
   currentLevel: 'N4',
   targetLevel: 'N3',
-  plan: 'basic' as const,
+  plan: 'basic' as 'free' | 'basic' | 'pro',
 };
 
 const mockCourses = [

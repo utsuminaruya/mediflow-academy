@@ -78,12 +78,12 @@ export default function Header({ locale }: HeaderProps) {
               </Link>
             </div>
 
-            <Link href={`/${locale}/dashboard`}>
+            <Link href={`/${locale}/auth/login`}>
               <Button variant="outline" size="sm">
                 {t('login')}
               </Button>
             </Link>
-            <Link href={`/${locale}/onboarding`}>
+            <Link href={`/${locale}/auth/signup`}>
               <Button size="sm">
                 {t('signup')}
               </Button>
@@ -135,7 +135,10 @@ export default function Header({ locale }: HeaderProps) {
                   Tiếng Việt
                 </Link>
               </div>
-              <Link href={`/${locale}/onboarding`} onClick={() => setMobileMenuOpen(false)}>
+              <Link href={`/${locale}/auth/login`} onClick={() => setMobileMenuOpen(false)}>
+                <Button fullWidth variant="outline">{t('login')}</Button>
+              </Link>
+              <Link href={`/${locale}/auth/signup`} onClick={() => setMobileMenuOpen(false)}>
                 <Button fullWidth>{t('signup')}</Button>
               </Link>
             </div>

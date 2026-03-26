@@ -3,7 +3,7 @@
 import { use, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
-import { ChevronRight, ChevronLeft, BookOpen, GraduationCap, Briefcase, MessageCircle, Globe, Award } from 'lucide-react';
+import { ChevronRight, ChevronLeft, BookOpen, GraduationCap, Briefcase, MessageCircle, Globe, Award, Pencil } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -48,13 +48,15 @@ export default function OnboardingPage({ params }: OnboardingPageProps) {
   const [selectedNationality, setSelectedNationality] = useState('');
   const [selectedLevel, setSelectedLevel] = useState('');
   const [selectedGoals, setSelectedGoals] = useState<string[]>([]);
+  const [freeText, setFreeText] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const totalSteps = 3;
+  const totalSteps = 4;
+  const isJa = locale === 'ja';
 
   const handleGoalToggle = (code: string) => {
-    setSelectedGoals((prev) =>
-      prev.includes(code) ? prev.filter((g) => g !== code) : [...prev, code]
+    setSelectedGoals(prev =>
+      prev.includes(code) ? prev.filter(g => g !== code) : [...prev, code]
     );
   };
 
@@ -62,17 +64,33 @@ export default function OnboardingPage({ params }: OnboardingPageProps) {
     if (step === 1) return selectedNationality !== '';
     if (step === 2) return selectedLevel !== '';
     if (step === 3) return selectedGoals.length > 0;
+    if (step === 4) return freeText.trim().length >= 10;
     return false;
   };
 
   const handleComplete = async () => {
     setIsSubmitting(true);
-    // In production: save to Supabase
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    router.push(`/${locale}/dashboard`);
+    // Save profile data - in production: save to Supabase
+    const profileData = {
+      nationality: selectedNationality,
+      level: selectedLevel,
+      goals: selectedGoals,
+      freeText: freeText,
+    };
+    // Store in sessionStorage to pass to learning plan page
+    sessionStorage.setItem('onboardingProfile', JSON.stringify(profileData));
+    await new Promise(resolve => setTimeout(resolve, 800));
+    router.push(`/${locale}/learning-plan`);
   };
 
-  const nationality = nationalities.find((n) => n.code === selectedNationality);
+  const nationality = nationalities.find(n => n.code === selectedNationality);
+
+  const stepLabels = [
+    isJa ? '国籍' : 'Quốc tịch',
+    isJa ? 'レベル' : 'Trình độ',
+    isJa ? '目標' : 'Mục tiêu',
+    isJa ? '詳細' : 'Chi tiết',
+  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 flex items-center justify-center px-4 py-8">
@@ -87,23 +105,31 @@ export default function OnboardingPage({ params }: OnboardingPageProps) {
         </div>
 
         {/* Progress */}
-        <div className="flex items-center gap-2 mb-8">
+        <div className="flex items-center gap-1 mb-8">
           {Array.from({ length: totalSteps }).map((_, i) => (
-            <div key={i} className="flex-1 flex items-center gap-2">
-              <div className={cn(
-                'w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 transition-all',
-                i + 1 < step ? 'bg-[#00B894] text-white' :
-                i + 1 === step ? 'bg-[#0066CC] text-white' :
-                'bg-gray-200 text-gray-500'
-              )}>
-                {i + 1 < step ? '✓' : i + 1}
-              </div>
-              {i < totalSteps - 1 && (
+            <div key={i} className="flex-1 flex flex-col items-center gap-1">
+              <div className="w-full flex items-center">
                 <div className={cn(
-                  'flex-1 h-0.5 rounded-full transition-all',
-                  i + 1 < step ? 'bg-[#00B894]' : 'bg-gray-200'
-                )} />
-              )}
+                  'w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 transition-all z-10',
+                  i + 1 < step ? 'bg-[#00B894] text-white' :
+                  i + 1 === step ? 'bg-[#0066CC] text-white shadow-md' :
+                  'bg-gray-200 text-gray-500'
+                )}>
+                  {i + 1 < step ? '✓' : i + 1}
+                </div>
+                {i < totalSteps - 1 && (
+                  <div className={cn(
+                    'flex-1 h-0.5 rounded-full transition-all',
+                    i + 1 < step ? 'bg-[#00B894]' : 'bg-gray-200'
+                  )} />
+                )}
+              </div>
+              <span className={cn(
+                'text-xs font-medium',
+                i + 1 === step ? 'text-[#0066CC]' : 'text-gray-400'
+              )}>
+                {stepLabels[i]}
+              </span>
             </div>
           ))}
         </div>
@@ -116,7 +142,7 @@ export default function OnboardingPage({ params }: OnboardingPageProps) {
               <h2 className="text-lg font-bold text-gray-900 mb-1">{t('step1')}</h2>
               <p className="text-sm text-gray-500 mb-6">{t('nationality')}</p>
               <div className="grid grid-cols-3 gap-2">
-                {nationalities.map((nat) => (
+                {nationalities.map(nat => (
                   <button
                     key={nat.code}
                     onClick={() => setSelectedNationality(nat.code)}
@@ -129,7 +155,7 @@ export default function OnboardingPage({ params }: OnboardingPageProps) {
                   >
                     <span className="text-2xl mb-1">{nat.flag}</span>
                     <span className="text-xs font-medium text-gray-700">
-                      {locale === 'ja' ? nat.name.ja : nat.name.vi}
+                      {isJa ? nat.name.ja : nat.name.vi}
                     </span>
                   </button>
                 ))}
@@ -142,10 +168,10 @@ export default function OnboardingPage({ params }: OnboardingPageProps) {
             <div>
               <h2 className="text-lg font-bold text-gray-900 mb-1">{t('step2')}</h2>
               <p className="text-sm text-gray-500 mb-4">
-                {locale === 'ja' ? '現在のJLPTレベルを選んでください' : 'Chọn trình độ JLPT hiện tại của bạn'}
+                {isJa ? '現在のJLPTレベルを選んでください' : 'Chọn trình độ JLPT hiện tại của bạn'}
               </p>
               <div className="space-y-2">
-                {jlptLevels.map((level) => (
+                {jlptLevels.map(level => (
                   <button
                     key={level.code}
                     onClick={() => setSelectedLevel(level.code)}
@@ -158,14 +184,14 @@ export default function OnboardingPage({ params }: OnboardingPageProps) {
                   >
                     <div>
                       <span className="font-semibold text-gray-900">
-                        {locale === 'ja' ? level.label.ja : level.label.vi}
+                        {isJa ? level.label.ja : level.label.vi}
                       </span>
                       <span className="text-xs text-gray-500 block">
-                        {locale === 'ja' ? level.desc.ja : level.desc.vi}
+                        {isJa ? level.desc.ja : level.desc.vi}
                       </span>
                     </div>
                     {selectedLevel === level.code && (
-                      <div className="w-5 h-5 rounded-full bg-[#0066CC] flex items-center justify-center">
+                      <div className="w-5 h-5 rounded-full bg-[#0066CC] flex items-center justify-center flex-shrink-0">
                         <span className="text-white text-xs">✓</span>
                       </div>
                     )}
@@ -180,10 +206,10 @@ export default function OnboardingPage({ params }: OnboardingPageProps) {
             <div>
               <h2 className="text-lg font-bold text-gray-900 mb-1">{t('step3')}</h2>
               <p className="text-sm text-gray-500 mb-4">
-                {locale === 'ja' ? '複数選択可能です' : 'Có thể chọn nhiều mục tiêu'}
+                {isJa ? '複数選択可能です' : 'Có thể chọn nhiều mục tiêu'}
               </p>
               <div className="grid grid-cols-2 gap-3">
-                {goals.map((goal) => {
+                {goals.map(goal => {
                   const Icon = goal.icon;
                   return (
                     <button
@@ -200,33 +226,106 @@ export default function OnboardingPage({ params }: OnboardingPageProps) {
                         <Icon className={cn('h-5 w-5', goal.color)} />
                       </div>
                       <span className="font-semibold text-gray-900 text-sm">
-                        {locale === 'ja' ? goal.label.ja : goal.label.vi}
+                        {isJa ? goal.label.ja : goal.label.vi}
                       </span>
                       <span className="text-xs text-gray-500 mt-1">
-                        {locale === 'ja' ? goal.desc.ja : goal.desc.vi}
+                        {isJa ? goal.desc.ja : goal.desc.vi}
                       </span>
                     </button>
                   );
                 })}
               </div>
+            </div>
+          )}
 
-              {/* Summary */}
-              {selectedNationality && selectedLevel && (
-                <div className="mt-6 p-4 bg-gray-50 rounded-xl">
-                  <p className="text-sm font-medium text-gray-700 mb-2">
-                    {locale === 'ja' ? '設定内容の確認' : 'Xác nhận cài đặt'}
-                  </p>
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <span>{nationality?.flag}</span>
-                    <span>{locale === 'ja' ? nationality?.name.ja : nationality?.name.vi}</span>
-                    <span>·</span>
-                    <span>{selectedLevel === 'none'
-                      ? (locale === 'ja' ? '初学者' : 'Người mới học')
-                      : selectedLevel
-                    }</span>
-                  </div>
-                </div>
-              )}
+          {/* Step 4: Free text */}
+          {step === 4 && (
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <Pencil className="h-5 w-5 text-[#0066CC]" />
+                <h2 className="text-lg font-bold text-gray-900">
+                  {isJa ? 'あなたについて教えてください' : 'Hãy cho chúng tôi biết về bạn'}
+                </h2>
+              </div>
+              <p className="text-sm text-gray-500 mb-4">
+                {isJa
+                  ? 'AI家庭教師Medi先生があなた専用の学習計画を作成します。現在の状況や日本語を学ぶ理由、将来の目標などを自由に書いてください。'
+                  : 'AI gia sư Medi-sensei sẽ tạo kế hoạch học tập riêng cho bạn. Hãy viết tự do về tình trạng hiện tại, lý do học tiếng Nhật và mục tiêu tương lai của bạn.'
+                }
+              </p>
+
+              {/* Profile summary */}
+              <div className="bg-blue-50 border border-blue-100 rounded-xl p-3 mb-4 flex flex-wrap gap-2 text-xs">
+                <span className="bg-white rounded-lg px-2 py-1 border border-blue-200 text-gray-700">
+                  {nationality?.flag} {isJa ? nationality?.name.ja : nationality?.name.vi}
+                </span>
+                <span className="bg-white rounded-lg px-2 py-1 border border-blue-200 text-gray-700">
+                  {selectedLevel === 'none' ? (isJa ? '初学者' : 'Mới học') : selectedLevel}
+                </span>
+                {selectedGoals.map(g => {
+                  const goal = goals.find(x => x.code === g);
+                  return (
+                    <span key={g} className="bg-white rounded-lg px-2 py-1 border border-blue-200 text-gray-700">
+                      {isJa ? goal?.label.ja : goal?.label.vi}
+                    </span>
+                  );
+                })}
+              </div>
+
+              <textarea
+                value={freeText}
+                onChange={e => setFreeText(e.target.value)}
+                placeholder={isJa
+                  ? '例：ベトナム出身で、介護施設で技能実習生として働いています。日本語はほぼ初めてです。来年N4に合格して、特定技能ビザを取得したいです。毎日30分は学習できます。介護の言葉を優先的に学びたいです。'
+                  : 'Ví dụ: Tôi đến từ Việt Nam, đang làm thực tập sinh kỹ năng tại cơ sở điều dưỡng. Tôi gần như mới bắt đầu học tiếng Nhật. Tôi muốn đạt N4 năm tới để lấy visa kỹ năng đặc định. Mỗi ngày tôi có thể học 30 phút...'
+                }
+                rows={6}
+                className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#0066CC] focus:ring-2 focus:ring-[#0066CC]/10 transition-all bg-gray-50 focus:bg-white resize-none leading-relaxed"
+              />
+
+              <div className="flex items-center justify-between mt-2">
+                <span className={cn(
+                  'text-xs',
+                  freeText.trim().length >= 10 ? 'text-[#00B894]' : 'text-gray-400'
+                )}>
+                  {freeText.trim().length} {isJa ? '文字' : 'ký tự'}
+                  {freeText.trim().length < 10 && (
+                    <span className="ml-1 text-gray-400">
+                      ({isJa ? 'あと' : 'còn'} {10 - freeText.trim().length} {isJa ? '文字以上' : ' ký tự nữa'})
+                    </span>
+                  )}
+                </span>
+                {freeText.trim().length >= 10 && (
+                  <span className="text-xs text-[#00B894] font-medium">
+                    ✓ {isJa ? 'AIが学習計画を作成します' : 'AI sẽ tạo kế hoạch học tập'}
+                  </span>
+                )}
+              </div>
+
+              {/* Tips */}
+              <div className="mt-4 bg-amber-50 border border-amber-100 rounded-xl p-3">
+                <p className="text-xs font-semibold text-amber-800 mb-2">
+                  💡 {isJa ? '書くと良い内容' : 'Nên viết về'}
+                </p>
+                <ul className="text-xs text-amber-700 space-y-1">
+                  {(isJa ? [
+                    '現在の職場や仕事の内容',
+                    '日本語を学ぶ理由・動機',
+                    '1日にどのくらい勉強できるか',
+                    '将来の目標（ビザ、転職、資格など）',
+                  ] : [
+                    'Công việc và nơi làm việc hiện tại',
+                    'Lý do học tiếng Nhật',
+                    'Bạn có thể học bao lâu mỗi ngày',
+                    'Mục tiêu tương lai (visa, chuyển việc, bằng cấp...)',
+                  ]).map((tip, i) => (
+                    <li key={i} className="flex items-start gap-1">
+                      <span className="text-amber-500 flex-shrink-0">•</span>
+                      {tip}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           )}
 
@@ -235,17 +334,14 @@ export default function OnboardingPage({ params }: OnboardingPageProps) {
             {step > 1 ? (
               <Button variant="ghost" onClick={() => setStep(step - 1)}>
                 <ChevronLeft className="h-4 w-4 mr-1" />
-                {locale === 'ja' ? '戻る' : 'Quay lại'}
+                {isJa ? '戻る' : 'Quay lại'}
               </Button>
             ) : (
               <div />
             )}
 
             {step < totalSteps ? (
-              <Button
-                onClick={() => setStep(step + 1)}
-                disabled={!canProceed()}
-              >
+              <Button onClick={() => setStep(step + 1)} disabled={!canProceed()}>
                 {t('next')}
                 <ChevronRight className="h-4 w-4 ml-1" />
               </Button>
@@ -254,8 +350,9 @@ export default function OnboardingPage({ params }: OnboardingPageProps) {
                 onClick={handleComplete}
                 disabled={!canProceed()}
                 isLoading={isSubmitting}
+                className="bg-gradient-to-r from-[#0066CC] to-[#00B894] hover:from-[#0052A3] hover:to-[#009974]"
               >
-                {t('complete')} 🎉
+                {isJa ? 'AI学習計画を作成 🤖' : 'Tạo kế hoạch AI 🤖'}
               </Button>
             )}
           </div>

@@ -26,36 +26,17 @@ export async function POST(request: NextRequest) {
 
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
 
-    const sessionParams: Parameters<typeof stripe.checkout.sessions.create>[0] = {
+    const session = await stripe.checkout.sessions.create({
       mode: 'subscription',
-      payment_method_types: ['card'],
-      line_items: [
-        {
-          price: priceId,
-          quantity: 1,
-        },
-      ],
+      line_items: [{ price: priceId, quantity: 1 }],
       success_url: `${appUrl}/ja/dashboard?checkout=success&plan=${plan}`,
       cancel_url: `${appUrl}/ja/pricing?checkout=cancelled`,
-      metadata: {
-        userId: userId || '',
-        plan,
-      },
-      subscription_data: {
-        metadata: {
-          userId: userId || '',
-          plan,
-        },
-      },
+      metadata: { userId: userId || '', plan },
+      subscription_data: { metadata: { userId: userId || '', plan } },
       allow_promotion_codes: true,
       billing_address_collection: 'auto',
-    };
-
-    if (email) {
-      sessionParams.customer_email = email;
-    }
-
-    const session = await stripe.checkout.sessions.create(sessionParams);
+      ...(email ? { customer_email: email } : {}),
+    });
 
     return NextResponse.json({ url: session.url });
   } catch (error) {
