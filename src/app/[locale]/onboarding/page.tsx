@@ -13,13 +13,6 @@ interface OnboardingPageProps {
 
 const nationalities = [
   { code: 'VN', name: { ja: 'ベトナム', vi: 'Việt Nam' }, flag: '🇻🇳', lang: 'vi' },
-  { code: 'PH', name: { ja: 'フィリピン', vi: 'Philippines' }, flag: '🇵🇭', lang: 'tl' },
-  { code: 'ID', name: { ja: 'インドネシア', vi: 'Indonesia' }, flag: '🇮🇩', lang: 'id' },
-  { code: 'TH', name: { ja: 'タイ', vi: 'Thái Lan' }, flag: '🇹🇭', lang: 'th' },
-  { code: 'MM', name: { ja: 'ミャンマー', vi: 'Myanmar' }, flag: '🇲🇲', lang: 'my' },
-  { code: 'CN', name: { ja: '中国', vi: 'Trung Quốc' }, flag: '🇨🇳', lang: 'zh' },
-  { code: 'KR', name: { ja: '韓国', vi: 'Hàn Quốc' }, flag: '🇰🇷', lang: 'ko' },
-  { code: 'BR', name: { ja: 'ブラジル', vi: 'Brazil' }, flag: '🇧🇷', lang: 'pt' },
   { code: 'OTHER', name: { ja: 'その他', vi: 'Khác' }, flag: '🌍', lang: 'en' },
 ];
 
@@ -141,7 +134,7 @@ export default function OnboardingPage({ params }: OnboardingPageProps) {
             <div>
               <h2 className="text-lg font-bold text-gray-900 mb-1">{t('step1')}</h2>
               <p className="text-sm text-gray-500 mb-6">{t('nationality')}</p>
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-2 gap-2">
                 {nationalities.map(nat => (
                   <button
                     key={nat.code}

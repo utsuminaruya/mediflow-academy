@@ -11,14 +11,13 @@ interface PricingPageProps {
 }
 
 const featureRows = [
-  { key: 'N5_course', label: { ja: 'N5コース', vi: 'Khóa học N5' }, free: true, basic: true, pro: true, icon: BookOpen },
-  { key: 'N4_course', label: { ja: 'N4コース', vi: 'Khóa học N4' }, free: false, basic: true, pro: true, icon: BookOpen },
-  { key: 'N3_course', label: { ja: 'N3〜N1コース', vi: 'Khóa học N3~N1' }, free: false, basic: false, pro: true, icon: BookOpen },
+  { key: 'all_courses', label: { ja: 'N5〜N1 全コース', vi: 'Toàn bộ khóa N5〜N1' }, free: true, basic: true, pro: true, icon: BookOpen },
   { key: 'ai_tutor_free', label: { ja: 'AI家庭教師（5回/日）', vi: 'Gia sư AI (5 lần/ngày)' }, free: true, basic: false, pro: false, icon: Bot },
   { key: 'ai_tutor_unlimited', label: { ja: 'AI家庭教師（無制限）', vi: 'Gia sư AI (không giới hạn)' }, free: false, basic: true, pro: true, icon: Bot },
-  { key: 'care_japanese', label: { ja: '介護の専門日本語', vi: 'Tiếng Nhật điều dưỡng chuyên ngành' }, free: false, basic: false, pro: true, icon: Shield },
-  { key: 'career_ai', label: { ja: 'キャリアAI相談', vi: 'Tư vấn sự nghiệp AI' }, free: false, basic: false, pro: true, icon: Briefcase },
-  { key: 'job_placement', label: { ja: '就職紹介サービス', vi: 'Dịch vụ giới thiệu việc làm' }, free: false, basic: false, pro: true, icon: Briefcase },
+  { key: 'care_japanese', label: { ja: '介護の専門日本語', vi: 'Tiếng Nhật điều dưỡng chuyên ngành' }, free: false, basic: true, pro: true, icon: Shield },
+  { key: 'career_consult', label: { ja: 'キャリア相談（現役ベトナム人介護福祉士）', vi: 'Tư vấn nghề nghiệp (điều dưỡng VN)' }, free: false, basic: true, pro: true, icon: Briefcase },
+  { key: 'job_placement', label: { ja: 'プレミアム就職紹介サービス', vi: 'Dịch vụ giới thiệu việc làm cao cấp' }, free: false, basic: false, pro: true, icon: Briefcase },
+  { key: 'medical_interpreter', label: { ja: 'ベトナム人N1 医療通訳コース', vi: 'Khóa phiên dịch y tế N1 người Việt' }, free: false, basic: false, pro: true, icon: Zap },
 ];
 
 export default function PricingPage({ params }: PricingPageProps) {
@@ -41,6 +40,7 @@ export default function PricingPage({ params }: PricingPageProps) {
       buttonText: t('getStarted'),
       highlighted: false,
       priceId: null,
+      description: { ja: 'N5〜N1まで全コース無料で学べます', vi: 'Học miễn phí toàn bộ N5〜N1' },
     },
     {
       key: 'basic',
@@ -53,6 +53,7 @@ export default function PricingPage({ params }: PricingPageProps) {
       buttonText: t('upgrade'),
       highlighted: false,
       priceId: process.env.NEXT_PUBLIC_STRIPE_BASIC_PRICE_ID,
+      description: { ja: '介護の現場で使える日本語と、現役ベトナム人介護福祉士によるキャリア相談', vi: 'Tiếng Nhật thực tế điều dưỡng & tư vấn từ điều dưỡng viên người Việt' },
     },
     {
       key: 'pro',
@@ -65,6 +66,7 @@ export default function PricingPage({ params }: PricingPageProps) {
       buttonText: t('upgrade'),
       highlighted: true,
       priceId: process.env.NEXT_PUBLIC_STRIPE_PRO_PRICE_ID,
+      description: { ja: 'プレミアム就職紹介とN1監修の医療通訳コース付き', vi: 'Giới thiệu việc làm cao cấp & khóa phiên dịch y tế giám sát N1' },
     },
   ];
 
@@ -174,6 +176,10 @@ export default function PricingPage({ params }: PricingPageProps) {
                 </p>
               )}
             </div>
+
+            <p className="text-xs text-gray-500 mb-4 leading-relaxed min-h-[32px]">
+              {locale === 'ja' ? plan.description.ja : plan.description.vi}
+            </p>
 
             <Button
               fullWidth
