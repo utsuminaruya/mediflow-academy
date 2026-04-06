@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { BookOpen, Mail, Lock, Eye, EyeOff, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { createClient } from '@/lib/supabase/client';
+import { createClient, isSupabaseConfigured } from '@/lib/supabase/client';
 
 interface LoginPageProps {
   params: Promise<{ locale: string }>;
@@ -22,22 +22,31 @@ export default function LoginPage({ params }: LoginPageProps) {
   const [error, setError] = useState('');
 
   const isJa = locale === 'ja';
-  const supabase = createClient();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setIsLoading(true);
+
+    // Demo mode: Supabase not configured
+    if (!isSupabaseConfigured) {
+      setTimeout(() => {
+        router.push(`/${locale}/dashboard`);
+      }, 800);
+      return;
+    }
+
     try {
-      const { error: authError } = await supabase.auth.signInWithPassword({ email, password });
+      const supabase = createClient();
+      const { error: authError } = await supabase!.auth.signInWithPassword({ email, password });
       if (authError) {
         setError(isJa ? 'メールアドレスまたはパスワードが正しくありません' : 'Email hoặc mật khẩu không đúng');
+        setIsLoading(false);
       } else {
         router.push(`/${locale}/dashboard`);
       }
     } catch {
       setError(isJa ? 'エラーが発生しました' : 'Đã xảy ra lỗi');
-    } finally {
       setIsLoading(false);
     }
   };
@@ -45,11 +54,21 @@ export default function LoginPage({ params }: LoginPageProps) {
   const handleGoogleLogin = async () => {
     setIsGoogleLoading(true);
     setError('');
+
+    // Demo mode
+    if (!isSupabaseConfigured) {
+      setTimeout(() => {
+        router.push(`/${locale}/dashboard`);
+      }, 800);
+      return;
+    }
+
     try {
-      const { error: authError } = await supabase.auth.signInWithOAuth({
+      const supabase = createClient();
+      const { error: authError } = await supabase!.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/${locale}/dashboard`,
+          redirectTo: `${window.location.origin}/auth/callback?next=/${locale}/dashboard`,
         },
       });
       if (authError) {

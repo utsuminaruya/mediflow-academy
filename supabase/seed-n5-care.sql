@@ -1,9 +1,9 @@
 -- seed-n5-care.sql
 -- N5 Care Japanese Lessons (8 lessons, sort_order 1-8, xp_reward 30)
--- course: jlpt_level = 'N5', category = 'care'
+-- course: jlpt_level = 'N5', category = 'conversation'
 
 INSERT INTO lessons (course_id, title, content, quiz_data, sort_order, xp_reward) VALUES (
-  (SELECT id FROM courses WHERE jlpt_level = 'N5' AND category = 'care' LIMIT 1),
+  (SELECT id FROM courses WHERE jlpt_level = 'N5' AND category = 'conversation' LIMIT 1),
   '{"ja": "朝のあいさつ・起床介助", "vi": "Chào buổi sáng và hỗ trợ thức dậy"}'::jsonb,
   '{
     "type": "care",
@@ -173,7 +173,7 @@ INSERT INTO lessons (course_id, title, content, quiz_data, sort_order, xp_reward
 
 
 INSERT INTO lessons (course_id, title, content, quiz_data, sort_order, xp_reward) VALUES (
-  (SELECT id FROM courses WHERE jlpt_level = 'N5' AND category = 'care' LIMIT 1),
+  (SELECT id FROM courses WHERE jlpt_level = 'N5' AND category = 'conversation' LIMIT 1),
   '{"ja": "食事介助・嚥下", "vi": "Hỗ trợ ăn uống và nuốt thức ăn"}'::jsonb,
   '{
     "type": "care",
@@ -343,7 +343,7 @@ INSERT INTO lessons (course_id, title, content, quiz_data, sort_order, xp_reward
 
 
 INSERT INTO lessons (course_id, title, content, quiz_data, sort_order, xp_reward) VALUES (
-  (SELECT id FROM courses WHERE jlpt_level = 'N5' AND category = 'care' LIMIT 1),
+  (SELECT id FROM courses WHERE jlpt_level = 'N5' AND category = 'conversation' LIMIT 1),
   '{"ja": "排泄介助・トイレ誘導", "vi": "Hỗ trợ vệ sinh và hướng dẫn đến nhà vệ sinh"}'::jsonb,
   '{
     "type": "care",
@@ -513,7 +513,7 @@ INSERT INTO lessons (course_id, title, content, quiz_data, sort_order, xp_reward
 
 
 INSERT INTO lessons (course_id, title, content, quiz_data, sort_order, xp_reward) VALUES (
-  (SELECT id FROM courses WHERE jlpt_level = 'N5' AND category = 'care' LIMIT 1),
+  (SELECT id FROM courses WHERE jlpt_level = 'N5' AND category = 'conversation' LIMIT 1),
   '{"ja": "入浴介助", "vi": "Hỗ trợ tắm rửa"}'::jsonb,
   '{
     "type": "care",
@@ -683,7 +683,7 @@ INSERT INTO lessons (course_id, title, content, quiz_data, sort_order, xp_reward
 
 
 INSERT INTO lessons (course_id, title, content, quiz_data, sort_order, xp_reward) VALUES (
-  (SELECT id FROM courses WHERE jlpt_level = 'N5' AND category = 'care' LIMIT 1),
+  (SELECT id FROM courses WHERE jlpt_level = 'N5' AND category = 'conversation' LIMIT 1),
   '{"ja": "移動・移乗介助", "vi": "Hỗ trợ di chuyển và chuyển vị trí"}'::jsonb,
   '{
     "type": "care",
@@ -853,7 +853,7 @@ INSERT INTO lessons (course_id, title, content, quiz_data, sort_order, xp_reward
 
 
 INSERT INTO lessons (course_id, title, content, quiz_data, sort_order, xp_reward) VALUES (
-  (SELECT id FROM courses WHERE jlpt_level = 'N5' AND category = 'care' LIMIT 1),
+  (SELECT id FROM courses WHERE jlpt_level = 'N5' AND category = 'conversation' LIMIT 1),
   '{"ja": "バイタル測定・報告", "vi": "Đo sinh hiệu và báo cáo"}'::jsonb,
   '{
     "type": "care",
@@ -1024,7 +1024,7 @@ INSERT INTO lessons (course_id, title, content, quiz_data, sort_order, xp_reward
 
 
 INSERT INTO lessons (course_id, title, content, quiz_data, sort_order, xp_reward) VALUES (
-  (SELECT id FROM courses WHERE jlpt_level = 'N5' AND category = 'care' LIMIT 1),
+  (SELECT id FROM courses WHERE jlpt_level = 'N5' AND category = 'conversation' LIMIT 1),
   '{"ja": "認知症ケア", "vi": "Chăm sóc người bị sa sút trí tuệ"}'::jsonb,
   '{
     "type": "care",
@@ -1194,7 +1194,7 @@ INSERT INTO lessons (course_id, title, content, quiz_data, sort_order, xp_reward
 
 
 INSERT INTO lessons (course_id, title, content, quiz_data, sort_order, xp_reward) VALUES (
-  (SELECT id FROM courses WHERE jlpt_level = 'N5' AND category = 'care' LIMIT 1),
+  (SELECT id FROM courses WHERE jlpt_level = 'N5' AND category = 'conversation' LIMIT 1),
   '{"ja": "緊急対応・申し送り", "vi": "Ứng phó khẩn cấp và bàn giao ca"}'::jsonb,
   '{
     "type": "care",

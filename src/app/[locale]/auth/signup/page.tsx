@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { BookOpen, Mail, Lock, Eye, EyeOff, User, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { createClient } from '@/lib/supabase/client';
+import { createClient, isSupabaseConfigured } from '@/lib/supabase/client';
 
 interface SignupPageProps {
   params: Promise<{ locale: string }>;
@@ -15,7 +15,6 @@ export default function SignupPage({ params }: SignupPageProps) {
   const { locale } = use(params);
   const router = useRouter();
   const isJa = locale === 'ja';
-  const supabase = createClient();
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -29,11 +28,21 @@ export default function SignupPage({ params }: SignupPageProps) {
   const handleGoogleSignup = async () => {
     setIsGoogleLoading(true);
     setError('');
+
+    // Demo mode
+    if (!isSupabaseConfigured) {
+      setTimeout(() => {
+        router.push(`/${locale}/onboarding`);
+      }, 800);
+      return;
+    }
+
     try {
-      const { error: authError } = await supabase.auth.signInWithOAuth({
+      const supabase = createClient();
+      const { error: authError } = await supabase!.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/${locale}/onboarding`,
+          redirectTo: `${window.location.origin}/auth/callback?next=/${locale}/onboarding`,
         },
       });
       if (authError) {
@@ -58,8 +67,18 @@ export default function SignupPage({ params }: SignupPageProps) {
       return;
     }
     setIsLoading(true);
+
+    // Demo mode
+    if (!isSupabaseConfigured) {
+      setTimeout(() => {
+        router.push(`/${locale}/onboarding`);
+      }, 800);
+      return;
+    }
+
     try {
-      const { error: authError } = await supabase.auth.signUp({
+      const supabase = createClient();
+      const { error: authError } = await supabase!.auth.signUp({
         email,
         password,
         options: {
@@ -67,13 +86,13 @@ export default function SignupPage({ params }: SignupPageProps) {
         },
       });
       if (authError) {
-        setError(isJa ? authError.message : authError.message);
+        setError(authError.message);
+        setIsLoading(false);
       } else {
         router.push(`/${locale}/onboarding`);
       }
     } catch {
       setError(isJa ? 'エラーが発生しました' : 'Đã xảy ra lỗi');
-    } finally {
       setIsLoading(false);
     }
   };

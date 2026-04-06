@@ -1,10 +1,10 @@
 -- seed-n5-mock.sql
 -- N5 Mock Exam Sets (3 sets, sort_order 1-3, xp_reward 50)
--- course: jlpt_level = 'N5', category = 'mock'
+-- course: jlpt_level = 'N5', category = 'reading'
 -- Each set: 30 questions covering vocabulary, grammar, reading comprehension
 
 INSERT INTO lessons (course_id, title, content, quiz_data, sort_order, xp_reward) VALUES (
-  (SELECT id FROM courses WHERE jlpt_level = 'N5' AND category = 'mock' LIMIT 1),
+  (SELECT id FROM courses WHERE jlpt_level = 'N5' AND category = 'reading' LIMIT 1),
   '{"ja": "模擬試験 第1回（介護語彙・文法）", "vi": "Đề thi thử số 1 (Từ vựng và ngữ pháp chăm sóc)"}'::jsonb,
   '{
     "type": "mock",
@@ -303,7 +303,7 @@ INSERT INTO lessons (course_id, title, content, quiz_data, sort_order, xp_reward
 
 
 INSERT INTO lessons (course_id, title, content, quiz_data, sort_order, xp_reward) VALUES (
-  (SELECT id FROM courses WHERE jlpt_level = 'N5' AND category = 'mock' LIMIT 1),
+  (SELECT id FROM courses WHERE jlpt_level = 'N5' AND category = 'reading' LIMIT 1),
   '{"ja": "模擬試験 第2回（介護場面・コミュニケーション）", "vi": "Đề thi thử số 2 (Tình huống chăm sóc và giao tiếp)"}'::jsonb,
   '{
     "type": "mock",
@@ -605,7 +605,7 @@ INSERT INTO lessons (course_id, title, content, quiz_data, sort_order, xp_reward
 
 
 INSERT INTO lessons (course_id, title, content, quiz_data, sort_order, xp_reward) VALUES (
-  (SELECT id FROM courses WHERE jlpt_level = 'N5' AND category = 'mock' LIMIT 1),
+  (SELECT id FROM courses WHERE jlpt_level = 'N5' AND category = 'reading' LIMIT 1),
   '{"ja": "模擬試験 第3回（総合・応用）", "vi": "Đề thi thử số 3 (Tổng hợp và ứng dụng)"}'::jsonb,
   '{
     "type": "mock",

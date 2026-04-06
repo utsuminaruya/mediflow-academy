@@ -1,6 +1,6 @@
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
-import { Bot, GraduationCap, Briefcase, Check, ArrowRight, Star, Stethoscope, Award } from 'lucide-react';
+import { Bot, GraduationCap, Briefcase, Check, ArrowRight, Star, Stethoscope, Award, Plane, Trophy, FileText, Home, Heart, Car } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 
@@ -86,14 +86,44 @@ function LandingContent({ locale }: { locale: string }) {
     },
   ];
 
-  // Dung's success story timeline
+  // Dung's success story timeline — icon は lucide アイコン（絵文字不使用）
   const dungStory = [
-    { year: '2014', event: isJa ? 'EPA介護福祉士候補者として来日' : 'Đến Nhật theo chương trình EPA', icon: '✈️' },
-    { year: '2016', event: isJa ? '介護福祉士資格取得' : 'Đạt chứng chỉ điều dưỡng viên', icon: '🏆' },
-    { year: '2018', event: isJa ? 'JLPT N1合格' : 'Đạt JLPT N1', icon: '📜' },
-    { year: '2019', event: isJa ? '日本人男性と結婚・関東に新築戸建て購入' : 'Kết hôn với người Nhật, mua nhà mới ở Kanto', icon: '🏠' },
-    { year: '2020', event: isJa ? '医療通訳として活躍・一児の母に' : 'Làm phiên dịch y tế, sinh con đầu lòng', icon: '👶' },
-    { year: '2024', event: isJa ? '日本の看護師免許取得・テスラで通勤中！' : 'Đạt bằng y tá Nhật Bản, đi làm bằng Tesla!', icon: '🚗' },
+    {
+      year: '2014',
+      event: isJa ? 'EPA介護福祉士候補者として来日' : 'Đến Nhật theo chương trình EPA',
+      Icon: Plane,
+      color: 'bg-blue-100 text-blue-600',
+    },
+    {
+      year: '2016',
+      event: isJa ? '介護福祉士資格取得' : 'Đạt chứng chỉ điều dưỡng viên',
+      Icon: Trophy,
+      color: 'bg-yellow-100 text-yellow-600',
+    },
+    {
+      year: '2018',
+      event: isJa ? 'JLPT N1合格' : 'Đạt JLPT N1',
+      Icon: FileText,
+      color: 'bg-green-100 text-green-600',
+    },
+    {
+      year: '2019',
+      event: isJa ? '日本人男性と結婚・関東に新築戸建て購入' : 'Kết hôn với người Nhật, mua nhà mới ở Kanto',
+      Icon: Home,
+      color: 'bg-pink-100 text-pink-600',
+    },
+    {
+      year: '2020',
+      event: isJa ? '医療通訳として活躍・一児の母に' : 'Làm phiên dịch y tế, sinh con đầu lòng',
+      Icon: Heart,
+      color: 'bg-red-100 text-red-600',
+    },
+    {
+      year: '2024',
+      event: isJa ? '日本の看護師免許取得・テスラで通勤中' : 'Đạt bằng y tá Nhật Bản, đi làm bằng Tesla',
+      Icon: Car,
+      color: 'bg-purple-100 text-purple-600',
+    },
   ];
 
   return (
@@ -136,18 +166,18 @@ function LandingContent({ locale }: { locale: string }) {
             }
           </p>
 
-          {/* Supervisor profiles */}
+          {/* Supervisor profiles — lucide icons のみ、絵文字なし */}
           <div className="flex flex-wrap justify-center gap-3 mb-8">
             <div className="flex items-center gap-2 bg-white/15 rounded-full px-4 py-2 text-sm">
-              <span className="text-lg">👩‍⚕️</span>
+              <Stethoscope className="h-4 w-4 text-[#00E5B5]" />
               <span>{isJa ? '現役日本人看護師' : 'Y tá Nhật đang hành nghề'}</span>
             </div>
             <div className="flex items-center gap-2 bg-white/15 rounded-full px-4 py-2 text-sm">
-              <span className="text-lg">🇻🇳</span>
+              <span className="text-base">🇻🇳</span>
               <span>{isJa ? 'N1合格ベトナム人介護福祉士' : 'Điều dưỡng viên Việt đạt N1'}</span>
             </div>
             <div className="flex items-center gap-2 bg-white/15 rounded-full px-4 py-2 text-sm">
-              <span className="text-lg">🏥</span>
+              <Award className="h-4 w-4 text-[#00E5B5]" />
               <span>{isJa ? '医療通訳専門家' : 'Chuyên gia phiên dịch y tế'}</span>
             </div>
           </div>
@@ -284,32 +314,33 @@ function LandingContent({ locale }: { locale: string }) {
 
           {/* Timeline */}
           <div className="relative">
-            {/* Center line */}
             <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#0066CC] to-[#00B894] md:left-1/2" />
 
             <div className="space-y-6">
-              {dungStory.map((item, i) => (
-                <div key={i} className={`flex gap-4 md:gap-0 ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
-                  {/* Content */}
-                  <div className={`flex-1 md:px-8 ${i % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
-                    <div className={`bg-white border border-gray-100 rounded-2xl p-4 shadow-sm inline-block w-full md:max-w-xs ${i % 2 === 0 ? 'md:ml-auto' : ''}`}>
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="text-2xl">{item.icon}</span>
-                        <span className="font-bold text-[#0066CC] text-sm">{item.year}</span>
+              {dungStory.map((item, i) => {
+                const IconComponent = item.Icon;
+                return (
+                  <div key={i} className={`flex gap-4 md:gap-0 ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
+                    <div className={`flex-1 md:px-8 ${i % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
+                      <div className={`bg-white border border-gray-100 rounded-2xl p-4 shadow-sm inline-block w-full md:max-w-xs ${i % 2 === 0 ? 'md:ml-auto' : ''}`}>
+                        <div className="flex items-center gap-2 mb-1">
+                          <div className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 ${item.color}`}>
+                            <IconComponent className="h-4 w-4" />
+                          </div>
+                          <span className="font-bold text-[#0066CC] text-sm">{item.year}</span>
+                        </div>
+                        <p className="text-gray-800 font-medium text-sm">{item.event}</p>
                       </div>
-                      <p className="text-gray-800 font-medium text-sm">{item.event}</p>
                     </div>
-                  </div>
 
-                  {/* Dot */}
-                  <div className="relative flex items-center justify-center flex-shrink-0 md:absolute md:left-1/2 md:-translate-x-1/2" style={{ width: '24px' }}>
-                    <div className="w-4 h-4 bg-white border-2 border-[#0066CC] rounded-full z-10 flex-shrink-0" />
-                  </div>
+                    <div className="relative flex items-center justify-center flex-shrink-0 md:absolute md:left-1/2 md:-translate-x-1/2" style={{ width: '24px' }}>
+                      <div className="w-4 h-4 bg-white border-2 border-[#0066CC] rounded-full z-10 flex-shrink-0" />
+                    </div>
 
-                  {/* Spacer for alternating */}
-                  <div className="flex-1 hidden md:block" />
-                </div>
-              ))}
+                    <div className="flex-1 hidden md:block" />
+                  </div>
+                );
+              })}
             </div>
           </div>
 
