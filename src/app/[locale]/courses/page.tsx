@@ -1,6 +1,6 @@
 'use client';
 
-import { use } from 'react';
+import { use, useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { Lock, BookOpen, ChevronRight, CheckCircle2, Star, Clock } from 'lucide-react';
@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ProgressBar } from '@/components/learning/progress-bar';
 import { cn } from '@/lib/utils';
+import { createClient, isSupabaseConfigured } from '@/lib/supabase/client';
 
 interface CoursesPageProps {
   params: Promise<{ locale: string }>;
@@ -397,7 +398,37 @@ export default function CoursesPage({ params }: CoursesPageProps) {
   const { locale } = use(params);
   const isJa = locale === 'ja';
 
-  const userPlan: 'free' | 'basic' | 'pro' = 'basic';
+  const [userPlan, setUserPlan] = useState<'free' | 'basic' | 'pro'>('free');
+  const [completedIds, setCompletedIds] = useState<Set<string>>(new Set());
+
+  useEffect(() => {
+    const loadUserData = async () => {
+      if (!isSupabaseConfigured) return;
+      const supabase = createClient();
+      if (!supabase) return;
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return;
+
+      // プランを取得
+      const { data: userData } = await supabase
+        .from('users')
+        .select('plan')
+        .eq('id', session.user.id)
+        .single();
+      if (userData?.plan) setUserPlan(userData.plan as 'free' | 'basic' | 'pro');
+
+      // 完了済みレッスンを取得
+      const { data: progress } = await supabase
+        .from('user_progress')
+        .select('lesson_key')
+        .eq('user_id', session.user.id)
+        .eq('status', 'completed')
+        .not('lesson_key', 'is', null);
+      if (progress) setCompletedIds(new Set(progress.map(p => p.lesson_key as string)));
+    };
+    loadUserData();
+  }, []);
+
   const planOrder = { free: 0, basic: 1, pro: 2 };
   const isLocked = (plan: 'free' | 'basic' | 'pro') => planOrder[plan] > planOrder[userPlan];
 
@@ -451,7 +482,7 @@ export default function CoursesPage({ params }: CoursesPageProps) {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {freeCourses.map((course) => (
-            <CourseCard key={course.id} course={course} locale={locale} locked={isLocked(course.requiredPlan)} />
+            <CourseCard key={course.id} course={{ ...course, completedLessons: completedIds.has(course.id) ? course.totalLessons : 0 }} locale={locale} locked={isLocked(course.requiredPlan)} />
           ))}
         </div>
       </section>
@@ -487,7 +518,7 @@ export default function CoursesPage({ params }: CoursesPageProps) {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {basicCourses.map((course) => (
-            <CourseCard key={course.id} course={course} locale={locale} locked={isLocked(course.requiredPlan)} />
+            <CourseCard key={course.id} course={{ ...course, completedLessons: completedIds.has(course.id) ? course.totalLessons : 0 }} locale={locale} locked={isLocked(course.requiredPlan)} />
           ))}
         </div>
       </section>
@@ -525,7 +556,7 @@ export default function CoursesPage({ params }: CoursesPageProps) {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {proCourses.map((course) => (
-            <CourseCard key={course.id} course={course} locale={locale} locked={isLocked(course.requiredPlan)} />
+            <CourseCard key={course.id} course={{ ...course, completedLessons: completedIds.has(course.id) ? course.totalLessons : 0 }} locale={locale} locked={isLocked(course.requiredPlan)} />
           ))}
         </div>
       </section>

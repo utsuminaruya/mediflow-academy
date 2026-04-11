@@ -5,7 +5,7 @@ import { cookies } from 'next/headers';
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get('code');
-  const next = searchParams.get('next') ?? '/ja/onboarding';
+  const next = searchParams.get('next') ?? '/ja/dashboard';
 
   if (code) {
     const cookieStore = await cookies();
@@ -35,5 +35,6 @@ export async function GET(request: Request) {
   }
 
   // Auth error — redirect to login with error
-  return NextResponse.redirect(`${origin}/ja/auth/login?error=auth_callback_error`);
+  const locale = next.startsWith('/vi') ? 'vi' : 'ja';
+  return NextResponse.redirect(`${origin}/${locale}/auth/login?error=auth_callback_error`);
 }

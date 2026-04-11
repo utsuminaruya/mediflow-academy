@@ -1,12 +1,12 @@
 'use client';
 
-import { use } from 'react';
+import { use, useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { ChevronLeft, Lock, Star, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { LessonView } from '@/components/learning/lesson-view';
-import { useState } from 'react';
+import { createClient, isSupabaseConfigured } from '@/lib/supabase/client';
 
 interface LessonPageProps {
   params: Promise<{ locale: string; id: string }>;
@@ -2136,11 +2136,28 @@ export default function LessonPage({ params }: LessonPageProps) {
   const t = useTranslations();
   const [isComplete, setIsComplete] = useState(false);
   const [earnedXp, setEarnedXp] = useState(0);
+  const [userPlan, setUserPlan] = useState<'free' | 'basic' | 'pro'>('free');
+
+  useEffect(() => {
+    const loadPlan = async () => {
+      if (!isSupabaseConfigured) return;
+      const supabase = createClient();
+      if (!supabase) return;
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return;
+      const { data: userData } = await supabase
+        .from('users')
+        .select('plan')
+        .eq('id', session.user.id)
+        .single();
+      if (userData?.plan) setUserPlan(userData.plan as 'free' | 'basic' | 'pro');
+    };
+    loadPlan();
+  }, []);
 
   const data = mockLessons[id] ?? fallbackLesson;
   const { lesson, courseTitle } = data;
 
-  const userPlan = 'basic';
   const planOrder: Record<string, number> = { free: 0, basic: 1, pro: 2 };
   const effectivelyLocked = planOrder[data.requiredPlan] > planOrder[userPlan];
 

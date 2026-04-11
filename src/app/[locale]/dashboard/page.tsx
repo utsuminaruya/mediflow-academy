@@ -32,11 +32,11 @@ type UserProfile = {
 const DEMO_USER: UserProfile = {
   name: 'デモユーザー',
   email: 'demo@mediflow.com',
-  plan: 'basic',
-  currentLevel: 'N4',
-  targetLevel: 'N3',
-  streak: 3,
-  totalXp: 180,
+  plan: 'free',
+  currentLevel: 'N5',
+  targetLevel: 'N4',
+  streak: 0,
+  totalXp: 0,
 };
 
 const recentCourses = [
@@ -93,15 +93,22 @@ export default function DashboardPage({ params }: DashboardPageProps) {
         session.user.email?.split('@')[0] ||
         'ユーザー';
 
+      // DBからプラン・XP・ストリークを取得
+      const { data: dbUser } = await supabase
+        .from('users')
+        .select('plan, total_xp, streak_days, japanese_level, target_qualification')
+        .eq('id', session.user.id)
+        .single();
+
       setUserProfile({
         name,
         email: session.user.email ?? '',
         avatarUrl: meta.avatar_url || meta.picture || undefined,
-        plan: (meta.plan as UserProfile['plan']) ?? 'free',
-        currentLevel: meta.currentLevel ?? 'N5',
-        targetLevel: meta.targetLevel ?? 'N4',
-        streak: meta.streak ?? 1,
-        totalXp: meta.totalXp ?? 0,
+        plan: (dbUser?.plan as UserProfile['plan']) ?? 'free',
+        currentLevel: dbUser?.japanese_level ?? 'N5',
+        targetLevel: dbUser?.target_qualification ?? 'N4',
+        streak: dbUser?.streak_days ?? 0,
+        totalXp: dbUser?.total_xp ?? 0,
       });
       setLoading(false);
     };

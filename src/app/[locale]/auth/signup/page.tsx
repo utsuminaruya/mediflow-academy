@@ -42,7 +42,7 @@ export default function SignupPage({ params }: SignupPageProps) {
       const { error: authError } = await supabase!.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/auth/callback?next=/${locale}/onboarding`,
+          redirectTo: `${window.location.origin}/auth/callback?next=/${locale}/dashboard`,
         },
       });
       if (authError) {
@@ -78,18 +78,25 @@ export default function SignupPage({ params }: SignupPageProps) {
 
     try {
       const supabase = createClient();
-      const { error: authError } = await supabase!.auth.signUp({
+      const { data: signUpData, error: authError } = await supabase!.auth.signUp({
         email,
         password,
         options: {
           data: { full_name: name },
+          emailRedirectTo: `${window.location.origin}/auth/callback?next=/${locale}/dashboard`,
         },
       });
       if (authError) {
         setError(authError.message);
         setIsLoading(false);
+      } else if (signUpData.user && !signUpData.session) {
+        // メール確認が必要な場合
+        setError(isJa
+          ? '確認メールを送信しました。メールを確認してログインしてください。'
+          : 'Email xác nhận đã được gửi. Vui lòng kiểm tra email và đăng nhập.');
+        setIsLoading(false);
       } else {
-        router.push(`/${locale}/onboarding`);
+        router.push(`/${locale}/dashboard`);
       }
     } catch {
       setError(isJa ? 'エラーが発生しました' : 'Đã xảy ra lỗi');

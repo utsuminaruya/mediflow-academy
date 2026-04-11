@@ -17,19 +17,20 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Lesson ID required' }, { status: 400 });
     }
 
-    // Upsert progress
+    // Upsert progress using lesson_key (string course ID like 'n5-01')
     const { data: progress, error: progressError } = await supabase
       .from('user_progress')
       .upsert(
         {
           user_id: user.id,
-          lesson_id: lessonId,
+          lesson_key: lessonId,
           status: status || 'completed',
-          quiz_score: quizScore,
+          score: quizScore,
+          xp_earned: xpEarned || 0,
           completed_at: status === 'completed' ? new Date().toISOString() : null,
         },
         {
-          onConflict: 'user_id,lesson_id',
+          onConflict: 'user_id,lesson_key',
         }
       )
       .select()
@@ -42,17 +43,20 @@ export async function POST(request: NextRequest) {
 
     // Award XP if lesson completed
     if (status === 'completed' && xpEarned > 0) {
-      const { error: xpError } = await supabase
+      // Fetch current XP then update
+      const { data: currentUser } = await supabase
         .from('users')
-        .update({
-          total_xp: supabase.rpc('increment_xp', { user_id: user.id, xp_amount: xpEarned }),
-          updated_at: new Date().toISOString(),
-        })
-        .eq('id', user.id);
-
-      if (xpError) {
-        console.error('XP update error:', xpError);
-        // Non-fatal: progress was saved, XP update failed
+        .select('total_xp')
+        .eq('id', user.id)
+        .single();
+      if (currentUser !== null) {
+        await supabase
+          .from('users')
+          .update({
+            total_xp: (currentUser?.total_xp || 0) + xpEarned,
+            updated_at: new Date().toISOString(),
+          })
+          .eq('id', user.id);
       }
 
       // Update streak
