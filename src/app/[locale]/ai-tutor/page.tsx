@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Modal } from '@/components/ui/modal';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
+import { createClient, isSupabaseConfigured } from '@/lib/supabase/client';
 
 interface AiTutorPageProps {
   params: Promise<{ locale: string }>;
@@ -36,8 +37,15 @@ export default function AiTutorPage({ params }: AiTutorPageProps) {
   const [messageCount, setMessageCount] = useState(0);
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
 
-  // Mock user plan
-  const userPlan = 'free';
+  // Supabaseから取得
+  const [userPlan, setUserPlan] = useState<'free' | 'basic' | 'pro'>('free');
+  const [userId, setUserId] = useState<string | null>(null);
+  const [userProfile, setUserProfile] = useState<{
+    nativeLanguage: string;
+    currentLevel: string;
+    targetLevel: string;
+  }>({ nativeLanguage: 'vi', currentLevel: 'N5', targetLevel: 'N4' });
+
   const FREE_LIMIT = 5;
   const isLimitReached = userPlan === 'free' && messageCount >= FREE_LIMIT;
 
@@ -51,6 +59,47 @@ export default function AiTutorPage({ params }: AiTutorPageProps) {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  // ユーザーデータをSupabaseから取得
+  useEffect(() => {
+    const loadUserData = async () => {
+      if (!isSupabaseConfigured) return;
+      const supabase = createClient();
+      if (!supabase) return;
+
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return;
+
+      setUserId(session.user.id);
+
+      // プラン・プロフィールを取得
+      const { data: userData } = await supabase
+        .from('users')
+        .select('plan, japanese_level, target_qualification, native_language')
+        .eq('id', session.user.id)
+        .single();
+
+      if (userData) {
+        setUserPlan((userData.plan as 'free' | 'basic' | 'pro') || 'free');
+        setUserProfile({
+          nativeLanguage: userData.native_language || 'vi',
+          currentLevel: userData.japanese_level || 'N5',
+          targetLevel: userData.target_qualification || 'N4',
+        });
+      }
+
+      // 本日のメッセージ数を取得
+      const today = new Date().toISOString().split('T')[0];
+      const { count } = await supabase
+        .from('ai_message_logs')
+        .select('*', { count: 'exact', head: true })
+        .eq('user_id', session.user.id)
+        .eq('message_date', today);
+
+      setMessageCount(count || 0);
+    };
+    loadUserData();
+  }, []);
 
   const handleSend = async (messageText?: string) => {
     const text = messageText || input.trim();
@@ -73,16 +122,23 @@ export default function AiTutorPage({ params }: AiTutorPageProps) {
     setIsLoading(true);
     setMessageCount((prev) => prev + 1);
 
-    // Add placeholder assistant message for streaming
+    // メッセージをDBに記録（フリーユーザーの制限用）
+    if (userId && userPlan === 'free' && isSupabaseConfigured) {
+      const supabase = createClient();
+      if (supabase) {
+        const today = new Date().toISOString().split('T')[0];
+        supabase.from('ai_message_logs').insert({
+          user_id: userId,
+          message_date: today,
+        }).then(() => {});
+      }
+    }
+
+    // ストリーミング用のプレースホルダー
     const assistantId = (Date.now() + 1).toString();
     setMessages((prev) => [
       ...prev,
-      {
-        id: assistantId,
-        role: 'assistant',
-        content: '',
-        timestamp: new Date(),
-      },
+      { id: assistantId, role: 'assistant', content: '', timestamp: new Date() },
     ]);
 
     try {
@@ -97,21 +153,17 @@ export default function AiTutorPage({ params }: AiTutorPageProps) {
               .map((m) => ({ role: m.role, content: m.content })),
             { role: 'user', content: text },
           ],
-          userProfile: {
-            nativeLanguage: 'vi',
-            currentLevel: 'N4',
-            targetLevel: 'N3',
-          },
+          userProfile,
         }),
       });
 
       if (!response.ok) {
-        throw new Error('API error');
+        const err = await response.json().catch(() => ({}));
+        throw new Error(err.error || 'API error');
       }
 
       const reader = response.body?.getReader();
       const decoder = new TextDecoder();
-
       if (!reader) throw new Error('No reader');
 
       let accumulated = '';
@@ -127,7 +179,6 @@ export default function AiTutorPage({ params }: AiTutorPageProps) {
           if (line.startsWith('data: ')) {
             const data = line.slice(6);
             if (data === '[DONE]') break;
-
             try {
               const parsed = JSON.parse(data);
               if (parsed.text) {
@@ -146,13 +197,16 @@ export default function AiTutorPage({ params }: AiTutorPageProps) {
       }
     } catch (error) {
       console.error('Chat error:', error);
+      const errMsg = locale === 'ja'
+        ? 'エラーが発生しました。APIキーの設定をご確認ください。'
+        : 'Đã xảy ra lỗi. Vui lòng kiểm tra cài đặt API key.';
       setMessages((prev) =>
         prev.map((m) =>
-          m.id === assistantId
-            ? { ...m, content: locale === 'ja' ? 'エラーが発生しました。もう一度お試しください。' : 'Đã xảy ra lỗi. Vui lòng thử lại.' }
-            : m
+          m.id === assistantId ? { ...m, content: errMsg } : m
         )
       );
+      // カウントを戻す
+      setMessageCount((prev) => Math.max(0, prev - 1));
     } finally {
       setIsLoading(false);
     }
@@ -165,11 +219,7 @@ export default function AiTutorPage({ params }: AiTutorPageProps) {
     }
   };
 
-  const quickQuestions = [
-    t('quickQ1'),
-    t('quickQ2'),
-    t('quickQ3'),
-  ];
+  const quickQuestions = [t('quickQ1'), t('quickQ2'), t('quickQ3')];
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-6 flex flex-col h-[calc(100vh-4rem)]">
@@ -190,7 +240,7 @@ export default function AiTutorPage({ params }: AiTutorPageProps) {
           </div>
         </div>
 
-        {/* Message counter for free users */}
+        {/* メッセージカウンター（フリーユーザーのみ） */}
         {userPlan === 'free' && (
           <div className={cn(
             'flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-full',
@@ -204,9 +254,15 @@ export default function AiTutorPage({ params }: AiTutorPageProps) {
             {FREE_LIMIT - messageCount}/{FREE_LIMIT}
           </div>
         )}
+        {userPlan !== 'free' && (
+          <div className="flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-full bg-blue-50 text-[#0066CC]">
+            <Zap className="h-3.5 w-3.5" />
+            {locale === 'ja' ? '無制限' : 'Không giới hạn'}
+          </div>
+        )}
       </div>
 
-      {/* Limit warning */}
+      {/* 上限警告 */}
       {userPlan === 'free' && messageCount >= FREE_LIMIT - 1 && !isLimitReached && (
         <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-3 mb-4 flex items-start gap-2">
           <AlertCircle className="h-4 w-4 text-yellow-600 flex-shrink-0 mt-0.5" />
@@ -216,17 +272,16 @@ export default function AiTutorPage({ params }: AiTutorPageProps) {
         </div>
       )}
 
-      {/* Messages */}
+      {/* メッセージ一覧 */}
       <div className="flex-1 overflow-y-auto space-y-4 mb-4 pr-1">
         {messages.map((message) => (
           <div
             key={message.id}
             className={cn(
-              'flex gap-3 chat-message',
+              'flex gap-3',
               message.role === 'user' ? 'flex-row-reverse' : 'flex-row'
             )}
           >
-            {/* Avatar */}
             <div className={cn(
               'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0',
               message.role === 'assistant'
@@ -240,9 +295,8 @@ export default function AiTutorPage({ params }: AiTutorPageProps) {
               )}
             </div>
 
-            {/* Bubble */}
             <div className={cn(
-              'max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed',
+              'max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed whitespace-pre-wrap',
               message.role === 'assistant'
                 ? 'bg-white border border-gray-200 text-gray-800 rounded-tl-none'
                 : 'bg-[#0066CC] text-white rounded-tr-none'
@@ -260,8 +314,8 @@ export default function AiTutorPage({ params }: AiTutorPageProps) {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Quick questions */}
-      {messages.length === 1 && (
+      {/* クイック質問 */}
+      {messages.length === 1 && !isLimitReached && (
         <div className="flex flex-wrap gap-2 mb-3">
           {quickQuestions.map((q, i) => (
             <button
@@ -275,15 +329,13 @@ export default function AiTutorPage({ params }: AiTutorPageProps) {
         </div>
       )}
 
-      {/* Input area */}
+      {/* 入力エリア */}
       <div className="relative">
         {isLimitReached ? (
           <div className="bg-red-50 border border-red-200 rounded-2xl p-4 text-center">
             <p className="text-red-600 text-sm font-medium mb-3">{t('limitReached')}</p>
             <Link href={`/${locale}/pricing`}>
-              <Button size="sm" variant="accent">
-                {t('upgrade')}
-              </Button>
+              <Button size="sm">{t('upgrade')}</Button>
             </Link>
           </div>
         ) : (
@@ -311,7 +363,7 @@ export default function AiTutorPage({ params }: AiTutorPageProps) {
         )}
       </div>
 
-      {/* Upgrade Modal */}
+      {/* アップグレードモーダル */}
       <Modal
         isOpen={showUpgradeModal}
         onClose={() => setShowUpgradeModal(false)}
@@ -326,15 +378,9 @@ export default function AiTutorPage({ params }: AiTutorPageProps) {
           </div>
           <div className="space-y-3">
             <Link href={`/${locale}/pricing`} onClick={() => setShowUpgradeModal(false)}>
-              <Button fullWidth>
-                {t('upgrade')}
-              </Button>
+              <Button fullWidth>{t('upgrade')}</Button>
             </Link>
-            <Button
-              fullWidth
-              variant="outline"
-              onClick={() => setShowUpgradeModal(false)}
-            >
+            <Button fullWidth variant="outline" onClick={() => setShowUpgradeModal(false)}>
               {locale === 'ja' ? '明日また来る' : 'Quay lại ngày mai'}
             </Button>
           </div>

@@ -15,6 +15,14 @@ interface ChatRequest {
 }
 
 export async function POST(request: NextRequest) {
+  // ANTHROPIC_API_KEY確認
+  if (!process.env.ANTHROPIC_API_KEY) {
+    return NextResponse.json(
+      { error: 'AI service is not configured. Please set ANTHROPIC_API_KEY.' },
+      { status: 503 }
+    );
+  }
+
   try {
     const body: ChatRequest = await request.json();
     const { messages, userProfile } = body;

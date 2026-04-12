@@ -2,7 +2,7 @@
 
 import { use, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { Check, X, Zap, Shield, Bot, BookOpen, Briefcase, ExternalLink } from 'lucide-react';
+import { Check, X, Zap, Shield, Bot, BookOpen, Briefcase, ExternalLink, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -25,6 +25,7 @@ export default function PricingPage({ params }: PricingPageProps) {
   const t = useTranslations('pricing');
   const [billingPeriod, setBillingPeriod] = useState<'monthly' | 'yearly'>('monthly');
   const [isLoading, setIsLoading] = useState<string | null>(null);
+  const [checkoutError, setCheckoutError] = useState('');
 
   const lineUrl = process.env.NEXT_PUBLIC_LINE_JOBSEEKER || 'https://lin.ee/xUocVyI';
 
@@ -73,20 +74,31 @@ export default function PricingPage({ params }: PricingPageProps) {
   const handleCheckout = async (planKey: string) => {
     if (planKey === 'free') return;
     setIsLoading(planKey);
+    setCheckoutError('');
 
     try {
       const response = await fetch('/api/stripe/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ plan: planKey }),
+        body: JSON.stringify({ plan: planKey, locale }),
       });
 
       const data = await response.json();
       if (data.url) {
         window.location.href = data.url;
+      } else if (data.error) {
+        setCheckoutError(
+          locale === 'ja'
+            ? '決済システムの準備中です。LINEよりお問い合わせください。'
+            : 'Hệ thống thanh toán đang được chuẩn bị. Vui lòng liên hệ qua LINE.'
+        );
       }
-    } catch (error) {
-      console.error('Checkout error:', error);
+    } catch {
+      setCheckoutError(
+        locale === 'ja'
+          ? 'エラーが発生しました。再度お試しください。'
+          : 'Đã xảy ra lỗi. Vui lòng thử lại.'
+      );
     } finally {
       setIsLoading(null);
     }
@@ -103,6 +115,19 @@ export default function PricingPage({ params }: PricingPageProps) {
             : 'Bắt đầu miễn phí, nâng cấp khi cần thiết cho sự nghiệp của bạn'
           }
         </p>
+
+        {checkoutError && (
+          <div className="max-w-lg mx-auto mb-6 bg-amber-50 border border-amber-200 rounded-xl p-4 flex items-start gap-3">
+            <MessageCircle className="h-5 w-5 text-amber-600 flex-shrink-0 mt-0.5" />
+            <div className="text-left">
+              <p className="text-sm text-amber-800 font-medium">{checkoutError}</p>
+              <a href="https://lin.ee/xUocVyI" target="_blank" rel="noopener noreferrer"
+                className="text-sm text-amber-700 underline mt-1 inline-block">
+                LINE で問い合わせる →
+              </a>
+            </div>
+          </div>
+        )}
 
         {/* Billing toggle */}
         <div className="inline-flex items-center bg-gray-100 rounded-full p-1">

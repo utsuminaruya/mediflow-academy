@@ -73,7 +73,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
   const { error } = await supabase
     .from('users')
     .update({
-      subscription_plan: plan,
+      plan,
       stripe_customer_id: session.customer as string,
       updated_at: new Date().toISOString(),
     })
@@ -97,12 +97,12 @@ async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
   const supabase = await createServiceClient();
 
   const status = subscription.status;
-  const subscriptionPlan = ['active', 'trialing'].includes(status) ? plan : 'free';
+  const newPlan = ['active', 'trialing'].includes(status) ? plan : 'free';
 
   const { error } = await supabase
     .from('users')
     .update({
-      subscription_plan: subscriptionPlan,
+      plan: newPlan,
       updated_at: new Date().toISOString(),
     })
     .eq('id', userId);
@@ -122,7 +122,8 @@ async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {
   const { error } = await supabase
     .from('users')
     .update({
-      subscription_plan: 'free',
+      plan: 'free',
+      stripe_customer_id: null,
       updated_at: new Date().toISOString(),
     })
     .eq('id', userId);
