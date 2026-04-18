@@ -1,0 +1,8 @@
+api/
+requirements.txt
+lib/
+static/
+templates/
+tests/
+*.py
+.pytest_cache/
