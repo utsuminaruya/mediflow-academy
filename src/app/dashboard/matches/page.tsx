@@ -39,6 +39,7 @@ export default async function MatchesPage() {
                 <th className="text-center px-4 py-3 text-gray-600 font-semibold">準備度</th>
                 <th className="text-left px-4 py-3 text-gray-600 font-semibold">納品プラン</th>
                 <th className="text-center px-4 py-3 text-gray-600 font-semibold">ステータス</th>
+                <th className="text-center px-4 py-3 text-gray-600 font-semibold">提案書</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
@@ -84,11 +85,23 @@ export default async function MatchesPage() {
                   <td className="px-4 py-3 text-center">
                     <span className="text-xs text-gray-500">{m.status}</span>
                   </td>
+                  <td className="px-4 py-3 text-center">
+                    {m.job_opening_id && (
+                      <a
+                        href={`/proposal/${m.job_opening_id}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded font-semibold transition-colors"
+                      >
+                        提案書
+                      </a>
+                    )}
+                  </td>
                 </tr>
               ))}
               {matches.length === 0 && (
                 <tr>
-                  <td colSpan={8} className="px-4 py-12 text-center text-gray-400">
+                  <td colSpan={9} className="px-4 py-12 text-center text-gray-400">
                     マッチング結果がまだありません。候補者と求人を登録後、マッチングを実行してください。
                   </td>
                 </tr>
