@@ -1,8 +1,8 @@
-api/
+/api/
 requirements.txt
-lib/
-static/
-templates/
-tests/
+/lib/
+/static/
+/templates/
+/tests/
 *.py
 .pytest_cache/
