@@ -2,6 +2,8 @@ import { createServerClient } from '@/lib/supabase';
 import Anthropic from '@anthropic-ai/sdk';
 import { NextResponse } from 'next/server';
 
+export const maxDuration = 60;
+
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
 
 export async function POST(request: Request) {
