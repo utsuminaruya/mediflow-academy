@@ -1,32 +1,78 @@
 @import "tailwindcss";
 
 :root {
-  --color-primary: #0066CC;
-  --color-primary-dark: #0052A3;
-  --color-primary-light: #3385D6;
-  --color-secondary: #00B894;
-  --color-secondary-dark: #009974;
-  --color-accent: #FF6B6B;
-  --color-accent-dark: #E55555;
-  --background: #ffffff;
-  --foreground: #171717;
+  /* ── Design System Tokens ───────────────────────────────── */
+  --ink: #0A1B3D;
+  --ink-2: #14264F;
+  --ink-soft: #3B4F7A;
+  --ink-faint: #6B7A9B;
+  --primary: #1B4FD9;
+  --primary-600: #1540B8;
+  --primary-700: #0F3AA8;
+  --primary-50: #EEF3FF;
+  --primary-100: #DBE5FF;
+  --primary-200: #B9CBFF;
+  --accent: #13C8A8;
+  --accent-soft: #6EE7D0;
+  --accent-50: #E4FBF5;
+  --cream: #FBF9F4;
+  --cream-2: #F3EFE6;
+  --sand: #E8E1D3;
+  --coral: #FF6B47;
+  --rose: #FFE1D9;
+  --white: #FFFFFF;
+  --line: rgba(10,27,61,0.10);
+  --line-strong: rgba(10,27,61,0.18);
+
+  --font-jp: 'Zen Kaku Gothic New', 'Noto Sans JP', system-ui, sans-serif;
+  --font-jp-serif: 'Noto Serif JP', serif;
+  --font-vn: 'Be Vietnam Pro', sans-serif;
+  --font-en-serif: 'Instrument Serif', serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --radius-sm: 8px;
+  --radius: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+
+  /* Tailwind compatibility */
+  --color-primary: #1B4FD9;
+  --color-primary-dark: #1540B8;
+  --color-primary-light: #4B6FE0;
+  --color-secondary: #13C8A8;
+  --color-secondary-dark: #0FA88E;
+  --color-accent: #FF6B47;
+  --color-accent-dark: #E55533;
+  --background: #FBF9F4;
+  --foreground: #0A1B3D;
 }
 
-
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: 'Noto Sans JP', 'Noto Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-jp);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ── ベトナム語フォント統一 ─────────────────────────────────────
+   Be Vietnam Pro の font-weight は必ず明示指定する。
+   指定なしだと各ブラウザが異なるウェイトをフォールバックするため
+   太太になったり細細になったりする問題が起きる。               */
+.vn, [data-font="vn"] {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-weight: 400;
+  font-synthesis: none;
 }
 
 @theme {
-  --color-primary: #0066CC;
-  --color-primary-dark: #0052A3;
-  --color-primary-light: #3385D6;
-  --color-secondary: #00B894;
-  --color-secondary-dark: #009974;
-  --color-accent: #FF6B6B;
-  --color-accent-dark: #E55555;
+  --color-primary: #1B4FD9;
+  --color-primary-dark: #1540B8;
+  --color-primary-light: #4B6FE0;
+  --color-secondary: #13C8A8;
+  --color-secondary-dark: #0FA88E;
+  --color-accent: #FF6B47;
+  --color-accent-dark: #E55533;
 }
 
 /* Smooth scrolling */

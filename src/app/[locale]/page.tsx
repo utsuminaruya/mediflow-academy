@@ -1,8 +1,5 @@
-import { useTranslations } from 'next-intl';
 import Link from 'next/link';
-import { Bot, GraduationCap, Briefcase, Check, ArrowRight, Star, Stethoscope, Award, Plane, Trophy, FileText, Home, Heart, Car } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import FAQAccordion from '@/components/landing/faq-accordion';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -13,448 +10,916 @@ export default async function LandingPage({ params }: PageProps) {
   return <LandingContent locale={locale} />;
 }
 
-function LandingContent({ locale }: { locale: string }) {
-  const t = useTranslations();
-  const isJa = locale === 'ja';
+// ── SVG helpers ────────────────────────────────────────────────
+function JpMark({ size = 14 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="11" fill="#fff" stroke="rgba(10,27,61,0.15)"/>
+      <circle cx="12" cy="12" r="6" fill="#BC002D"/>
+    </svg>
+  );
+}
+function VnMark({ size = 14 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24">
+      <rect x="1" y="1" width="22" height="22" rx="11" fill="#DA251D"/>
+      <path d="M12 6l1.47 4.53H18l-3.76 2.74L15.71 18 12 15.27 8.29 18l1.47-4.73L6 10.53h4.53L12 6z" fill="#FFCD00"/>
+    </svg>
+  );
+}
+function ArrowIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M5 12h14M13 5l7 7-7 7"/>
+    </svg>
+  );
+}
+function CheckIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M20 6L9 17l-5-5"/>
+    </svg>
+  );
+}
 
-  const features = [
-    {
-      icon: <Bot className="h-8 w-8 text-[#0066CC]" />,
-      title: t('features.ai.title'),
-      desc: t('features.ai.desc'),
-      color: 'bg-blue-50',
-    },
-    {
-      icon: <GraduationCap className="h-8 w-8 text-[#00B894]" />,
-      title: t('features.jlpt.title'),
-      desc: t('features.jlpt.desc'),
-      color: 'bg-green-50',
-    },
-    {
-      icon: <Briefcase className="h-8 w-8 text-[#FF6B6B]" />,
-      title: t('features.career.title'),
-      desc: t('features.career.desc'),
-      color: 'bg-red-50',
-    },
-  ];
+// ── Section: Hero ──────────────────────────────────────────────
+function Hero({ locale }: { locale: string }) {
+  return (
+    <section style={{ position: 'relative', overflow: 'hidden', background: 'var(--cream)' }}>
+      <div style={{
+        position: 'absolute', inset: 0,
+        backgroundImage: 'linear-gradient(rgba(10,27,61,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(10,27,61,0.04) 1px, transparent 1px)',
+        backgroundSize: '80px 80px',
+        maskImage: 'radial-gradient(ellipse at center, black 40%, transparent 80%)',
+        WebkitMaskImage: 'radial-gradient(ellipse at center, black 40%, transparent 80%)',
+      }}/>
 
-  const plans = [
-    {
-      key: 'free',
-      price: '¥0',
-      period: '',
-      color: 'border-gray-200',
-      highlight: false,
-      features: [
-        { text: isJa ? 'N5〜N1 全コース' : 'Toàn bộ khóa học N5〜N1', included: true },
-        { text: isJa ? 'AI家庭教師 5回/日' : 'Gia sư AI 5 lần/ngày', included: true },
-        { text: isJa ? '介護の専門日本語' : 'Tiếng Nhật điều dưỡng', included: false },
-        { text: isJa ? 'キャリア相談（現役介護福祉士）' : 'Tư vấn nghề nghiệp', included: false },
-        { text: isJa ? 'プレミアム就職紹介' : 'Giới thiệu việc làm cao cấp', included: false },
-        { text: isJa ? '医療通訳コース' : 'Khóa phiên dịch y tế', included: false },
-      ],
-    },
-    {
-      key: 'basic',
-      price: '¥980',
-      period: '/月',
-      color: 'border-[#0066CC]',
-      highlight: false,
-      features: [
-        { text: isJa ? 'N5〜N1 全コース' : 'Toàn bộ khóa học N5〜N1', included: true },
-        { text: isJa ? 'AI家庭教師 無制限' : 'Gia sư AI không giới hạn', included: true },
-        { text: isJa ? '介護の専門日本語' : 'Tiếng Nhật điều dưỡng', included: true },
-        { text: isJa ? 'キャリア相談（現役介護福祉士）' : 'Tư vấn nghề nghiệp', included: true },
-        { text: isJa ? 'プレミアム就職紹介' : 'Giới thiệu việc làm cao cấp', included: false },
-        { text: isJa ? '医療通訳コース' : 'Khóa phiên dịch y tế', included: false },
-      ],
-    },
-    {
-      key: 'pro',
-      price: '¥1,980',
-      period: '/月',
-      color: 'border-[#00B894]',
-      highlight: true,
-      features: [
-        { text: isJa ? 'N5〜N1 全コース' : 'Toàn bộ khóa học N5〜N1', included: true },
-        { text: isJa ? 'AI家庭教師 無制限' : 'Gia sư AI không giới hạn', included: true },
-        { text: isJa ? '介護の専門日本語' : 'Tiếng Nhật điều dưỡng', included: true },
-        { text: isJa ? 'キャリア相談（現役介護福祉士）' : 'Tư vấn nghề nghiệp', included: true },
-        { text: isJa ? 'プレミアム就職紹介サービス' : 'Giới thiệu việc làm cao cấp', included: true },
-        { text: isJa ? '医療通訳コース（N1監修）' : 'Khóa phiên dịch y tế (N1)', included: true },
-      ],
-    },
-  ];
+      <div className="hero-wrap" style={{ maxWidth: 1280, margin: '0 auto', padding: '48px 32px 80px', position: 'relative' }}>
+        {/* Running header */}
+        <div className="hero-header" style={{
+          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+          fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.14em',
+          color: 'var(--ink-soft)', textTransform: 'uppercase',
+          paddingBottom: 16, borderBottom: '1px solid var(--line-strong)', marginBottom: 40,
+        }}>
+          <span>Mediflow Academy · Issue 04 · 2026</span>
+          <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--coral)', display: 'inline-block' }}/>
+            Enrolling · 新規受講受付中
+          </span>
+        </div>
 
-  // Dung's success story timeline — icon は lucide アイコン（絵文字不使用）
-  const dungStory = [
+        {/* Two-column layout */}
+        <div className="hero-grid" style={{ display: 'grid', gridTemplateColumns: '1.1fr 0.9fr', gap: 56, alignItems: 'start' }}>
+
+          {/* LEFT — Japanese */}
+          <div>
+            <div style={{
+              display: 'inline-flex', alignItems: 'center', gap: 10,
+              fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.16em',
+              textTransform: 'uppercase', color: 'var(--primary)', fontWeight: 500, marginBottom: 28,
+            }}>
+              <span style={{ display: 'inline-block', width: 24, height: 1, background: 'var(--primary)', verticalAlign: 'middle' }}/>
+              <JpMark size={14}/> Japanese · 日本語
+            </div>
+            <h1 className="hero-h1" style={{
+              fontFamily: 'var(--font-jp)', fontWeight: 900,
+              fontSize: 'clamp(52px, 9vw, 88px)', lineHeight: 1.02,
+              letterSpacing: '-0.035em', color: 'var(--ink)',
+            }}>
+              現場で<br/>
+              使える<br/>
+              <span style={{
+                background: 'linear-gradient(180deg,transparent 70%,var(--accent-soft) 70%)',
+                paddingRight: 8,
+              }}>日本語</span>を。
+            </h1>
+            <p style={{
+              fontFamily: 'var(--font-jp-serif)', fontSize: 'clamp(14px,1.8vw,17px)', lineHeight: 1.8,
+              color: 'var(--ink-soft)', marginTop: 32, maxWidth: 440,
+            }}>
+              看護・介護のプロが監修したカリキュラムで、<br/>
+              「伝わる」日本語を身につける。<br/>
+              <span style={{ color: 'var(--primary)', fontWeight: 600 }}>N5 → N1、そして現場へ。</span>
+            </p>
+          </div>
+
+          {/* RIGHT — Vietnamese */}
+          <div className="hero-vn-card" style={{
+            background: 'var(--ink)', color: 'var(--cream)',
+            borderRadius: 24, padding: '40px 36px', position: 'relative', overflow: 'hidden',
+            minHeight: 480,
+          }}>
+            <div style={{
+              position: 'absolute', inset: 0, opacity: 0.08,
+              backgroundImage: 'radial-gradient(circle at 20% 30%, var(--primary-200) 0%, transparent 40%), radial-gradient(circle at 80% 70%, var(--accent) 0%, transparent 40%)',
+            }}/>
+            <div style={{ position: 'relative' }}>
+              <div style={{
+                display: 'inline-flex', alignItems: 'center', gap: 10,
+                fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.16em',
+                textTransform: 'uppercase', color: 'var(--accent-soft)', fontWeight: 500, marginBottom: 28,
+              }}>
+                <span style={{ display: 'inline-block', width: 24, height: 1, background: 'var(--accent-soft)', verticalAlign: 'middle' }}/>
+                <VnMark size={14}/> Vietnamese · Tiếng Việt
+              </div>
+              <h2 style={{
+                fontFamily: 'var(--font-vn)', fontWeight: 800,
+                fontSize: 'clamp(32px, 5vw, 48px)', lineHeight: 1.1,
+                letterSpacing: '-0.025em', color: 'var(--cream)',
+              }}>
+                Tiếng Nhật<br/>
+                cho <span style={{ color: 'var(--accent)' }}>điều dưỡng</span><br/>
+                chuyên nghiệp.
+              </h2>
+              <p style={{
+                fontFamily: 'var(--font-vn)', fontWeight: 400, fontSize: 15, lineHeight: 1.7,
+                color: 'rgba(251,249,244,0.75)', marginTop: 28, maxWidth: 360,
+              }}>
+                Được biên soạn bởi y tá đang làm việc tại Nhật và hộ lý người Việt đạt N1. Học thật — đi làm thật.
+              </p>
+
+              {/* Supervisors card */}
+              <div style={{
+                marginTop: 36, background: 'rgba(255,255,255,0.06)',
+                border: '1px solid rgba(255,255,255,0.12)', borderRadius: 14, padding: 20,
+              }}>
+                <div style={{
+                  fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.14em',
+                  color: 'var(--accent-soft)', textTransform: 'uppercase', marginBottom: 12,
+                }}>
+                  監修 / Supervised by
+                </div>
+                {[
+                  { name: '佐藤 由美', role: '現役看護師（都内総合病院 勤務 12年）', vn: 'Y tá đang hành nghề' },
+                  { name: 'Nguyễn Thị Linh', role: 'N1合格・介護福祉士（神戸）', vn: 'Hộ lý N1 tại Kobe' },
+                  { name: '田中 健', role: '医療通訳士・元JICA専門員', vn: 'Phiên dịch y tế' },
+                ].map((p, i) => (
+                  <div key={i} style={{
+                    display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12,
+                    paddingBottom: 8, borderBottom: i < 2 ? '1px dashed rgba(255,255,255,0.12)' : 'none',
+                    marginBottom: i < 2 ? 8 : 0,
+                  }}>
+                    <div>
+                      <div style={{ fontWeight: 600, fontSize: 14, color: 'var(--cream)' }}>{p.name}</div>
+                      <div style={{ fontSize: 11, color: 'rgba(251,249,244,0.55)', marginTop: 2 }}>{p.role}</div>
+                    </div>
+                    <div style={{
+                      fontFamily: 'var(--font-vn)', fontWeight: 400, fontSize: 11,
+                      color: 'var(--accent-soft)', fontStyle: 'italic', whiteSpace: 'nowrap',
+                    }}>{p.vn}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* CTA row */}
+        <div className="hero-cta" style={{
+          marginTop: 48, display: 'flex', justifyContent: 'space-between',
+          alignItems: 'center', gap: 24, flexWrap: 'wrap',
+          paddingTop: 40, borderTop: '1px solid var(--line)',
+        }}>
+          <div className="hero-cta-btns" style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
+            <Link href={`/${locale}/auth/signup`} style={{
+              display: 'inline-flex', alignItems: 'center', gap: 10,
+              padding: '16px 24px', borderRadius: 14, fontWeight: 600, fontSize: 15,
+              background: 'var(--ink)', color: 'var(--cream)', textDecoration: 'none',
+            }}>
+              無料で始める · Bắt đầu<ArrowIcon/>
+            </Link>
+            <Link href={`/${locale}/courses`} style={{
+              display: 'inline-flex', alignItems: 'center', gap: 10,
+              padding: '16px 24px', borderRadius: 14, fontWeight: 600, fontSize: 15,
+              border: '1px solid var(--line-strong)', color: 'var(--ink)', textDecoration: 'none',
+            }}>
+              コースを見る
+            </Link>
+          </div>
+          <div className="hero-stats" style={{ display: 'flex', gap: 32, fontSize: 13, color: 'var(--ink-soft)' }}>
+            {[
+              { num: '1,247', unit: '名', label: '学習者数' },
+              { num: '85', unit: '%', label: 'JLPT合格率' },
+              { num: 'N5–N1', unit: '', label: '全レベル対応' },
+            ].map((s, i) => (
+              <div key={i}>
+                <div style={{
+                  fontFamily: 'var(--font-jp-serif)', fontWeight: 700,
+                  fontSize: 'clamp(18px,3vw,24px)',
+                  color: 'var(--ink)', lineHeight: 1, letterSpacing: '-0.01em',
+                }}>
+                  {s.num}<span style={{ fontSize: 13, marginLeft: 2 }}>{s.unit}</span>
+                </div>
+                <div style={{
+                  fontSize: 10, color: 'var(--ink-faint)', marginTop: 4,
+                  fontFamily: 'var(--font-mono)', letterSpacing: '0.08em', textTransform: 'uppercase',
+                }}>{s.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── Section: Trust bar ─────────────────────────────────────────
+function TrustBar() {
+  return (
+    <div style={{
+      borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)',
+      background: 'rgba(255,255,255,0.5)',
+    }}>
+      <div className="trust-inner" style={{
+        maxWidth: 1280, margin: '0 auto',
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        gap: 16, padding: '18px 32px', flexWrap: 'wrap',
+        fontSize: 13, color: 'var(--ink-soft)',
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <div style={{ display: 'flex' }}>
+            {['#FFE1D9','#DBE5FF','#E4FBF5','#F3EFE6'].map((bg, i) => (
+              <div key={i} style={{
+                width: 26, height: 26, borderRadius: '50%', background: bg,
+                border: '2px solid var(--cream)', marginLeft: i === 0 ? 0 : -8,
+                display: 'grid', placeItems: 'center',
+                fontFamily: 'var(--font-jp-serif)', fontSize: 11, fontWeight: 700, color: 'var(--ink)',
+              }}>
+                {['L','M','H','T'][i]}
+              </div>
+            ))}
+          </div>
+          <span><strong style={{ color: 'var(--ink)' }}>1,247名</strong> が今月学習中</span>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+          <div style={{ display: 'flex', color: 'var(--coral)' }}>
+            {[0,1,2,3,4].map(i => (
+              <svg key={i} width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="1.5">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+            ))}
+          </div>
+          <span><strong style={{ color: 'var(--ink)' }}>4.9</strong> / 受講生満足度</span>
+        </div>
+        <div className="trust-online" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/>
+          </svg>
+          <span>ベトナム → 日本就労 <strong style={{ color: 'var(--ink)' }}>オンライン完結</strong></span>
+        </div>
+        <div className="trust-iso" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.1em', color: 'var(--primary)' }}>ISO 29993</span>
+          <span>学習品質ガイドライン準拠</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Section: Features ──────────────────────────────────────────
+function Features() {
+  const items = [
     {
-      year: '2014',
-      event: isJa ? 'EPA介護福祉士候補者として来日' : 'Đến Nhật theo chương trình EPA',
-      Icon: Plane,
-      color: 'bg-blue-100 text-blue-600',
+      icon: (
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M6 3v7a5 5 0 0 0 10 0V3M4 3h4M14 3h4"/><circle cx="18" cy="17" r="3"/><path d="M11 15v-1.5"/>
+        </svg>
+      ),
+      ja: '現場の言葉を、現場の人から',
+      vi: 'Từ người thật, ngữ thật',
+      body: '病棟・施設で実際に使われる表現を、現役看護師と介護福祉士が直接教えます。教科書的な日本語ではなく「明日使える」言葉を。',
+      tag: 'LIVE & REAL',
     },
     {
-      year: '2016',
-      event: isJa ? '介護福祉士資格取得' : 'Đạt chứng chỉ điều dưỡng viên',
-      Icon: Trophy,
-      color: 'bg-yellow-100 text-yellow-600',
+      icon: (
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+      ),
+      ja: 'ベトナム語で、深く理解',
+      vi: 'Giải thích bằng tiếng Việt',
+      body: 'すべての教材・解説に日本語とベトナム語の対訳。母語で理解してから、日本語で覚える。迷子にならない設計。',
+      tag: 'BILINGUAL',
     },
     {
-      year: '2018',
-      event: isJa ? 'JLPT N1合格' : 'Đạt JLPT N1',
-      Icon: FileText,
-      color: 'bg-green-100 text-green-600',
+      icon: (
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+      ),
+      ja: 'AI家庭教師が24時間',
+      vi: 'Gia sư AI 24/7',
+      body: '質問はいつでもAIに。発音チェック、敬語の添削、ロールプレイ練習。待ち時間ゼロで学習が止まらない。',
+      tag: 'AI POWERED',
     },
     {
-      year: '2019',
-      event: isJa ? '日本人男性と結婚・関東に新築戸建て購入' : 'Kết hôn với người Nhật, mua nhà mới ở Kanto',
-      Icon: Home,
-      color: 'bg-pink-100 text-pink-600',
-    },
-    {
-      year: '2020',
-      event: isJa ? '医療通訳として活躍・一児の母に' : 'Làm phiên dịch y tế, sinh con đầu lòng',
-      Icon: Heart,
-      color: 'bg-red-100 text-red-600',
-    },
-    {
-      year: '2024',
-      event: isJa ? '日本の看護師免許取得・テスラで通勤中' : 'Đạt bằng y tá Nhật Bản, đi làm bằng Tesla',
-      Icon: Car,
-      color: 'bg-purple-100 text-purple-600',
+      icon: (
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5v14zM4 5.5V19.5"/>
+        </svg>
+      ),
+      ja: 'N5から就労日本語まで',
+      vi: 'Từ N5 đến tiếng Nhật công sở',
+      body: 'ひらがなからスタートし、介護技術試験、EPA、特定技能まで。あなたのゴールに合わせた最短ルート。',
+      tag: 'END-TO-END',
     },
   ];
 
   return (
-    <div className="overflow-hidden">
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-[#0066CC] via-[#0052A3] to-[#003d7a] text-white py-20 px-4 overflow-hidden">
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full bg-white/5" />
-          <div className="absolute -bottom-20 -left-20 w-60 h-60 rounded-full bg-white/5" />
-        </div>
-
-        <div className="relative max-w-4xl mx-auto text-center">
-          {/* Supervisor badge */}
-          <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm text-white/95 text-sm font-semibold px-5 py-2.5 rounded-full mb-6 border border-white/30">
-            <Stethoscope className="h-4 w-4 text-[#00E5B5]" />
-            {isJa
-              ? '現役日本人看護師 × ベトナム人N1介護福祉士 監修'
-              : 'Giám sát bởi Y tá Nhật Bản & Điều dưỡng viên N1 người Việt'
-            }
-          </div>
-
-          <h1 className="text-4xl md:text-6xl font-bold mb-4 leading-tight">
-            {isJa ? (
-              <>
-                現場を知る<span className="text-[#00E5B5]">プロが教える</span><br />
-                介護・医療の日本語
-              </>
-            ) : (
-              <>
-                Học tiếng Nhật<br />
-                <span className="text-[#00E5B5]">từ chuyên gia thực tế</span>
-              </>
-            )}
-          </h1>
-
-          <p className="text-lg text-blue-100 mb-4 max-w-2xl mx-auto leading-relaxed">
-            {isJa
-              ? '日本で活躍する現役看護師とN1合格のベトナム人介護福祉士が、あなたの日本語学習とキャリアを本気でサポートします'
-              : 'Y tá Nhật Bản đang hành nghề và điều dưỡng viên người Việt đạt N1 sẽ hỗ trợ hành trình học tiếng Nhật và sự nghiệp của bạn'
-            }
-          </p>
-
-          {/* Supervisor profiles — lucide icons のみ、絵文字なし */}
-          <div className="flex flex-wrap justify-center gap-3 mb-8">
-            <div className="flex items-center gap-2 bg-white/15 rounded-full px-4 py-2 text-sm">
-              <Stethoscope className="h-4 w-4 text-[#00E5B5]" />
-              <span>{isJa ? '現役日本人看護師' : 'Y tá Nhật đang hành nghề'}</span>
+    <section className="sp" style={{ padding: '120px 0', background: 'var(--cream)', borderTop: '1px solid var(--line)' }}>
+      <div className="si" style={{ maxWidth: 1280, margin: '0 auto', padding: '0 32px' }}>
+        <div className="feat-hdr" style={{ display: 'grid', gridTemplateColumns: '1fr 1.5fr', gap: 80, alignItems: 'end', marginBottom: 64 }}>
+          <div>
+            <div style={{
+              display: 'inline-flex', alignItems: 'center', gap: 10,
+              fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.16em',
+              textTransform: 'uppercase', color: 'var(--primary)', fontWeight: 500, marginBottom: 18,
+            }}>
+              <span style={{ width: 24, height: 1, background: 'var(--primary)', display: 'inline-block' }}/>
+              Why Mediflow
             </div>
-            <div className="flex items-center gap-2 bg-white/15 rounded-full px-4 py-2 text-sm">
-              <span className="text-base">🇻🇳</span>
-              <span>{isJa ? 'N1合格ベトナム人介護福祉士' : 'Điều dưỡng viên Việt đạt N1'}</span>
-            </div>
-            <div className="flex items-center gap-2 bg-white/15 rounded-full px-4 py-2 text-sm">
-              <Award className="h-4 w-4 text-[#00E5B5]" />
-              <span>{isJa ? '医療通訳専門家' : 'Chuyên gia phiên dịch y tế'}</span>
-            </div>
-          </div>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Link href={`/${locale}/auth/signup`}>
-              <Button
-                size="xl"
-                className="bg-white text-[#0066CC] hover:bg-blue-50 font-bold shadow-xl hover:shadow-2xl group"
-              >
-                {t('hero.cta')}
-                <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </Link>
-          </div>
-
-          {/* Stats */}
-          <div className="flex flex-wrap justify-center gap-8 mt-14">
-            {[
-              { value: '1,200+', label: isJa ? '学習者数' : 'Học viên' },
-              { value: '85%', label: isJa ? 'JLPT合格率' : 'Tỷ lệ đậu JLPT' },
-              { value: 'N1〜N5', label: isJa ? '全レベル無料' : 'Miễn phí mọi cấp' },
-            ].map((stat) => (
-              <div key={stat.label} className="text-center">
-                <div className="text-3xl font-bold text-white">{stat.value}</div>
-                <div className="text-blue-200 text-sm mt-1">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Supervisor Section */}
-      <section className="py-16 px-4 bg-white">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-10">
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">
-              {isJa ? '監修者紹介' : 'Giới thiệu chuyên gia giám sát'}
-            </h2>
-            <p className="text-gray-500 text-sm">
-              {isJa ? '現場のリアルを知るプロが、あなたの学習を設計しました' : 'Những chuyên gia từ thực tế đã thiết kế chương trình học cho bạn'}
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-6 border border-blue-100">
-              <div className="flex items-start gap-4">
-                <div className="w-14 h-14 bg-[#0066CC] rounded-2xl flex items-center justify-center flex-shrink-0">
-                  <Stethoscope className="h-7 w-7 text-white" />
-                </div>
-                <div>
-                  <div className="text-xs font-semibold text-[#0066CC] uppercase tracking-wide mb-1">
-                    {isJa ? '日本人監修者' : 'Chuyên gia Nhật Bản'}
-                  </div>
-                  <h3 className="font-bold text-gray-900 text-lg mb-2">
-                    {isJa ? '現役看護師・Mediflow代表' : 'Y tá hành nghề · Đại diện Mediflow'}
-                  </h3>
-                  <p className="text-sm text-gray-600 leading-relaxed">
-                    {isJa
-                      ? '介護・医療現場で実際に使われる日本語を熟知。外国人スタッフとの協働経験から、学習に必要な語彙と表現を設計しました。'
-                      : 'Am hiểu sâu về tiếng Nhật thực tế trong môi trường điều dưỡng và y tế. Thiết kế chương trình từ kinh nghiệm làm việc với nhân viên nước ngoài.'
-                    }
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-6 border border-green-100">
-              <div className="flex items-start gap-4">
-                <div className="w-14 h-14 bg-[#00B894] rounded-2xl flex items-center justify-center flex-shrink-0">
-                  <Award className="h-7 w-7 text-white" />
-                </div>
-                <div>
-                  <div className="text-xs font-semibold text-[#00B894] uppercase tracking-wide mb-1">
-                    {isJa ? 'ベトナム人監修者' : 'Chuyên gia Việt Nam'}
-                  </div>
-                  <h3 className="font-bold text-gray-900 text-lg mb-2">
-                    {isJa ? 'N1合格・介護福祉士・医療通訳' : 'Đạt N1 · Điều dưỡng viên · Phiên dịch y tế'}
-                  </h3>
-                  <p className="text-sm text-gray-600 leading-relaxed">
-                    {isJa
-                      ? 'EPA制度で来日後、介護福祉士・JLPT N1を取得。現在は医療通訳としても活躍中。日本で看護師資格も取得した実績を持つ。'
-                      : 'Đến Nhật theo EPA, đạt chứng chỉ điều dưỡng và JLPT N1. Hiện đang làm phiên dịch y tế và đã đạt bằng y tá Nhật Bản.'
-                    }
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-16 px-4 bg-gray-50">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              {isJa ? '3つの強み' : '3 điểm mạnh'}
+            <h2 className="sec-h2" style={{
+              fontSize: 'clamp(28px,5vw,48px)', lineHeight: 1.1, letterSpacing: '-0.02em', fontWeight: 800, marginTop: 0,
+            }}>
+              他の日本語スクールとは、<br/>違う場所を<br/>見ています。
             </h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {features.map((feature, i) => (
-              <Card key={i} hover bordered className="text-center bg-white">
-                <CardHeader>
-                  <div className={`w-16 h-16 ${feature.color} rounded-2xl flex items-center justify-center mx-auto mb-4`}>
-                    {feature.icon}
-                  </div>
-                  <CardTitle className="text-xl">{feature.title}</CardTitle>
-                  <CardDescription className="text-base">{feature.desc}</CardDescription>
-                </CardHeader>
-              </Card>
-            ))}
+          <div>
+            <p style={{ fontSize: 'clamp(14px,1.8vw,17px)', lineHeight: 1.75, color: 'var(--ink-soft)' }}>
+              私たちは「試験に受かる」ゴールではなく、
+              <strong style={{ color: 'var(--ink)' }}>日本の医療・介護現場で、あなたが輝く</strong>ことをゴールに設計しています。だから教えるのは、現場の人。
+              <span style={{
+                fontFamily: 'var(--font-vn)', fontWeight: 400, color: 'var(--primary)',
+                fontStyle: 'italic', display: 'block', marginTop: 12,
+              }}>
+                Mục tiêu không phải là thi đậu, mà là bạn toả sáng tại Nhật.
+              </span>
+            </p>
           </div>
         </div>
-      </section>
 
-      {/* Success Story: Dung-san */}
-      <section className="py-20 px-4 bg-white">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 bg-amber-50 text-amber-700 text-sm font-semibold px-4 py-2 rounded-full border border-amber-200 mb-4">
-              <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
-              {isJa ? 'サクセスストーリー' : 'Câu chuyện thành công'}
-            </div>
-            <h2 className="text-3xl font-bold text-gray-900 mb-3">
-              {isJa ? 'Dungさんの軌跡' : 'Hành trình của Dung'}
-            </h2>
-            <p className="text-gray-500">
-              {isJa
-                ? 'EPA来日から看護師免許・テスラ・新築戸建てまで。これはひとりのベトナム人女性の本当の話。'
-                : 'Từ EPA đến bằng y tá, Tesla và nhà mới. Đây là câu chuyện thật của một người phụ nữ Việt Nam.'
-              }
-            </p>
-          </div>
-
-          {/* Timeline */}
-          <div className="relative">
-            <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#0066CC] to-[#00B894] md:left-1/2" />
-
-            <div className="space-y-6">
-              {dungStory.map((item, i) => {
-                const IconComponent = item.Icon;
-                return (
-                  <div key={i} className={`flex gap-4 md:gap-0 ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
-                    <div className={`flex-1 md:px-8 ${i % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
-                      <div className={`bg-white border border-gray-100 rounded-2xl p-4 shadow-sm inline-block w-full md:max-w-xs ${i % 2 === 0 ? 'md:ml-auto' : ''}`}>
-                        <div className="flex items-center gap-2 mb-1">
-                          <div className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 ${item.color}`}>
-                            <IconComponent className="h-4 w-4" />
-                          </div>
-                          <span className="font-bold text-[#0066CC] text-sm">{item.year}</span>
-                        </div>
-                        <p className="text-gray-800 font-medium text-sm">{item.event}</p>
-                      </div>
-                    </div>
-
-                    <div className="relative flex items-center justify-center flex-shrink-0 md:absolute md:left-1/2 md:-translate-x-1/2" style={{ width: '24px' }}>
-                      <div className="w-4 h-4 bg-white border-2 border-[#0066CC] rounded-full z-10 flex-shrink-0" />
-                    </div>
-
-                    <div className="flex-1 hidden md:block" />
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Quote */}
-          <div className="mt-12 bg-gradient-to-r from-[#0066CC]/5 to-[#00B894]/5 border border-[#00B894]/20 rounded-2xl p-6 text-center">
-            <p className="text-lg font-semibold text-gray-800 mb-3">
-              {isJa
-                ? '「日本語を学ぶことで、人生が変わりました。Mediflow Academyはそのきっかけをくれます。」'
-                : '"Học tiếng Nhật đã thay đổi cuộc đời tôi. Mediflow Academy cho bạn cơ hội đó."'
-              }
-            </p>
-            <div className="flex items-center justify-center gap-2">
-              <span className="text-2xl">🇻🇳</span>
-              <div className="text-left">
-                <p className="font-bold text-gray-900 text-sm">Dung</p>
-                <p className="text-xs text-gray-500">
-                  {isJa ? '介護福祉士 / 医療通訳 / 日本看護師 / Mediflow Academy監修者' : 'Điều dưỡng viên / Phiên dịch y tế / Y tá Nhật / Giám sát Mediflow Academy'}
-                </p>
+        <div className="feat-grid" style={{
+          display: 'grid', gridTemplateColumns: 'repeat(2,1fr)',
+          gap: 2, background: 'var(--line)', border: '1px solid var(--line)',
+          borderRadius: 24, overflow: 'hidden',
+        }}>
+          {items.map((it, i) => (
+            <div key={i} style={{
+              background: 'var(--cream)', padding: '40px 36px',
+              display: 'flex', flexDirection: 'column', gap: 16, minHeight: 240,
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                <div style={{
+                  width: 48, height: 48, borderRadius: 12, background: 'var(--ink)', color: 'var(--cream)',
+                  display: 'grid', placeItems: 'center',
+                }}>{it.icon}</div>
+                <div style={{
+                  fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.14em',
+                  color: 'var(--primary)', background: 'var(--primary-50)',
+                  padding: '4px 8px', borderRadius: 6,
+                }}>{it.tag}</div>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Pricing Section */}
-      <section className="py-20 px-4 bg-gray-50" id="pricing">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">{t('pricing.title')}</h2>
-            <p className="text-gray-600">
-              {isJa ? 'N5〜N1まで全コース無料で始められます' : 'Bắt đầu miễn phí với toàn bộ khóa học N5〜N1'}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {plans.map((plan) => (
-              <div
-                key={plan.key}
-                className={`bg-white rounded-2xl border-2 p-6 relative ${plan.color} ${
-                  plan.highlight ? 'shadow-xl scale-105' : 'shadow-sm'
-                }`}
-              >
-                {plan.highlight && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                    <span className="bg-[#00B894] text-white text-sm font-bold px-4 py-1.5 rounded-full shadow-md">
-                      {t('pricing.mostPopular')}
-                    </span>
-                  </div>
-                )}
-
-                <div className="mb-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">
-                    {plan.key === 'free' ? t('pricing.free') :
-                     plan.key === 'basic' ? t('pricing.basic') :
-                     t('pricing.pro')}
-                  </h3>
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-4xl font-bold text-gray-900">{plan.price}</span>
-                    <span className="text-gray-500">{plan.period}</span>
-                  </div>
-                </div>
-
-                <ul className="space-y-3 mb-8">
-                  {plan.features.map((feature, i) => (
-                    <li key={i} className="flex items-center gap-2">
-                      {feature.included ? (
-                        <Check className="h-5 w-5 text-[#00B894] flex-shrink-0" />
-                      ) : (
-                        <div className="h-5 w-5 rounded-full border-2 border-gray-200 flex-shrink-0" />
-                      )}
-                      <span className={feature.included ? 'text-gray-700 text-sm' : 'text-gray-400 text-sm'}>
-                        {feature.text}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-
-                <Link href={plan.key === 'free' ? `/${locale}/auth/signup` : `/${locale}/pricing`}>
-                  <Button
-                    fullWidth
-                    variant={plan.highlight ? 'secondary' : plan.key === 'free' ? 'outline' : 'primary'}
-                  >
-                    {plan.key === 'free' ? t('pricing.getStarted') : t('pricing.upgrade')}
-                  </Button>
-                </Link>
+              <div>
+                <h3 style={{ fontSize: 'clamp(17px,2vw,22px)', fontWeight: 700, letterSpacing: '-0.02em', lineHeight: 1.3 }}>{it.ja}</h3>
+                <div style={{
+                  fontFamily: 'var(--font-vn)', fontWeight: 400, fontSize: 13,
+                  color: 'var(--primary)', fontStyle: 'italic', marginTop: 4,
+                }}>{it.vi}</div>
               </div>
-            ))}
-          </div>
+              <p style={{ fontSize: 14, lineHeight: 1.7, color: 'var(--ink-soft)', marginTop: 'auto' }}>{it.body}</p>
+            </div>
+          ))}
         </div>
-      </section>
+      </div>
+    </section>
+  );
+}
 
-      {/* CTA Section */}
-      <section className="py-20 px-4 bg-gradient-to-br from-[#0066CC] to-[#00B894] text-white">
-        <div className="max-w-3xl mx-auto text-center">
-          <Stethoscope className="h-12 w-12 text-white/80 mx-auto mb-6" />
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            {isJa ? '今すぐ学習を始めよう' : 'Bắt đầu học ngay hôm nay'}
+// ── Section: Teachers ──────────────────────────────────────────
+function Teachers() {
+  const team = [
+    { name: '佐藤 由美', role: '現役看護師', detail: '都内総合病院 / 病棟12年', vi: 'Y tá lâm sàng', color: '#DBE5FF', init: '佐' },
+    { name: 'Nguyễn Thị Linh', role: 'N1合格・介護福祉士', detail: '神戸 / 介護施設勤務', vi: 'Hộ lý người Việt', color: '#FFE1D9', init: 'L' },
+    { name: '田中 健', role: '医療通訳士', detail: '元JICA / ベトナム駐在5年', vi: 'Phiên dịch y tế', color: '#E4FBF5', init: '田' },
+    { name: 'Trần Văn Hùng', role: 'EPA看護師', detail: '東京 / EPA7期生', vi: 'Y tá EPA', color: '#F3EFE6', init: 'H' },
+  ];
+
+  return (
+    <section id="teachers" className="sp" style={{ padding: '120px 0', background: 'var(--ink)', color: 'var(--cream)', position: 'relative', overflow: 'hidden' }}>
+      <div style={{
+        position: 'absolute', top: '10%', right: '-5%', width: 400, height: 400,
+        background: 'radial-gradient(circle, rgba(19,200,168,0.15) 0%, transparent 60%)',
+        filter: 'blur(40px)',
+      }}/>
+      <div className="si" style={{ maxWidth: 1280, margin: '0 auto', padding: '0 32px', position: 'relative' }}>
+        <div style={{ maxWidth: 720, marginBottom: 48 }}>
+          <div style={{
+            display: 'inline-flex', alignItems: 'center', gap: 10,
+            fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.16em',
+            textTransform: 'uppercase', color: 'var(--accent-soft)', fontWeight: 500, marginBottom: 18,
+          }}>
+            <span style={{ width: 24, height: 1, background: 'var(--accent-soft)', display: 'inline-block' }}/>
+            Teachers · 教える人
+          </div>
+          <h2 className="sec-h2" style={{
+            fontSize: 'clamp(28px,5vw,48px)', lineHeight: 1.1, letterSpacing: '-0.02em', fontWeight: 800,
+            color: 'var(--cream)', margin: '18px 0 16px',
+          }}>
+            肩書きではなく、<br/>
+            <span style={{ color: 'var(--accent)' }}>現場での時間</span>で選ばれた人たち。
           </h2>
-          <p className="text-xl text-white/80 mb-8">
-            {isJa
-              ? 'N5〜N1まで全コース無料。現役看護師とN1介護福祉士が監修した本物の教材で。'
-              : 'Toàn bộ N5〜N1 miễn phí. Tài liệu thực tế do y tá và điều dưỡng N1 giám sát.'
-            }
+          <p style={{ fontSize: 'clamp(14px,1.8vw,17px)', lineHeight: 1.65, color: 'rgba(251,249,244,0.7)' }}>
+            全員が、日本の医療・介護現場で<strong style={{ color: 'var(--cream)' }}>今も働く</strong>プロ。もしくは、ベトナムから来日し、N1を取り、この現場を生き抜いた人たち。
           </p>
-          <Link href={`/${locale}/auth/signup`}>
-            <Button
-              size="xl"
-              className="bg-white text-[#0066CC] hover:bg-blue-50 font-bold shadow-xl"
-            >
-              {t('hero.cta')}
-            </Button>
+        </div>
+
+        <div className="tchr-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 20 }}>
+          {team.map((m, i) => (
+            <div key={i} style={{
+              background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)',
+              borderRadius: 20, padding: 24,
+            }}>
+              <div style={{
+                aspectRatio: '1', borderRadius: 14, background: m.color, color: 'var(--ink)',
+                display: 'grid', placeItems: 'center',
+                fontFamily: 'var(--font-jp-serif)', fontSize: 'clamp(40px,6vw,64px)', fontWeight: 700,
+                marginBottom: 18, position: 'relative', overflow: 'hidden',
+              }}>
+                {m.init}
+                <div style={{
+                  position: 'absolute', top: 10, right: 10,
+                  fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.1em',
+                  background: 'rgba(10,27,61,0.12)', padding: '4px 8px', borderRadius: 6,
+                }}>#{String(i + 1).padStart(2, '0')}</div>
+              </div>
+              <div style={{ fontWeight: 700, fontSize: 15, color: 'var(--cream)' }}>{m.name}</div>
+              <div style={{ fontSize: 13, color: 'var(--accent-soft)', marginTop: 4 }}>{m.role}</div>
+              <div style={{ fontSize: 12, color: 'rgba(251,249,244,0.55)', marginTop: 6, lineHeight: 1.5 }}>{m.detail}</div>
+              <div style={{
+                fontFamily: 'var(--font-vn)', fontWeight: 400, fontSize: 11,
+                color: 'rgba(251,249,244,0.4)',
+                fontStyle: 'italic', marginTop: 8, paddingTop: 10,
+                borderTop: '1px dashed rgba(255,255,255,0.1)',
+              }}>{m.vi}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── Section: Course Map ────────────────────────────────────────
+function CourseMap({ locale }: { locale: string }) {
+  const rows = [
+    { level: 'N5', ja: 'はじめての日本語', vi: 'Tiếng Nhật cơ bản', weeks: '0–8週', hours: 120, color: 'var(--sand)' },
+    { level: 'N4', ja: '日常会話と基礎文法', vi: 'Giao tiếp hàng ngày', weeks: '8–16週', hours: 140, color: 'var(--rose)' },
+    { level: 'N3', ja: '医療日本語・入門', vi: 'Nhập môn y tế', weeks: '16–28週', hours: 180, color: 'var(--accent-soft)' },
+    { level: 'N2', ja: '介護現場の日本語', vi: 'Tiếng Nhật chăm sóc', weeks: '28–40週', hours: 220, color: 'var(--primary-200)' },
+    { level: 'N1', ja: '専門日本語と就労', vi: 'Chuyên sâu & đi làm', weeks: '40–52週', hours: 240, color: 'var(--coral)' },
+  ];
+
+  return (
+    <section className="sp" style={{ padding: '120px 0', background: 'var(--cream)' }}>
+      <div className="si" style={{ maxWidth: 1280, margin: '0 auto', padding: '0 32px' }}>
+        <div style={{ maxWidth: 720, marginBottom: 48 }}>
+          <div style={{
+            display: 'inline-flex', alignItems: 'center', gap: 10,
+            fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.16em',
+            textTransform: 'uppercase', color: 'var(--primary)', fontWeight: 500, marginBottom: 18,
+          }}>
+            <span style={{ width: 24, height: 1, background: 'var(--primary)', display: 'inline-block' }}/>
+            Course Map · 学習ロードマップ
+          </div>
+          <h2 className="sec-h2" style={{ fontSize: 'clamp(28px,5vw,48px)', lineHeight: 1.1, letterSpacing: '-0.02em', fontWeight: 800, margin: '18px 0 16px' }}>
+            52週間、N5から現場まで。
+          </h2>
+          <p style={{ fontSize: 'clamp(14px,1.8vw,17px)', lineHeight: 1.65, color: 'var(--ink-soft)' }}>
+            標準ルートで約1年。自分のペースで伸縮OK。
+          </p>
+        </div>
+
+        <div style={{ background: 'var(--white)', border: '1px solid var(--line)', borderRadius: 24, overflow: 'hidden' }}>
+          <style>{`
+            .course-row:hover{background:var(--primary-50)!important}
+            .cm-vi,.cm-weeks,.cm-hours{display:table-cell}
+            @media(max-width:600px){
+              .cm-hdr{display:none!important}
+              .course-row{grid-template-columns:56px 1fr 36px!important;padding:16px!important}
+              .cm-vi,.cm-weeks,.cm-hours{display:none!important}
+            }
+          `}</style>
+          <div className="cm-hdr" style={{
+            display: 'grid', gridTemplateColumns: '80px 1.5fr 1fr 120px 120px 60px',
+            padding: '16px 28px', background: 'var(--cream-2)',
+            fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.14em',
+            color: 'var(--ink-soft)', textTransform: 'uppercase',
+          }}>
+            <div>LEVEL</div><div>コース内容</div><div>VI</div><div>期間</div><div>学習時間</div><div/>
+          </div>
+          {rows.map((r, i) => (
+            <Link key={i} href={`/${locale}/courses`} className="course-row" style={{
+              display: 'grid', gridTemplateColumns: '80px 1.5fr 1fr 120px 120px 60px',
+              padding: '22px 28px', borderTop: '1px solid var(--line)', alignItems: 'center',
+              textDecoration: 'none', color: 'inherit', transition: 'background .2s',
+            }}>
+              <div>
+                <div style={{
+                  width: 44, height: 44, borderRadius: 10, background: r.color,
+                  display: 'grid', placeItems: 'center',
+                  fontFamily: 'var(--font-jp-serif)', fontWeight: 800, fontSize: 18, color: 'var(--ink)',
+                }}>{r.level}</div>
+              </div>
+              <div style={{ fontSize: 'clamp(14px,1.8vw,17px)', fontWeight: 600 }}>{r.ja}</div>
+              <div className="cm-vi" style={{
+                fontFamily: 'var(--font-vn)', fontWeight: 400, fontSize: 13,
+                color: 'var(--primary)', fontStyle: 'italic',
+              }}>{r.vi}</div>
+              <div className="cm-weeks" style={{ fontSize: 13, color: 'var(--ink-soft)', fontVariantNumeric: 'tabular-nums' }}>{r.weeks}</div>
+              <div className="cm-hours" style={{ fontSize: 13, color: 'var(--ink-soft)', fontVariantNumeric: 'tabular-nums' }}>{r.hours}h</div>
+              <div style={{ textAlign: 'right', color: 'var(--ink-faint)' }}>
+                <ArrowIcon/>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── Section: Stories ───────────────────────────────────────────
+function Stories() {
+  const stories = [
+    {
+      name: 'Linh', age: 26, city: '神戸', role: '介護福祉士',
+      quote: '母と電話で泣きながら勉強した日もあったけど、今は現場で笑っていられる。',
+      before: 'ハノイ/看護学生', after: '神戸/介護施設',
+    },
+    {
+      name: 'Minh', age: 24, city: '東京', role: 'EPA看護師候補',
+      quote: '病棟で患者さんの不安を聞けたとき、日本語を学んだ意味が初めてわかった。',
+      before: 'ダナン/EPA合格', after: '東京/病棟勤務',
+    },
+    {
+      name: 'Thảo', age: 28, city: '大阪', role: '介護施設リーダー',
+      quote: '後輩を指導できるほどになれたのは、日本の先輩たちに教わった言葉のおかげ。',
+      before: 'フエ/日本語教室', after: '大阪/チーフ',
+    },
+  ];
+
+  return (
+    <section id="stories" className="sp" style={{
+      padding: '120px 0', background: 'var(--cream-2)',
+      borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)',
+    }}>
+      <div className="si" style={{ maxWidth: 1280, margin: '0 auto', padding: '0 32px' }}>
+        <div style={{ maxWidth: 720, marginBottom: 48 }}>
+          <div style={{
+            display: 'inline-flex', alignItems: 'center', gap: 10,
+            fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.16em',
+            textTransform: 'uppercase', color: 'var(--primary)', fontWeight: 500, marginBottom: 18,
+          }}>
+            <span style={{ width: 24, height: 1, background: 'var(--primary)', display: 'inline-block' }}/>
+            Stories · 受講生の物語
+          </div>
+          <h2 className="sec-h2" style={{ fontSize: 'clamp(28px,5vw,48px)', lineHeight: 1.1, letterSpacing: '-0.02em', fontWeight: 800, margin: '18px 0 16px' }}>
+            1,247の<br/>ジャーニー。
+          </h2>
+          <p style={{ fontSize: 'clamp(14px,1.8vw,17px)', lineHeight: 1.65, color: 'var(--ink-soft)' }}>
+            私たちの教材は、卒業生の一人ひとりの言葉で、今も書き換わっています。
+          </p>
+        </div>
+
+        <div className="str-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 20 }}>
+          {stories.map((s, i) => (
+            <div key={i} style={{
+              background: 'var(--cream)', borderRadius: 20, padding: 28,
+              border: '1px solid var(--line)', display: 'flex', flexDirection: 'column', gap: 16,
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                <div style={{
+                  width: 44, height: 44, borderRadius: '50%',
+                  background: ['#FFE1D9','#DBE5FF','#E4FBF5'][i],
+                  display: 'grid', placeItems: 'center',
+                  fontFamily: 'var(--font-jp-serif)', fontSize: 18, fontWeight: 700, color: 'var(--ink)',
+                }}>{s.name[0]}</div>
+                <div>
+                  <div style={{ fontWeight: 700, fontSize: 15 }}>{s.name}</div>
+                  <div style={{ fontSize: 12, color: 'var(--ink-faint)' }}>{s.age}歳 · {s.city} · {s.role}</div>
+                </div>
+              </div>
+              <div style={{
+                fontFamily: 'var(--font-jp-serif)', fontSize: 'clamp(15px,2vw,19px)', lineHeight: 1.6,
+                color: 'var(--ink)', fontWeight: 500, letterSpacing: '-0.005em',
+              }}>
+                「{s.quote}」
+              </div>
+              <div style={{
+                marginTop: 'auto', paddingTop: 16, borderTop: '1px dashed var(--line)',
+                display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: 'var(--ink-soft)',
+                flexWrap: 'wrap',
+              }}>
+                <span>{s.before}</span>
+                <ArrowIcon/>
+                <strong style={{ color: 'var(--primary)' }}>{s.after}</strong>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── Section: Pricing ───────────────────────────────────────────
+function Pricing({ locale }: { locale: string }) {
+  const plans = [
+    {
+      name: 'Free', vi: 'Miễn phí', price: '¥0', period: 'ずっと',
+      trial: null,
+      features: ['N5–N1全コース閲覧', 'AI家庭教師 5回/日', 'コミュニティ参加'],
+      cta: '無料で始める', href: `/${locale}/auth/signup`, primary: false, key: 'free',
+    },
+    {
+      name: 'Basic', vi: 'Cơ bản', price: '¥980', period: '/月',
+      trial: '7日間無料',
+      features: ['全教材ダウンロード', 'AI家庭教師 無制限', '介護の専門日本語', 'キャリア相談'],
+      cta: '7日間 無料で試す', href: `/${locale}/pricing`, primary: true, tag: '人気', key: 'basic',
+    },
+    {
+      name: 'Pro', vi: 'Chuyên nghiệp', price: '¥1,980', period: '/月',
+      trial: '7日間無料',
+      features: ['Basicの全機能', '週1回のプロ講師1on1', '履歴書・面接サポート', '日本企業とのマッチング', 'ビザ・渡航サポート'],
+      cta: '7日間 無料で試す', href: `/${locale}/pricing`, primary: false, key: 'pro',
+    },
+  ];
+
+  return (
+    <section id="pricing" className="sp" style={{ padding: '120px 0', background: 'var(--cream)' }}>
+      <div className="si" style={{ maxWidth: 1280, margin: '0 auto', padding: '0 32px' }}>
+        <div style={{ textAlign: 'center', margin: '0 auto 56px', maxWidth: 720 }}>
+          <div style={{
+            display: 'inline-flex', alignItems: 'center', gap: 10,
+            fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.16em',
+            textTransform: 'uppercase', color: 'var(--primary)', fontWeight: 500, marginBottom: 18,
+            justifyContent: 'center',
+          }}>
+            <span style={{ width: 24, height: 1, background: 'var(--primary)', display: 'inline-block' }}/>
+            Pricing · 料金
+          </div>
+          <h2 className="sec-h2" style={{ fontSize: 'clamp(28px,5vw,48px)', lineHeight: 1.1, letterSpacing: '-0.02em', fontWeight: 800, margin: '18px 0 16px' }}>
+            学びは、無料から。
+          </h2>
+          <p style={{ fontSize: 'clamp(14px,1.8vw,17px)', lineHeight: 1.65, color: 'var(--ink-soft)' }}>
+            N5〜N1のすべてのコースは、ずっと無料で公開されています。<br/>
+            有料プランは<strong style={{ color: 'var(--primary)' }}>7日間無料トライアル</strong>でお試しいただけます。
+          </p>
+        </div>
+
+        <div className="pri-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 20, maxWidth: 1100, margin: '0 auto' }}>
+          {plans.map((p) => (
+            <div key={p.key} className={p.primary ? 'pri-card pri-elevated' : 'pri-card'} style={{
+              background: p.primary ? 'var(--ink)' : 'var(--white)',
+              color: p.primary ? 'var(--cream)' : 'var(--ink)',
+              borderRadius: 24, padding: 32,
+              border: p.primary ? 'none' : '1px solid var(--line)',
+              position: 'relative', display: 'flex', flexDirection: 'column', gap: 20,
+              boxShadow: p.primary ? '0 40px 80px -40px rgba(10,27,61,0.4)' : 'none',
+              transform: p.primary ? 'translateY(-8px)' : 'none',
+            }}>
+              {p.tag && (
+                <div style={{
+                  position: 'absolute', top: 16, right: 16,
+                  background: 'var(--accent)', color: 'var(--ink)',
+                  padding: '4px 10px', borderRadius: 6, fontSize: 11, fontWeight: 700,
+                  fontFamily: 'var(--font-mono)', letterSpacing: '0.1em',
+                }}>{p.tag}</div>
+              )}
+              {p.trial && (
+                <div style={{
+                  display: 'inline-flex', alignItems: 'center', gap: 5,
+                  background: p.primary ? 'rgba(19,200,168,0.2)' : 'var(--accent-50)',
+                  color: p.primary ? 'var(--accent-soft)' : '#0aa088',
+                  padding: '5px 10px', borderRadius: 6, fontSize: 11, fontWeight: 700,
+                  fontFamily: 'var(--font-mono)', letterSpacing: '0.06em', width: 'fit-content',
+                }}>
+                  ★ {p.trial}
+                </div>
+              )}
+              <div>
+                <div style={{ fontWeight: 700, fontSize: 20 }}>{p.name}</div>
+                <div style={{
+                  fontFamily: 'var(--font-vn)', fontWeight: 400, fontSize: 12, fontStyle: 'italic',
+                  color: p.primary ? 'var(--accent-soft)' : 'var(--primary)', marginTop: 2,
+                }}>{p.vi}</div>
+              </div>
+              <div>
+                <span style={{
+                  fontFamily: 'var(--font-en-serif)', fontSize: 'clamp(40px,6vw,56px)',
+                  letterSpacing: '-0.02em', lineHeight: 1,
+                }}>{p.price}</span>
+                <span style={{
+                  fontSize: 13, marginLeft: 6,
+                  color: p.primary ? 'rgba(251,249,244,0.6)' : 'var(--ink-faint)',
+                }}>{p.period}</span>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10, fontSize: 14 }}>
+                {p.features.map((f, j) => (
+                  <div key={j} style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
+                    <div style={{ color: p.primary ? 'var(--accent)' : 'var(--primary)', marginTop: 2, flexShrink: 0 }}>
+                      <CheckIcon/>
+                    </div>
+                    <span style={{
+                      color: p.primary ? 'rgba(251,249,244,0.85)' : 'var(--ink-soft)',
+                      lineHeight: 1.5,
+                    }}>{f}</span>
+                  </div>
+                ))}
+              </div>
+              <Link href={p.href} style={{
+                marginTop: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                padding: '14px 20px', borderRadius: 12, fontWeight: 600, fontSize: 14,
+                background: p.primary ? 'var(--accent)' : 'transparent',
+                color: p.primary ? 'var(--ink)' : 'var(--ink)',
+                border: p.primary ? 'none' : '1px solid var(--line-strong)',
+                textDecoration: 'none', transition: 'all .2s',
+              }}>
+                {p.cta} <ArrowIcon/>
+              </Link>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── Section: FAQ ───────────────────────────────────────────────
+function FAQSection() {
+  return (
+    <section id="faq" className="sp" style={{ padding: '120px 0', background: 'var(--cream)', borderTop: '1px solid var(--line)' }}>
+      <div className="si" style={{ maxWidth: 900, margin: '0 auto', padding: '0 32px' }}>
+        <div style={{ maxWidth: 720, marginBottom: 48 }}>
+          <div style={{
+            display: 'inline-flex', alignItems: 'center', gap: 10,
+            fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.16em',
+            textTransform: 'uppercase', color: 'var(--primary)', fontWeight: 500, marginBottom: 18,
+          }}>
+            <span style={{ width: 24, height: 1, background: 'var(--primary)', display: 'inline-block' }}/>
+            FAQ · よくある質問
+          </div>
+          <h2 className="sec-h2" style={{ fontSize: 'clamp(28px,5vw,48px)', lineHeight: 1.1, letterSpacing: '-0.02em', fontWeight: 800, margin: '18px 0 0' }}>
+            迷ったら、読んでみて。
+          </h2>
+        </div>
+        <FAQAccordion/>
+      </div>
+    </section>
+  );
+}
+
+// ── Section: Final CTA ─────────────────────────────────────────
+function FinalCTA({ locale }: { locale: string }) {
+  return (
+    <section className="sp" style={{ padding: '120px 0', background: 'var(--ink)', color: 'var(--cream)', position: 'relative', overflow: 'hidden' }}>
+      <div style={{
+        position: 'absolute', top: '-20%', left: '50%', width: 800, height: 800,
+        transform: 'translateX(-50%)',
+        background: 'radial-gradient(circle, rgba(19,200,168,0.2) 0%, transparent 60%)',
+        filter: 'blur(40px)',
+      }}/>
+      <div className="si" style={{ maxWidth: 1280, margin: '0 auto', padding: '0 32px', textAlign: 'center', position: 'relative' }}>
+        <div style={{
+          display: 'inline-flex', alignItems: 'center', gap: 10, justifyContent: 'center',
+          fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.16em',
+          textTransform: 'uppercase', color: 'var(--accent-soft)', fontWeight: 500, marginBottom: 24,
+        }}>
+          <span style={{ width: 24, height: 1, background: 'var(--accent-soft)', display: 'inline-block' }}/>
+          あなたの番です · Đến lượt bạn
+        </div>
+        <h2 style={{
+          fontFamily: 'var(--font-jp)', fontWeight: 900,
+          fontSize: 'clamp(36px, 7vw, 96px)',
+          lineHeight: 1.05, letterSpacing: '-0.035em',
+          margin: '0 auto 20px', color: 'var(--cream)',
+        }}>
+          次の物語を、<br/>
+          <span style={{ color: 'var(--accent)' }}>今日</span>はじめよう。
+        </h2>
+        <p style={{
+          fontFamily: 'var(--font-vn)', fontWeight: 400, fontSize: 'clamp(16px,2.5vw,20px)',
+          fontStyle: 'italic', color: 'rgba(251,249,244,0.7)', marginBottom: 40,
+        }}>
+          Câu chuyện tiếp theo bắt đầu từ hôm nay.
+        </p>
+        <div className="cta-btns" style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
+          <Link href={`/${locale}/auth/signup`} style={{
+            display: 'inline-flex', alignItems: 'center', gap: 10,
+            padding: '18px 28px', borderRadius: 14, fontWeight: 600, fontSize: 16,
+            background: 'var(--accent)', color: 'var(--ink)', textDecoration: 'none',
+          }}>
+            無料で始める <ArrowIcon/>
+          </Link>
+          <Link href={`/${locale}/courses`} style={{
+            display: 'inline-flex', alignItems: 'center', gap: 10,
+            padding: '18px 28px', borderRadius: 14, fontWeight: 600, fontSize: 16,
+            border: '1px solid rgba(255,255,255,0.2)', color: 'var(--cream)', textDecoration: 'none',
+          }}>
+            コースを見る
           </Link>
         </div>
-      </section>
+        <div style={{
+          marginTop: 32, fontFamily: 'var(--font-mono)', fontSize: 11,
+          letterSpacing: '0.1em', color: 'rgba(251,249,244,0.4)',
+        }}>
+          ✓ CARD FREE &nbsp; ✓ 1-MINUTE SIGNUP &nbsp; ✓ VI / JA SUPPORTED
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── Main landing content ───────────────────────────────────────
+function LandingContent({ locale }: { locale: string }) {
+  return (
+    <div>
+      <style>{`
+        /* ── ベトナム語フォント統一 ─────────────────────────
+           Be Vietnam Pro: 常に weight 明示。
+           fontStyle italic は装飾のみ、weight は親から継承させない。       */
+        [style*="--font-vn"] { font-synthesis: none; }
+
+        /* ── モバイル共通 ──────────────────────────────────── */
+        @media (max-width: 768px) {
+          /* セクション padding */
+          .sp { padding: 64px 0 !important; }
+          .si { padding: 0 20px !important; }
+
+          /* Hero */
+          .hero-wrap { padding: 32px 20px 56px !important; }
+          .hero-header { display: none !important; }
+          .hero-grid {
+            grid-template-columns: 1fr !important;
+            gap: 32px !important;
+          }
+          .hero-vn-card { min-height: unset !important; padding: 28px 24px !important; }
+          .hero-cta {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 24px !important;
+          }
+          .hero-cta-btns { width: 100%; }
+          .hero-cta-btns a { width: 100% !important; justify-content: center; }
+          .hero-stats { gap: 20px !important; }
+
+          /* TrustBar */
+          .trust-inner { gap: 12px 24px !important; padding: 16px 20px !important; }
+          .trust-iso { display: none !important; }
+
+          /* Features */
+          .feat-hdr {
+            grid-template-columns: 1fr !important;
+            gap: 20px !important;
+            margin-bottom: 32px !important;
+          }
+          .feat-grid { grid-template-columns: 1fr !important; }
+
+          /* Teachers */
+          .tchr-grid { grid-template-columns: repeat(2, 1fr) !important; }
+
+          /* Stories */
+          .str-grid { grid-template-columns: 1fr !important; }
+
+          /* Pricing */
+          .pri-grid {
+            grid-template-columns: 1fr !important;
+            max-width: 440px !important;
+            margin: 0 auto !important;
+          }
+          .pri-elevated { transform: none !important; box-shadow: 0 20px 40px -20px rgba(10,27,61,0.35) !important; }
+
+          /* CTA buttons */
+          .cta-btns { flex-direction: column !important; align-items: center !important; }
+          .cta-btns a { width: 100% !important; max-width: 320px; justify-content: center; }
+        }
+
+        @media (max-width: 480px) {
+          .tchr-grid { grid-template-columns: 1fr !important; }
+          .hero-stats { flex-wrap: wrap !important; gap: 16px !important; }
+          .pri-grid { max-width: 100% !important; }
+        }
+      `}</style>
+      <Hero locale={locale}/>
+      <TrustBar/>
+      <Features/>
+      <Teachers/>
+      <CourseMap locale={locale}/>
+      <Stories/>
+      <Pricing locale={locale}/>
+      <FAQSection/>
+      <FinalCTA locale={locale}/>
     </div>
   );
 }

@@ -26,6 +26,13 @@ export async function POST(request: NextRequest) {
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
 
+    if (!user) {
+      return NextResponse.json(
+        { error: 'Unauthorized. Please log in first.' },
+        { status: 401 }
+      );
+    }
+
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://mediaca.vercel.app';
 
     const session = await stripe.checkout.sessions.create({
@@ -34,15 +41,17 @@ export async function POST(request: NextRequest) {
       success_url: `${appUrl}/${locale}/dashboard?checkout=success&plan=${plan}`,
       cancel_url: `${appUrl}/${locale}/pricing?checkout=cancelled`,
       metadata: {
-        userId: user?.id || '',
+        userId: user.id,
         plan,
       },
       subscription_data: {
-        metadata: { userId: user?.id || '', plan },
+        trial_period_days: 7,
+        metadata: { userId: user.id, plan },
       },
       allow_promotion_codes: true,
       billing_address_collection: 'auto',
-      ...(user?.email ? { customer_email: user.email } : {}),
+      payment_method_collection: 'always', // カードは必須（無料期間後に自動課金）
+      ...(user.email ? { customer_email: user.email } : {}),
     });
 
     return NextResponse.json({ url: session.url });

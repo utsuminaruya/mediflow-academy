@@ -51,8 +51,9 @@ export default function PricingPage({ params }: PricingPageProps) {
       period: t('month'),
       color: 'border-[#0066CC]',
       buttonVariant: 'primary' as const,
-      buttonText: t('upgrade'),
+      buttonText: locale === 'ja' ? '7日間無料で試す' : 'Dùng thử 7 ngày miễn phí',
       highlighted: false,
+      trial: true,
       priceId: process.env.NEXT_PUBLIC_STRIPE_BASIC_PRICE_ID,
       description: { ja: '介護の現場で使える日本語と、現役ベトナム人介護福祉士によるキャリア相談', vi: 'Tiếng Nhật thực tế điều dưỡng & tư vấn từ điều dưỡng viên người Việt' },
     },
@@ -64,8 +65,9 @@ export default function PricingPage({ params }: PricingPageProps) {
       period: t('month'),
       color: 'border-[#00B894]',
       buttonVariant: 'secondary' as const,
-      buttonText: t('upgrade'),
+      buttonText: locale === 'ja' ? '7日間無料で試す' : 'Dùng thử 7 ngày miễn phí',
       highlighted: true,
+      trial: true,
       priceId: process.env.NEXT_PUBLIC_STRIPE_PRO_PRICE_ID,
       description: { ja: 'プレミアム就職紹介とN1監修の医療通訳コース付き', vi: 'Giới thiệu việc làm cao cấp & khóa phiên dịch y tế giám sát N1' },
     },
@@ -109,12 +111,19 @@ export default function PricingPage({ params }: PricingPageProps) {
       {/* Header */}
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold text-gray-900 mb-4">{t('title')}</h1>
-        <p className="text-xl text-gray-500 mb-8">
+        <p className="text-xl text-gray-500 mb-4">
           {locale === 'ja'
             ? 'まず無料で始めて、キャリアアップに合わせてアップグレード'
             : 'Bắt đầu miễn phí, nâng cấp khi cần thiết cho sự nghiệp của bạn'
           }
         </p>
+        <div className="inline-flex items-center gap-2 bg-emerald-50 border border-emerald-200 text-emerald-700 rounded-full px-4 py-2 text-sm font-semibold mb-6">
+          <span>🎉</span>
+          {locale === 'ja'
+            ? 'ベーシック・Proプランは7日間無料でお試しいただけます'
+            : 'Gói Basic và Pro miễn phí 7 ngày đầu tiên'
+          }
+        </div>
 
         {checkoutError && (
           <div className="max-w-lg mx-auto mb-6 bg-amber-50 border border-amber-200 rounded-xl p-4 flex items-start gap-3">
@@ -174,6 +183,11 @@ export default function PricingPage({ params }: PricingPageProps) {
                   <Zap className="h-3.5 w-3.5" />
                   {t('mostPopular')}
                 </span>
+              </div>
+            )}
+            {(plan as { trial?: boolean }).trial && (
+              <div className="inline-flex items-center gap-1 bg-emerald-50 border border-emerald-200 text-emerald-700 rounded-md px-2.5 py-1 text-xs font-semibold mb-2">
+                ✓ {locale === 'ja' ? '7日間無料トライアル' : 'Thử miễn phí 7 ngày'}
               </div>
             )}
 
@@ -319,6 +333,12 @@ export default function PricingPage({ params }: PricingPageProps) {
         </h2>
         <div className="space-y-4 max-w-3xl mx-auto">
           {[
+            {
+              q: locale === 'ja' ? '7日間無料トライアルはどのように機能しますか？' : 'Thử miễn phí 7 ngày hoạt động như thế nào?',
+              a: locale === 'ja'
+                ? 'カード情報をご登録いただきますが、7日間は一切課金されません。トライアル期間中にキャンセルすれば、料金は発生しません。7日後、自動的に選択したプランに移行します。'
+                : 'Bạn cần nhập thông tin thẻ, nhưng sẽ không bị tính phí trong 7 ngày đầu. Hủy trước khi hết hạn và bạn sẽ không mất phí.',
+            },
             {
               q: locale === 'ja' ? 'いつでもキャンセルできますか？' : 'Tôi có thể hủy bất cứ lúc nào không?',
               a: locale === 'ja'

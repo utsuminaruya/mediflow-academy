@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import {
   Flame, Zap, BookOpen, Bot, ChevronRight, TrendingUp,
-  LogOut, User, ExternalLink, Star, Target,
+  LogOut, User, ExternalLink, Star, Target, MessageSquare,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -357,6 +357,35 @@ export default function DashboardPage({ params }: DashboardPageProps) {
             <Link href={`/${locale}/ai-tutor`}>
               <Button className="bg-white text-[#0066CC] hover:bg-blue-50" size="sm">
                 チャット開始
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </Link>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* ===== AIロールプレイ練習 ===== */}
+      <Card className="bg-gradient-to-r from-purple-600 to-purple-500 text-white border-0">
+        <CardContent className="pt-5 pb-5">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                <MessageSquare className="h-6 w-6 text-white" />
+              </div>
+              <div>
+                <p className="font-bold text-white">
+                  {locale === 'vi' ? 'Luyện hội thoại AI' : 'AIロールプレイで練習'}
+                </p>
+                <p className="text-purple-100 text-sm">
+                  {locale === 'vi'
+                    ? 'Thực hành hội thoại theo từng tình huống chăm sóc'
+                    : '介護現場のシーンでリアルな会話を練習しよう'}
+                </p>
+              </div>
+            </div>
+            <Link href={`/${locale}/ai-tutor/roleplay`}>
+              <Button className="bg-white text-purple-600 hover:bg-purple-50" size="sm">
+                {locale === 'vi' ? 'Bắt đầu' : 'はじめる'}
                 <ChevronRight className="h-4 w-4" />
               </Button>
             </Link>
