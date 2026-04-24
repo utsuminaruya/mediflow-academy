@@ -3,7 +3,7 @@
 import { useState, useRef } from 'react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
-import { Menu, X, ChevronDown, FileText } from 'lucide-react';
+import { Menu, X, ChevronDown, FileText, MessageSquare } from 'lucide-react';
 
 interface HeaderProps {
   locale: string;
@@ -90,6 +90,23 @@ export default function Header({ locale }: HeaderProps) {
               {link.label}
             </Link>
           ))}
+          {/* AIロールプレイ */}
+          <Link href={`/${locale}/ai-tutor/roleplay`} style={{
+            display: 'flex', alignItems: 'center', gap: 6,
+            padding: '8px 14px', borderRadius: 8, fontSize: 14, fontWeight: 500,
+            color: 'var(--ink-soft)', transition: 'all .2s', textDecoration: 'none',
+          }}
+          onMouseEnter={e => { const el = e.currentTarget; el.style.color = 'var(--ink)'; el.style.background = 'rgba(10,27,61,0.04)'; }}
+          onMouseLeave={e => { const el = e.currentTarget; el.style.color = 'var(--ink-soft)'; el.style.background = 'transparent'; }}
+          >
+            <MessageSquare size={14} style={{ color: '#8b5cf6' }} />
+            {locale === 'vi' ? 'Luyện hội thoại' : 'AIロールプレイ'}
+            <span style={{
+              display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+              fontSize: 9, fontWeight: 700, color: '#fff', background: '#8b5cf6',
+              borderRadius: 4, padding: '1px 5px', letterSpacing: '0.05em',
+            }}>NEW</span>
+          </Link>
           {/* 過去問 dropdown */}
           <div
             ref={examDropdownRef}
@@ -230,6 +247,20 @@ export default function Header({ locale }: HeaderProps) {
               {link.label}
             </Link>
           ))}
+          {/* AIロールプレイ */}
+          <Link href={`/${locale}/ai-tutor/roleplay`} onClick={() => setMobileOpen(false)} style={{
+            display: 'flex', alignItems: 'center', gap: 8,
+            padding: '12px 0', fontSize: 15, fontWeight: 500,
+            color: 'var(--ink-soft)', textDecoration: 'none',
+            borderBottom: '1px solid var(--line)',
+          }}>
+            <MessageSquare size={15} style={{ color: '#8b5cf6' }} />
+            {locale === 'vi' ? 'Luyện hội thoại AI' : 'AIロールプレイ'}
+            <span style={{
+              fontSize: 9, fontWeight: 700, color: '#fff', background: '#8b5cf6',
+              borderRadius: 4, padding: '1px 5px',
+            }}>NEW</span>
+          </Link>
           {/* 過去問 accordion */}
           <div style={{ borderBottom: '1px solid var(--line)' }}>
             <button
