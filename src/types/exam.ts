@@ -40,6 +40,28 @@ export interface Choice {
   text: LocalizedText;
 }
 
+/** Alias for Choice — used by ExplanationPanel */
+export type ExamChoice = Choice;
+
+/** Actual DB explanation schema (used in exam questions & ExplanationPanel) */
+export interface QuestionExplanation {
+  summary: LocalizedText;
+  why_correct: LocalizedText;
+  choice_explanations: {
+    choice: number;
+    explanation: LocalizedText;
+    is_common_mistake?: boolean;
+  }[];
+  real_world_example: LocalizedText;
+  key_points: LocalizedText[];
+  related_terms: {
+    term: string;
+    reading?: string;
+    meaning: LocalizedText;
+  }[];
+}
+
+/** Legacy alias — kept for backwards compatibility */
 export interface ExplanationData {
   overall: LocalizedText;
   choices: {
@@ -65,7 +87,7 @@ export interface ExamQuestion {
   question_text: LocalizedText;
   choices: Choice[];
   correct_answer: number;
-  explanation: ExplanationData;
+  explanation: QuestionExplanation;
   difficulty: Difficulty;
   created_at: string;
 }
@@ -130,7 +152,7 @@ export interface SubmitAnswerRequest {
 export interface SubmitAnswerResponse {
   is_correct: boolean;
   correct_answer: number;
-  explanation: ExplanationData;
+  explanation: QuestionExplanation;
   answer: ExamAnswer;
 }
 
