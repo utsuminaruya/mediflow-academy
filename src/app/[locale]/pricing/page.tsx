@@ -1,10 +1,11 @@
 'use client';
 
-import { use, useState } from 'react';
+import { use, useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { Check, X, Zap, Shield, Bot, BookOpen, Briefcase, ExternalLink, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { createClient } from '@/lib/supabase/client';
 
 interface PricingPageProps {
   params: Promise<{ locale: string }>;
@@ -28,6 +29,14 @@ export default function PricingPage({ params }: PricingPageProps) {
   const [checkoutError, setCheckoutError] = useState('');
 
   const lineUrl = process.env.NEXT_PUBLIC_LINE_JOBSEEKER || 'https://lin.ee/xUocVyI';
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const supabase = createClient();
+    supabase.auth.getUser().then(({ data }) => {
+      setIsLoggedIn(!!data.user);
+    });
+  }, []);
 
   const plans = [
     {
@@ -75,6 +84,13 @@ export default function PricingPage({ params }: PricingPageProps) {
 
   const handleCheckout = async (planKey: string) => {
     if (planKey === 'free') return;
+
+    // ログイン確認 — 未ログインならサインアップへ
+    if (!isLoggedIn) {
+      window.location.href = `/${locale}/auth/signup?redirect=/pricing&plan=${planKey}`;
+      return;
+    }
+
     setIsLoading(planKey);
     setCheckoutError('');
 
@@ -85,14 +101,20 @@ export default function PricingPage({ params }: PricingPageProps) {
         body: JSON.stringify({ plan: planKey, locale }),
       });
 
+      if (response.status === 401) {
+        // セッション切れ → ログインページへ
+        window.location.href = `/${locale}/auth/login?redirect=/pricing&plan=${planKey}`;
+        return;
+      }
+
       const data = await response.json();
       if (data.url) {
         window.location.href = data.url;
-      } else if (data.error) {
+      } else {
         setCheckoutError(
           locale === 'ja'
-            ? '決済システムの準備中です。LINEよりお問い合わせください。'
-            : 'Hệ thống thanh toán đang được chuẩn bị. Vui lòng liên hệ qua LINE.'
+            ? '決済ページを開けませんでした。LINEよりお問い合わせください。'
+            : 'Không thể mở trang thanh toán. Vui lòng liên hệ qua LINE.'
         );
       }
     } catch {
@@ -232,7 +254,10 @@ export default function PricingPage({ params }: PricingPageProps) {
                 }
               }}
             >
-              {plan.buttonText}
+              {plan.key !== 'free' && !isLoggedIn
+                ? (locale === 'ja' ? '無料登録して試す' : 'Đăng ký & dùng thử miễn phí')
+                : plan.buttonText
+              }
             </Button>
           </div>
         ))}

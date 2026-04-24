@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { Menu, X, ChevronDown, FileText, MessageSquare } from 'lucide-react';
@@ -26,34 +26,14 @@ const VnMark = () => (
 export default function Header({ locale }: HeaderProps) {
   const t = useTranslations('nav');
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [examDropdownOpen, setExamDropdownOpen] = useState(false);
-  const [mobileExamOpen, setMobileExamOpen] = useState(false);
-  const examDropdownRef = useRef<HTMLDivElement>(null);
 
   const navLinks = [
-    { href: `/${locale}/courses`, label: 'コース' },
-    { href: `/${locale}#teachers`, label: '講師' },
-    { href: `/${locale}#stories`, label: '受講生の声' },
-    { href: `/${locale}/pricing`, label: '料金' },
+    { href: `/${locale}/courses`, label: locale === 'vi' ? 'Khóa học' : 'コース' },
+    { href: `/${locale}/pricing`, label: locale === 'vi' ? 'Giá' : '料金' },
     { href: `/${locale}#faq`, label: 'FAQ' },
   ];
 
   const examLabel = locale === 'vi' ? 'Đề thi' : '過去問';
-  const examItems = [
-    {
-      group: locale === 'vi' ? 'Đánh giá kỹ năng đặc định' : '特定技能「介護」評価試験',
-      items: [
-        { href: `/${locale}/exams/tokutei-ginou`, label: locale === 'vi' ? 'Đánh giá kỹ năng điều dưỡng' : '介護技能評価試験' },
-        { href: `/${locale}/exams/tokutei-ginou`, label: locale === 'vi' ? 'Đánh giá tiếng Nhật điều dưỡng' : '介護日本語評価試験' },
-      ],
-    },
-    {
-      group: locale === 'vi' ? 'Kỳ thi quốc gia Kaigo Fukushishi' : '介護福祉士国家試験',
-      items: [
-        { href: `/${locale}/exams/kaigo-fukushishi`, label: locale === 'vi' ? 'Luyện tập theo đề' : '過去問演習' },
-      ],
-    },
-  ];
 
   return (
     <header style={{
@@ -90,86 +70,36 @@ export default function Header({ locale }: HeaderProps) {
               {link.label}
             </Link>
           ))}
-          {/* AIロールプレイ */}
-          <Link href={`/${locale}/ai-tutor/roleplay`} style={{
-            display: 'flex', alignItems: 'center', gap: 6,
+          {/* AIロールプレイ（準備中） */}
+          <span title={locale === 'vi' ? 'Sắp ra mắt' : 'まもなく開設'} style={{
+            display: 'inline-flex', alignItems: 'center', gap: 6,
             padding: '8px 14px', borderRadius: 8, fontSize: 14, fontWeight: 500,
-            color: 'var(--ink-soft)', transition: 'all .2s', textDecoration: 'none',
-          }}
-          onMouseEnter={e => { const el = e.currentTarget; el.style.color = 'var(--ink)'; el.style.background = 'rgba(10,27,61,0.04)'; }}
-          onMouseLeave={e => { const el = e.currentTarget; el.style.color = 'var(--ink-soft)'; el.style.background = 'transparent'; }}
-          >
-            <MessageSquare size={14} style={{ color: '#8b5cf6' }} />
+            color: 'rgba(139,92,246,0.55)', cursor: 'default', userSelect: 'none',
+          }}>
+            <MessageSquare size={14} style={{ color: 'rgba(139,92,246,0.5)' }} />
             {locale === 'vi' ? 'Luyện hội thoại' : 'AIロールプレイ'}
             <span style={{
               display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: 9, fontWeight: 700, color: '#fff', background: '#8b5cf6',
+              fontSize: 9, fontWeight: 700, color: '#8b5cf6', background: 'rgba(139,92,246,0.1)',
+              border: '1px solid rgba(139,92,246,0.25)',
               borderRadius: 4, padding: '1px 5px', letterSpacing: '0.05em',
-            }}>NEW</span>
-          </Link>
-          {/* 過去問 dropdown */}
-          <div
-            ref={examDropdownRef}
-            style={{ position: 'relative' }}
-            onMouseEnter={() => setExamDropdownOpen(true)}
-            onMouseLeave={() => setExamDropdownOpen(false)}
-          >
-            <button style={{
-              display: 'flex', alignItems: 'center', gap: 4,
-              padding: '8px 14px', borderRadius: 8, fontSize: 14, fontWeight: 500,
-              color: examDropdownOpen ? 'var(--ink)' : 'var(--ink-soft)',
-              background: examDropdownOpen ? 'rgba(10,27,61,0.04)' : 'transparent',
-              border: 'none', cursor: 'pointer', transition: 'all .2s',
-            }}>
-              {examLabel}
-              <span style={{
-                display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: 9, fontWeight: 700, color: '#fff', background: '#3b82f6',
-                borderRadius: 4, padding: '1px 5px', letterSpacing: '0.05em', marginLeft: 2,
-              }}>NEW</span>
-              <ChevronDown size={13} style={{ transition: 'transform .2s', transform: examDropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)' }} />
-            </button>
-            {examDropdownOpen && (
-              <div style={{
-                position: 'absolute', top: '100%', left: 0, marginTop: 4,
-                background: 'var(--white)', border: '1px solid var(--line)',
-                borderRadius: 12, boxShadow: '0 8px 30px rgba(0,0,0,0.12)',
-                minWidth: 240, padding: '8px 0', zIndex: 100,
-              }}>
-                {examItems.map((group, gi) => (
-                  <div key={gi}>
-                    {gi > 0 && <div style={{ height: 1, background: 'var(--line)', margin: '6px 12px' }} />}
-                    <div style={{ padding: '6px 16px 2px', fontSize: 10, fontWeight: 700, color: 'var(--ink-soft)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-                      {group.group}
-                    </div>
-                    {group.items.map((item, ii) => (
-                      <Link key={ii} href={item.href} onClick={() => setExamDropdownOpen(false)} style={{
-                        display: 'flex', alignItems: 'center', gap: 8,
-                        padding: '9px 16px', fontSize: 13, fontWeight: 500,
-                        color: 'var(--ink)', textDecoration: 'none', transition: 'background .15s',
-                      }}
-                      onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(59,130,246,0.06)'; }}
-                      onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'transparent'; }}
-                      >
-                        <FileText size={13} style={{ color: '#3b82f6', flexShrink: 0 }} />
-                        {item.label}
-                      </Link>
-                    ))}
-                  </div>
-                ))}
-                <div style={{ height: 1, background: 'var(--line)', margin: '6px 12px' }} />
-                <Link href={`/${locale}/exams`} onClick={() => setExamDropdownOpen(false)} style={{
-                  display: 'block', padding: '9px 16px', fontSize: 13, fontWeight: 600,
-                  color: '#3b82f6', textDecoration: 'none', transition: 'background .15s',
-                }}
-                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(59,130,246,0.06)'; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'transparent'; }}
-                >
-                  {locale === 'vi' ? '→ Xem tất cả đề thi' : '→ 過去問トップへ'}
-                </Link>
-              </div>
-            )}
-          </div>
+            }}>{locale === 'vi' ? 'Sắp ra mắt' : '準備中'}</span>
+          </span>
+          {/* 過去問（準備中） */}
+          <span title={locale === 'vi' ? 'Sắp ra mắt' : 'まもなく開設'} style={{
+            display: 'inline-flex', alignItems: 'center', gap: 4,
+            padding: '8px 14px', borderRadius: 8, fontSize: 14, fontWeight: 500,
+            color: 'rgba(59,130,246,0.5)', cursor: 'default', userSelect: 'none',
+          }}>
+            <FileText size={13} style={{ color: 'rgba(59,130,246,0.45)' }} />
+            {examLabel}
+            <span style={{
+              display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+              fontSize: 9, fontWeight: 700, color: '#3b82f6', background: 'rgba(59,130,246,0.08)',
+              border: '1px solid rgba(59,130,246,0.2)',
+              borderRadius: 4, padding: '1px 5px', letterSpacing: '0.05em', marginLeft: 2,
+            }}>{locale === 'vi' ? 'Sắp ra mắt' : '準備中'}</span>
+          </span>
         </nav>
 
         {/* Desktop right */}
@@ -247,66 +177,35 @@ export default function Header({ locale }: HeaderProps) {
               {link.label}
             </Link>
           ))}
-          {/* AIロールプレイ */}
-          <Link href={`/${locale}/ai-tutor/roleplay`} onClick={() => setMobileOpen(false)} style={{
+          {/* AIロールプレイ（準備中） */}
+          <div style={{
             display: 'flex', alignItems: 'center', gap: 8,
             padding: '12px 0', fontSize: 15, fontWeight: 500,
-            color: 'var(--ink-soft)', textDecoration: 'none',
+            color: 'rgba(139,92,246,0.5)',
             borderBottom: '1px solid var(--line)',
           }}>
-            <MessageSquare size={15} style={{ color: '#8b5cf6' }} />
+            <MessageSquare size={15} style={{ color: 'rgba(139,92,246,0.45)' }} />
             {locale === 'vi' ? 'Luyện hội thoại AI' : 'AIロールプレイ'}
             <span style={{
-              fontSize: 9, fontWeight: 700, color: '#fff', background: '#8b5cf6',
+              fontSize: 9, fontWeight: 700, color: '#8b5cf6',
+              background: 'rgba(139,92,246,0.08)', border: '1px solid rgba(139,92,246,0.2)',
               borderRadius: 4, padding: '1px 5px',
-            }}>NEW</span>
-          </Link>
-          {/* 過去問 accordion */}
-          <div style={{ borderBottom: '1px solid var(--line)' }}>
-            <button
-              onClick={() => setMobileExamOpen(!mobileExamOpen)}
-              style={{
-                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                width: '100%', padding: '12px 0', fontSize: 15, fontWeight: 500,
-                color: 'var(--ink-soft)', background: 'none', border: 'none', cursor: 'pointer',
-              }}
-            >
-              <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                {examLabel}
-                <span style={{
-                  fontSize: 9, fontWeight: 700, color: '#fff', background: '#3b82f6',
-                  borderRadius: 4, padding: '1px 5px',
-                }}>NEW</span>
-              </span>
-              <ChevronDown size={14} style={{ transform: mobileExamOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform .2s' }} />
-            </button>
-            {mobileExamOpen && (
-              <div style={{ paddingBottom: 12 }}>
-                {examItems.map((group, gi) => (
-                  <div key={gi} style={{ marginBottom: 8 }}>
-                    <div style={{ fontSize: 10, fontWeight: 700, color: 'var(--ink-soft)', textTransform: 'uppercase', letterSpacing: '0.08em', padding: '4px 0 2px 12px' }}>
-                      {group.group}
-                    </div>
-                    {group.items.map((item, ii) => (
-                      <Link key={ii} href={item.href} onClick={() => setMobileOpen(false)} style={{
-                        display: 'flex', alignItems: 'center', gap: 8,
-                        padding: '8px 12px', fontSize: 14, fontWeight: 500,
-                        color: 'var(--ink)', textDecoration: 'none',
-                      }}>
-                        <FileText size={13} style={{ color: '#3b82f6', flexShrink: 0 }} />
-                        {item.label}
-                      </Link>
-                    ))}
-                  </div>
-                ))}
-                <Link href={`/${locale}/exams`} onClick={() => setMobileOpen(false)} style={{
-                  display: 'block', padding: '8px 12px', fontSize: 14, fontWeight: 600,
-                  color: '#3b82f6', textDecoration: 'none',
-                }}>
-                  {locale === 'vi' ? '→ Xem tất cả đề thi' : '→ 過去問トップへ'}
-                </Link>
-              </div>
-            )}
+            }}>{locale === 'vi' ? 'Sắp ra mắt' : '準備中'}</span>
+          </div>
+          {/* 過去問（準備中） */}
+          <div style={{
+            display: 'flex', alignItems: 'center', gap: 8,
+            padding: '12px 0', fontSize: 15, fontWeight: 500,
+            color: 'rgba(59,130,246,0.5)',
+            borderBottom: '1px solid var(--line)',
+          }}>
+            <FileText size={15} style={{ color: 'rgba(59,130,246,0.45)' }} />
+            {examLabel}
+            <span style={{
+              fontSize: 9, fontWeight: 700, color: '#3b82f6',
+              background: 'rgba(59,130,246,0.08)', border: '1px solid rgba(59,130,246,0.2)',
+              borderRadius: 4, padding: '1px 5px',
+            }}>{locale === 'vi' ? 'Sắp ra mắt' : '準備中'}</span>
           </div>
           <div style={{ display: 'flex', gap: 8, marginTop: 20 }}>
             <Link href="/ja" onClick={() => setMobileOpen(false)} style={{

@@ -1,8 +1,8 @@
 'use client';
 
-import { use, useState } from 'react';
+import { use, useState, Suspense } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { BookOpen, Mail, Lock, Eye, EyeOff, User, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { createClient, isSupabaseConfigured } from '@/lib/supabase/client';
@@ -13,7 +13,17 @@ interface SignupPageProps {
 
 export default function SignupPage({ params }: SignupPageProps) {
   const { locale } = use(params);
+  return (
+    <Suspense>
+      <SignupForm locale={locale} />
+    </Suspense>
+  );
+}
+
+function SignupForm({ locale }: { locale: string }) {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectAfter = searchParams.get('redirect') || `/${locale}/dashboard`;
   const isJa = locale === 'ja';
 
   const [name, setName] = useState('');
@@ -42,7 +52,7 @@ export default function SignupPage({ params }: SignupPageProps) {
       const { error: authError } = await supabase!.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/auth/callback?next=/${locale}/dashboard`,
+          redirectTo: `${window.location.origin}/auth/callback?next=${redirectAfter}`,
         },
       });
       if (authError) {
@@ -71,7 +81,7 @@ export default function SignupPage({ params }: SignupPageProps) {
     // Demo mode
     if (!isSupabaseConfigured) {
       setTimeout(() => {
-        router.push(`/${locale}/onboarding`);
+        router.push(redirectAfter.startsWith('/') ? redirectAfter : `/${locale}/onboarding`);
       }, 800);
       return;
     }
@@ -83,7 +93,7 @@ export default function SignupPage({ params }: SignupPageProps) {
         password,
         options: {
           data: { full_name: name },
-          emailRedirectTo: `${window.location.origin}/auth/callback?next=/${locale}/dashboard`,
+          emailRedirectTo: `${window.location.origin}/auth/callback?next=${redirectAfter}`,
         },
       });
       if (authError) {
@@ -96,7 +106,7 @@ export default function SignupPage({ params }: SignupPageProps) {
           : 'Email xác nhận đã được gửi. Vui lòng kiểm tra email và đăng nhập.');
         setIsLoading(false);
       } else {
-        router.push(`/${locale}/dashboard`);
+        router.push(redirectAfter);
       }
     } catch {
       setError(isJa ? 'エラーが発生しました' : 'Đã xảy ra lỗi');
