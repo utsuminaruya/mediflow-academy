@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import FAQAccordion from '@/components/landing/faq-accordion';
 
 interface PageProps {
@@ -151,14 +152,15 @@ function Hero({ locale }: { locale: string }) {
                   監修 / Supervised by
                 </div>
                 {[
-                  { name: '佐藤 由美', role: '現役看護師（都内総合病院 勤務 12年）', vn: 'Y tá đang hành nghề' },
-                  { name: 'Nguyễn Thị Linh', role: 'N1合格・介護福祉士（神戸）', vn: 'Hộ lý N1 tại Kobe' },
-                  { name: '田中 健', role: '医療通訳士・元JICA専門員', vn: 'Phiên dịch y tế' },
+                  { name: 'Utsumi Naruya', role: '現役看護師 10年｜病院・介護・訪問看護・ツアーナース', vn: 'Y tá lâm sàng 10 năm' },
+                  { name: 'Nguyễn Thị Dung', role: '介護福祉士兼看護師・N1・医療通訳・元EPA', vn: 'Hộ lý kiêm y tá, phiên dịch y tế' },
+                  { name: 'Trần Thị Lan', role: 'N1・介護福祉士・日本語教師', vn: 'Giáo viên tiếng Nhật N1' },
+                  { name: 'Lê Văn Minh', role: 'N1・介護福祉士・介護施設勤務（現場経験8年）', vn: 'Hộ lý giàu kinh nghiệm thực tế' },
                 ].map((p, i) => (
                   <div key={i} style={{
                     display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12,
-                    paddingBottom: 8, borderBottom: i < 2 ? '1px dashed rgba(255,255,255,0.12)' : 'none',
-                    marginBottom: i < 2 ? 8 : 0,
+                    paddingBottom: 8, borderBottom: i < 3 ? '1px dashed rgba(255,255,255,0.12)' : 'none',
+                    marginBottom: i < 3 ? 8 : 0,
                   }}>
                     <div>
                       <div style={{ fontWeight: 600, fontSize: 14, color: 'var(--cream)' }}>{p.name}</div>
@@ -399,10 +401,46 @@ function Features() {
 // ── Section: Teachers ──────────────────────────────────────────
 function Teachers() {
   const team = [
-    { name: '佐藤 由美', role: '現役看護師', detail: '都内総合病院 / 病棟12年', vi: 'Y tá lâm sàng', color: '#DBE5FF', init: '佐' },
-    { name: 'Nguyễn Thị Linh', role: 'N1合格・介護福祉士', detail: '神戸 / 介護施設勤務', vi: 'Hộ lý người Việt', color: '#FFE1D9', init: 'L' },
-    { name: '田中 健', role: '医療通訳士', detail: '元JICA / ベトナム駐在5年', vi: 'Phiên dịch y tế', color: '#E4FBF5', init: '田' },
-    { name: 'Trần Văn Hùng', role: 'EPA看護師', detail: '東京 / EPA7期生', vi: 'Y tá EPA', color: '#F3EFE6', init: 'H' },
+    {
+      name: 'Utsumi Naruya',
+      nameJa: '内海 成哉',
+      role: '現役看護師',
+      detail: '看護師歴10年｜病院・介護施設・訪問看護・訪問入浴・ツアーナース',
+      vi: 'Y tá lâm sàng 10 năm kinh nghiệm',
+      photo: '/images/nurse.png',
+      tags: ['RN', '10年'],
+    },
+    {
+      name: 'Nguyễn Thị Dung',
+      nameJa: 'グエン・ティ・ズン',
+      role: '介護福祉士 兼 看護師 · 医療通訳',
+      detail: 'N1取得 · 元EPA · 日越医療通訳として現場に立つ',
+      vi: 'Hộ lý kiêm y tá · Phiên dịch y tế Nhật-Việt',
+      photo: '/images/interpreter.jpg',
+      tags: ['N1', 'EPA', '通訳'],
+    },
+    {
+      name: 'Trần Thị Lan',
+      nameJa: 'チャン・ティ・ラン',
+      role: '介護福祉士 · 日本語教師',
+      detail: 'N1取得 · 介護施設で勤務しながら、ベトナム人後輩に日本語を教える',
+      vi: 'Hộ lý N1 · Giáo viên tiếng Nhật cho người Việt',
+      photo: null,
+      tags: ['N1', '日本語教師'],
+      color: '#E4FBF5',
+      init: 'L',
+    },
+    {
+      name: 'Lê Văn Minh',
+      nameJa: 'レ・バン・ミン',
+      role: '介護福祉士',
+      detail: 'N1取得 · 介護施設で8年勤務 · 認知症ケア・看取りに精通',
+      vi: 'Hộ lý N1 · 8 năm kinh nghiệm thực tế tại cơ sở chăm sóc',
+      photo: null,
+      tags: ['N1', '8年'],
+      color: '#F3EFE6',
+      init: 'M',
+    },
   ];
 
   return (
@@ -420,7 +458,7 @@ function Teachers() {
             textTransform: 'uppercase', color: 'var(--accent-soft)', fontWeight: 500, marginBottom: 18,
           }}>
             <span style={{ width: 24, height: 1, background: 'var(--accent-soft)', display: 'inline-block' }}/>
-            Teachers · 教える人
+            Supervised by · 監修者
           </div>
           <h2 className="sec-h2" style={{
             fontSize: 'clamp(28px,5vw,48px)', lineHeight: 1.1, letterSpacing: '-0.02em', fontWeight: 800,
@@ -440,22 +478,50 @@ function Teachers() {
               background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)',
               borderRadius: 20, padding: 24,
             }}>
+              {/* Photo or initial */}
               <div style={{
-                aspectRatio: '1', borderRadius: 14, background: m.color, color: 'var(--ink)',
+                aspectRatio: '1', borderRadius: 14, overflow: 'hidden',
+                marginBottom: 18, position: 'relative',
+                background: m.photo ? '#111' : (m.color || '#DBE5FF'),
                 display: 'grid', placeItems: 'center',
-                fontFamily: 'var(--font-jp-serif)', fontSize: 'clamp(40px,6vw,64px)', fontWeight: 700,
-                marginBottom: 18, position: 'relative', overflow: 'hidden',
               }}>
-                {m.init}
+                {m.photo ? (
+                  <Image
+                    src={m.photo}
+                    alt={m.name}
+                    fill
+                    style={{ objectFit: 'cover', objectPosition: 'top' }}
+                  />
+                ) : (
+                  <span style={{
+                    fontFamily: 'var(--font-jp-serif)', fontSize: 'clamp(40px,6vw,64px)',
+                    fontWeight: 700, color: 'var(--ink)',
+                  }}>{m.init}</span>
+                )}
                 <div style={{
                   position: 'absolute', top: 10, right: 10,
                   fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.1em',
-                  background: 'rgba(10,27,61,0.12)', padding: '4px 8px', borderRadius: 6,
+                  background: 'rgba(10,27,61,0.55)', color: '#fff',
+                  padding: '4px 8px', borderRadius: 6, backdropFilter: 'blur(4px)',
                 }}>#{String(i + 1).padStart(2, '0')}</div>
               </div>
+
+              {/* Tags */}
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginBottom: 10 }}>
+                {m.tags.map((tag, t) => (
+                  <span key={t} style={{
+                    fontSize: 10, fontWeight: 700, letterSpacing: '0.04em',
+                    padding: '3px 7px', borderRadius: 5,
+                    background: 'rgba(19,200,168,0.15)', color: 'var(--accent)',
+                    border: '1px solid rgba(19,200,168,0.25)',
+                  }}>{tag}</span>
+                ))}
+              </div>
+
               <div style={{ fontWeight: 700, fontSize: 15, color: 'var(--cream)' }}>{m.name}</div>
-              <div style={{ fontSize: 13, color: 'var(--accent-soft)', marginTop: 4 }}>{m.role}</div>
-              <div style={{ fontSize: 12, color: 'rgba(251,249,244,0.55)', marginTop: 6, lineHeight: 1.5 }}>{m.detail}</div>
+              <div style={{ fontSize: 12, color: 'rgba(251,249,244,0.45)', marginTop: 2 }}>{m.nameJa}</div>
+              <div style={{ fontSize: 13, color: 'var(--accent-soft)', marginTop: 6 }}>{m.role}</div>
+              <div style={{ fontSize: 12, color: 'rgba(251,249,244,0.55)', marginTop: 6, lineHeight: 1.6 }}>{m.detail}</div>
               <div style={{
                 fontFamily: 'var(--font-vn)', fontWeight: 400, fontSize: 11,
                 color: 'rgba(251,249,244,0.4)',
