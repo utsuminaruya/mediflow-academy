@@ -47,8 +47,9 @@ export async function POST(request: NextRequest) {
       || 'https://mediaca.vercel.app';
 
     // Stripe を動的インポート（プレースホルダー時に throw させない）
-    const Stripe = (await import('stripe')).default;
-    const stripe = new Stripe(secretKey, { apiVersion: '2025-02-24.acacia' as Parameters<typeof Stripe>[1]['apiVersion'] });
+    const StripeLib = (await import('stripe')).default;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const stripe = new StripeLib(secretKey, { apiVersion: '2025-02-24.acacia' as any });
 
     const session = await stripe.checkout.sessions.create({
       mode: 'subscription',
