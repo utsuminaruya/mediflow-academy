@@ -33,6 +33,7 @@ export default function PricingPage({ params }: PricingPageProps) {
 
   useEffect(() => {
     const supabase = createClient();
+    if (!supabase) { setIsLoggedIn(false); return; }
     supabase.auth.getUser().then(({ data }) => {
       setIsLoggedIn(!!data.user);
     });
