@@ -2,8 +2,9 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { Menu, X, ChevronDown, FileText, MessageSquare } from 'lucide-react';
+import { Menu, X, MessageSquare, FileText, Bot, Briefcase } from 'lucide-react';
 
 interface HeaderProps {
   locale: string;
@@ -23,87 +24,117 @@ const VnMark = () => (
   </svg>
 );
 
+// ナビアイテム共通スタイル
+const navItemStyle: React.CSSProperties = {
+  display: 'inline-flex', alignItems: 'center', gap: 5,
+  padding: '8px 12px', borderRadius: 8, fontSize: 13.5, fontWeight: 500,
+  color: 'var(--ink-soft)', transition: 'all .2s', textDecoration: 'none',
+};
+
+const comingSoonBadge = (label: string): React.ReactNode => (
+  <span style={{
+    fontSize: 9, fontWeight: 700, color: 'var(--ink-soft)',
+    background: 'rgba(10,27,61,0.07)', border: '1px solid rgba(10,27,61,0.12)',
+    borderRadius: 4, padding: '1px 5px', letterSpacing: '0.05em',
+  }}>{label}</span>
+);
+
 export default function Header({ locale }: HeaderProps) {
   const t = useTranslations('nav');
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const navLinks = [
-    { href: `/${locale}/courses`, label: locale === 'vi' ? 'Khóa học' : 'コース' },
-    { href: `/${locale}/pricing`, label: locale === 'vi' ? 'Giá' : '料金' },
-    { href: `/${locale}#faq`, label: 'FAQ' },
-  ];
-
-  const examLabel = locale === 'vi' ? 'Đề thi' : '過去問';
+  const isJa = locale !== 'vi';
+  const lineUrl = process.env.NEXT_PUBLIC_LINE_JOBSEEKER || 'https://lin.ee/xUocVyI';
 
   return (
     <header style={{
       position: 'sticky', top: 0, zIndex: 50,
-      background: 'rgba(251,249,244,0.9)',
+      background: 'rgba(251,249,244,0.92)',
       backdropFilter: 'blur(16px)',
       borderBottom: '1px solid var(--line)',
     }}>
       <div style={{
         maxWidth: 1280, margin: '0 auto',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        gap: 24, padding: '14px 32px',
+        gap: 16, padding: '12px 32px',
       }}>
-        {/* Logo */}
-        <Link href={`/${locale}`} style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none', fontWeight: 800, fontSize: 18, color: 'var(--ink)', letterSpacing: '-0.01em' }}>
-          <div style={{
-            width: 32, height: 32, borderRadius: 8, background: 'var(--primary)',
-            color: '#fff', display: 'grid', placeItems: 'center',
-            fontFamily: 'var(--font-jp-serif)', fontWeight: 900, fontSize: 18,
-          }}>医</div>
+
+        {/* ── Logo ─────────────────────────────────────────────── */}
+        <Link href={`/${locale}`} style={{
+          display: 'flex', alignItems: 'center', gap: 9,
+          textDecoration: 'none', fontWeight: 800, fontSize: 17,
+          color: 'var(--ink)', letterSpacing: '-0.01em', flexShrink: 0,
+        }}>
+          <Image
+            src="/images/logo.png"
+            alt="Mediflow Academy"
+            width={34}
+            height={34}
+            style={{ borderRadius: 8, objectFit: 'contain' }}
+            priority
+          />
           <span>Mediflow <span style={{ fontWeight: 400, color: 'var(--ink-soft)' }}>Academy</span></span>
         </Link>
 
-        {/* Desktop nav */}
-        <nav style={{ display: 'flex', gap: 4, alignItems: 'center' }} className="hidden-mobile">
-          {navLinks.map(link => (
-            <Link key={link.href} href={link.href} style={{
-              padding: '8px 14px', borderRadius: 8, fontSize: 14, fontWeight: 500,
-              color: 'var(--ink-soft)', transition: 'all .2s', textDecoration: 'none',
-            }}
-            onMouseEnter={e => { (e.target as HTMLElement).style.color = 'var(--ink)'; (e.target as HTMLElement).style.background = 'rgba(10,27,61,0.04)'; }}
-            onMouseLeave={e => { (e.target as HTMLElement).style.color = 'var(--ink-soft)'; (e.target as HTMLElement).style.background = 'transparent'; }}
-            >
-              {link.label}
-            </Link>
-          ))}
-          {/* AIロールプレイ（準備中） */}
-          <span title={locale === 'vi' ? 'Sắp ra mắt' : 'まもなく開設'} style={{
-            display: 'inline-flex', alignItems: 'center', gap: 6,
-            padding: '8px 14px', borderRadius: 8, fontSize: 14, fontWeight: 500,
-            color: 'rgba(139,92,246,0.55)', cursor: 'default', userSelect: 'none',
+        {/* ── Desktop nav ───────────────────────────────────────── */}
+        <nav style={{ display: 'flex', gap: 2, alignItems: 'center', flex: 1, justifyContent: 'center' }} className="hidden-mobile">
+
+          {/* コース */}
+          <Link href={`/${locale}/courses`} style={navItemStyle}
+            onMouseEnter={e => { const el = e.currentTarget; el.style.color = 'var(--ink)'; el.style.background = 'rgba(10,27,61,0.04)'; }}
+            onMouseLeave={e => { const el = e.currentTarget; el.style.color = 'var(--ink-soft)'; el.style.background = 'transparent'; }}
+          >
+            {isJa ? 'コース' : 'Khóa học'}
+          </Link>
+
+          {/* AI家庭教師 */}
+          <Link href={`/${locale}/ai-tutor`} style={navItemStyle}
+            onMouseEnter={e => { const el = e.currentTarget; el.style.color = 'var(--ink)'; el.style.background = 'rgba(0,102,204,0.06)'; }}
+            onMouseLeave={e => { const el = e.currentTarget; el.style.color = 'var(--ink-soft)'; el.style.background = 'transparent'; }}
+          >
+            <Bot size={13} style={{ color: '#0066CC' }} />
+            {isJa ? 'AI家庭教師' : 'Gia sư AI'}
+          </Link>
+
+          {/* 就職相談 */}
+          <a href={lineUrl} target="_blank" rel="noopener noreferrer" style={navItemStyle}
+            onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.color = 'var(--ink)'; el.style.background = 'rgba(0,184,148,0.06)'; }}
+            onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.color = 'var(--ink-soft)'; el.style.background = 'transparent'; }}
+          >
+            <Briefcase size={13} style={{ color: '#00B894' }} />
+            {isJa ? '就職相談' : 'Tư vấn việc làm'}
+          </a>
+
+          {/* 料金 */}
+          <Link href={`/${locale}/pricing`} style={navItemStyle}
+            onMouseEnter={e => { const el = e.currentTarget; el.style.color = 'var(--ink)'; el.style.background = 'rgba(10,27,61,0.04)'; }}
+            onMouseLeave={e => { const el = e.currentTarget; el.style.color = 'var(--ink-soft)'; el.style.background = 'transparent'; }}
+          >
+            {isJa ? '料金' : 'Giá'}
+          </Link>
+
+          {/* AIロールプレイ 準備中 */}
+          <span title={isJa ? 'まもなく開設予定' : 'Sắp ra mắt'} style={{
+            ...navItemStyle, color: 'rgba(139,92,246,0.5)', cursor: 'default', userSelect: 'none',
           }}>
-            <MessageSquare size={14} style={{ color: 'rgba(139,92,246,0.5)' }} />
-            {locale === 'vi' ? 'Luyện hội thoại' : 'AIロールプレイ'}
-            <span style={{
-              display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: 9, fontWeight: 700, color: '#8b5cf6', background: 'rgba(139,92,246,0.1)',
-              border: '1px solid rgba(139,92,246,0.25)',
-              borderRadius: 4, padding: '1px 5px', letterSpacing: '0.05em',
-            }}>{locale === 'vi' ? 'Sắp ra mắt' : '準備中'}</span>
+            <MessageSquare size={13} style={{ color: 'rgba(139,92,246,0.45)' }} />
+            {isJa ? 'AIロールプレイ' : 'Luyện hội thoại'}
+            {comingSoonBadge(isJa ? '準備中' : 'Sắp ra mắt')}
           </span>
-          {/* 過去問（準備中） */}
-          <span title={locale === 'vi' ? 'Sắp ra mắt' : 'まもなく開設'} style={{
-            display: 'inline-flex', alignItems: 'center', gap: 4,
-            padding: '8px 14px', borderRadius: 8, fontSize: 14, fontWeight: 500,
-            color: 'rgba(59,130,246,0.5)', cursor: 'default', userSelect: 'none',
+
+          {/* 過去問 準備中 */}
+          <span title={isJa ? 'まもなく開設予定' : 'Sắp ra mắt'} style={{
+            ...navItemStyle, color: 'rgba(59,130,246,0.5)', cursor: 'default', userSelect: 'none',
           }}>
             <FileText size={13} style={{ color: 'rgba(59,130,246,0.45)' }} />
-            {examLabel}
-            <span style={{
-              display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: 9, fontWeight: 700, color: '#3b82f6', background: 'rgba(59,130,246,0.08)',
-              border: '1px solid rgba(59,130,246,0.2)',
-              borderRadius: 4, padding: '1px 5px', letterSpacing: '0.05em', marginLeft: 2,
-            }}>{locale === 'vi' ? 'Sắp ra mắt' : '準備中'}</span>
+            {isJa ? '過去問' : 'Đề thi'}
+            {comingSoonBadge(isJa ? '準備中' : 'Sắp ra mắt')}
           </span>
+
         </nav>
 
-        {/* Desktop right */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }} className="hidden-mobile">
+        {/* ── Desktop right ─────────────────────────────────────── */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }} className="hidden-mobile">
           {/* Language toggle */}
           <div style={{
             display: 'flex', background: 'rgba(10,27,61,0.05)', padding: 3, borderRadius: 8,
@@ -130,7 +161,7 @@ export default function Header({ locale }: HeaderProps) {
           </div>
 
           <Link href={`/${locale}/auth/login`} style={{
-            fontSize: 14, padding: '9px 16px', fontWeight: 600, color: 'var(--ink)',
+            fontSize: 13.5, padding: '8px 14px', fontWeight: 600, color: 'var(--ink)',
             border: '1px solid var(--line-strong)', borderRadius: 8, textDecoration: 'none',
             transition: 'all .2s',
           }}
@@ -140,8 +171,8 @@ export default function Header({ locale }: HeaderProps) {
             {t('login')}
           </Link>
           <Link href={`/${locale}/auth/signup`} style={{
-            display: 'inline-flex', alignItems: 'center', gap: 8,
-            padding: '10px 16px', borderRadius: 12, fontWeight: 600, fontSize: 14,
+            display: 'inline-flex', alignItems: 'center', gap: 6,
+            padding: '9px 16px', borderRadius: 10, fontWeight: 600, fontSize: 13.5,
             background: 'var(--ink)', color: 'var(--cream)', textDecoration: 'none',
             transition: 'all .2s',
           }}
@@ -155,29 +186,46 @@ export default function Header({ locale }: HeaderProps) {
         {/* Mobile menu button */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          style={{ display: 'none', padding: 8, color: 'var(--ink-soft)', cursor: 'pointer' }}
+          style={{ display: 'none', padding: 8, color: 'var(--ink-soft)', cursor: 'pointer', background: 'none', border: 'none' }}
           className="show-mobile"
         >
           {mobileOpen ? <X size={24}/> : <Menu size={24}/>}
         </button>
       </div>
 
-      {/* Mobile menu */}
+      {/* ── Mobile menu ───────────────────────────────────────── */}
       {mobileOpen && (
         <div style={{
           borderTop: '1px solid var(--line)', background: 'var(--cream)',
           padding: '16px 24px 24px',
         }}>
-          {navLinks.map(link => (
-            <Link key={link.href} href={link.href} onClick={() => setMobileOpen(false)} style={{
-              display: 'block', padding: '12px 0', fontSize: 15, fontWeight: 500,
+          {/* Active links */}
+          {[
+            { href: `/${locale}/courses`,   label: isJa ? 'コース' : 'Khóa học', icon: null },
+            { href: `/${locale}/ai-tutor`,  label: isJa ? 'AI家庭教師' : 'Gia sư AI', icon: <Bot size={15} style={{ color: '#0066CC' }} /> },
+            { href: `/${locale}/pricing`,   label: isJa ? '料金' : 'Giá', icon: null },
+          ].map(item => (
+            <Link key={item.href} href={item.href} onClick={() => setMobileOpen(false)} style={{
+              display: 'flex', alignItems: 'center', gap: 8,
+              padding: '12px 0', fontSize: 15, fontWeight: 500,
               color: 'var(--ink-soft)', textDecoration: 'none',
               borderBottom: '1px solid var(--line)',
             }}>
-              {link.label}
+              {item.icon}
+              {item.label}
             </Link>
           ))}
-          {/* AIロールプレイ（準備中） */}
+          {/* 就職相談 (external) */}
+          <a href={lineUrl} target="_blank" rel="noopener noreferrer" onClick={() => setMobileOpen(false)} style={{
+            display: 'flex', alignItems: 'center', gap: 8,
+            padding: '12px 0', fontSize: 15, fontWeight: 500,
+            color: 'var(--ink-soft)', textDecoration: 'none',
+            borderBottom: '1px solid var(--line)',
+          }}>
+            <Briefcase size={15} style={{ color: '#00B894' }} />
+            {isJa ? '就職相談（LINE）' : 'Tư vấn việc làm (LINE)'}
+          </a>
+          {/* AIロールプレイ 準備中 */}
           <div style={{
             display: 'flex', alignItems: 'center', gap: 8,
             padding: '12px 0', fontSize: 15, fontWeight: 500,
@@ -185,14 +233,14 @@ export default function Header({ locale }: HeaderProps) {
             borderBottom: '1px solid var(--line)',
           }}>
             <MessageSquare size={15} style={{ color: 'rgba(139,92,246,0.45)' }} />
-            {locale === 'vi' ? 'Luyện hội thoại AI' : 'AIロールプレイ'}
+            {isJa ? 'AIロールプレイ' : 'Luyện hội thoại AI'}
             <span style={{
-              fontSize: 9, fontWeight: 700, color: '#8b5cf6',
-              background: 'rgba(139,92,246,0.08)', border: '1px solid rgba(139,92,246,0.2)',
+              fontSize: 9, fontWeight: 700, color: 'var(--ink-soft)',
+              background: 'rgba(10,27,61,0.07)', border: '1px solid rgba(10,27,61,0.12)',
               borderRadius: 4, padding: '1px 5px',
-            }}>{locale === 'vi' ? 'Sắp ra mắt' : '準備中'}</span>
+            }}>{isJa ? '準備中' : 'Sắp ra mắt'}</span>
           </div>
-          {/* 過去問（準備中） */}
+          {/* 過去問 準備中 */}
           <div style={{
             display: 'flex', alignItems: 'center', gap: 8,
             padding: '12px 0', fontSize: 15, fontWeight: 500,
@@ -200,13 +248,15 @@ export default function Header({ locale }: HeaderProps) {
             borderBottom: '1px solid var(--line)',
           }}>
             <FileText size={15} style={{ color: 'rgba(59,130,246,0.45)' }} />
-            {examLabel}
+            {isJa ? '過去問' : 'Đề thi'}
             <span style={{
-              fontSize: 9, fontWeight: 700, color: '#3b82f6',
-              background: 'rgba(59,130,246,0.08)', border: '1px solid rgba(59,130,246,0.2)',
+              fontSize: 9, fontWeight: 700, color: 'var(--ink-soft)',
+              background: 'rgba(10,27,61,0.07)', border: '1px solid rgba(10,27,61,0.12)',
               borderRadius: 4, padding: '1px 5px',
-            }}>{locale === 'vi' ? 'Sắp ra mắt' : '準備中'}</span>
+            }}>{isJa ? '準備中' : 'Sắp ra mắt'}</span>
           </div>
+
+          {/* Language toggle */}
           <div style={{ display: 'flex', gap: 8, marginTop: 20 }}>
             <Link href="/ja" onClick={() => setMobileOpen(false)} style={{
               flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,

@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { ExternalLink } from 'lucide-react';
 
 interface FooterProps {
@@ -67,12 +68,7 @@ export default function Footer({ locale }: FooterProps) {
             <Link href={`/${locale}`} style={{
               display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16, textDecoration: 'none',
             }}>
-              <div style={{
-                width: 32, height: 32, borderRadius: 8,
-                background: 'var(--accent)', color: 'var(--ink)',
-                display: 'grid', placeItems: 'center',
-                fontFamily: 'var(--font-jp-serif)', fontWeight: 900, fontSize: 18,
-              }}>医</div>
+              <Image src="/images/logo.png" alt="Mediflow Academy" width={32} height={32} style={{ borderRadius: 8, objectFit: 'contain' }} />
               <span style={{ color: 'var(--cream)', fontWeight: 700, fontSize: 18 }}>Mediflow Academy</span>
             </Link>
             <p style={{ lineHeight: 1.7, maxWidth: 360, fontSize: 13 }}>
@@ -118,6 +114,8 @@ export default function Footer({ locale }: FooterProps) {
           ]}/>
           <FooterCol title="サポート" items={[
             { label: 'ダッシュボード', href: `/${locale}/dashboard` },
+            { label: '利用規約', href: `/${locale}/terms` },
+            { label: 'プライバシーポリシー', href: `/${locale}/privacy` },
             { label: '日本語', href: '/ja' },
             { label: 'Tiếng Việt', href: '/vi' },
           ]}/>

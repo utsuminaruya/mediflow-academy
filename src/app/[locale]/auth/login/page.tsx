@@ -2,8 +2,9 @@
 
 import { use, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { BookOpen, Mail, Lock, Eye, EyeOff, ArrowRight } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { createClient, isSupabaseConfigured } from '@/lib/supabase/client';
 
@@ -86,9 +87,7 @@ export default function LoginPage({ params }: LoginPageProps) {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link href={`/${locale}`} className="inline-flex items-center gap-2 mb-6">
-            <div className="w-10 h-10 bg-[#0066CC] rounded-xl flex items-center justify-center">
-              <BookOpen className="h-5 w-5 text-white" />
-            </div>
+            <Image src="/images/logo.png" alt="Mediflow Academy" width={40} height={40} style={{ borderRadius: 10, objectFit: 'contain' }} />
             <span className="font-bold text-xl text-gray-900">Mediflow <span className="text-[#0066CC]">Academy</span></span>
           </Link>
           <h1 className="text-2xl font-bold text-gray-900">
