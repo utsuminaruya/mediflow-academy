@@ -822,6 +822,161 @@ function Pricing({ locale }: { locale: string }) {
   );
 }
 
+// ── Section: Live Study ────────────────────────────────────────
+function LiveStudySection({ locale }: { locale: string }) {
+  const isJa = locale !== 'vi';
+  return (
+    <section id="live-study" className="sp" style={{
+      padding: '100px 0',
+      background: 'linear-gradient(135deg, #0a1b3d 0%, #0d2a4a 60%, #0a3d3a 100%)',
+      position: 'relative', overflow: 'hidden',
+    }}>
+      {/* decorative glow */}
+      <div style={{
+        position: 'absolute', top: '-10%', left: '60%', width: 500, height: 500,
+        background: 'radial-gradient(circle, rgba(19,200,168,0.12) 0%, transparent 65%)',
+        filter: 'blur(60px)',
+      }}/>
+      <div style={{
+        position: 'absolute', bottom: '-10%', left: '10%', width: 400, height: 400,
+        background: 'radial-gradient(circle, rgba(0,102,204,0.12) 0%, transparent 65%)',
+        filter: 'blur(50px)',
+      }}/>
+
+      <div className="si" style={{ maxWidth: 1280, margin: '0 auto', padding: '0 32px', position: 'relative' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
+          <span style={{
+            display: 'inline-flex', alignItems: 'center', gap: 6,
+            background: 'rgba(255,60,60,0.15)', border: '1px solid rgba(255,60,60,0.4)',
+            color: '#ff6b6b', borderRadius: 8, padding: '5px 12px',
+            fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em',
+          }}>
+            <span style={{
+              width: 7, height: 7, borderRadius: '50%', background: '#ff4444',
+              boxShadow: '0 0 8px #ff4444', display: 'inline-block',
+              animation: 'livePulse 1.4s ease-in-out infinite',
+            }}/>
+            {isJa ? '近日開催予定' : 'SẮP RA MẮT'}
+          </span>
+          <span style={{
+            fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.14em',
+            textTransform: 'uppercase', color: 'var(--accent-soft)',
+          }}>
+            Live Study · 勉強ライブ
+          </span>
+        </div>
+
+        <h2 style={{
+          fontSize: 'clamp(26px,4.5vw,52px)', lineHeight: 1.1, letterSpacing: '-0.025em', fontWeight: 800,
+          color: 'var(--cream)', margin: '0 0 16px', maxWidth: 760,
+        }}>
+          {isJa
+            ? <>現役介護福祉士と<br/><span style={{ color: 'var(--accent)' }}>N1の先生</span>によるLive勉強会</>
+            : <>Buổi học Live với<br/><span style={{ color: 'var(--accent)' }}>Giáo viên N1</span> và nhân viên điều dưỡng thực tế</>}
+        </h2>
+        <p style={{ fontSize: 'clamp(14px,1.6vw,17px)', lineHeight: 1.7, color: 'rgba(251,249,244,0.7)', maxWidth: 620, marginBottom: 48 }}>
+          {isJa
+            ? '介護施設で今も働くプロが、リアルな現場の日本語・ケアスキル・就職情報を生配信でお届け。チャットで直接質問できます。'
+            : 'Chuyên gia đang làm việc thực tế tại cơ sở điều dưỡng sẽ livestream về tiếng Nhật thực tế, kỹ năng chăm sóc và thông tin việc làm. Bạn có thể hỏi trực tiếp qua chat.'}
+        </p>
+
+        {/* Feature cards */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16, marginBottom: 48 }} className="live-grid">
+          {[
+            {
+              icon: '🏥',
+              title: isJa ? '現場のリアルな日本語' : 'Tiếng Nhật thực tế từ hiện trường',
+              body: isJa
+                ? '「申し送り」「ヒヤリハット」「ケアプラン」など、教科書に載らないリアルな介護の言葉を解説'
+                : 'Giải thích các từ ngữ điều dưỡng thực tế không có trong sách giáo khoa như "申し送り", "ヒヤリハット"',
+            },
+            {
+              icon: '🎓',
+              title: isJa ? 'N1講師による文法・試験対策' : 'Ngữ pháp & luyện thi từ giáo viên N1',
+              body: isJa
+                ? '日本語N1を持つベトナム人介護福祉士が、同じ立場から日本語学習のコツを伝授'
+                : 'Hộ lý người Việt có N1 chia sẻ bí quyết học tiếng Nhật từ góc nhìn người đồng cảnh ngộ',
+            },
+            {
+              icon: '💼',
+              title: isJa ? '就職・キャリア相談' : 'Tư vấn việc làm & định hướng nghề nghiệp',
+              body: isJa
+                ? '介護施設の選び方・面接対策・ビザの話まで、経験者がぶっちゃけトーク'
+                : 'Cách chọn cơ sở điều dưỡng, chuẩn bị phỏng vấn, câu chuyện visa - người có kinh nghiệm chia sẻ thật lòng',
+            },
+          ].map((card, i) => (
+            <div key={i} style={{
+              background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)',
+              borderRadius: 16, padding: 24,
+            }}>
+              <div style={{ fontSize: 28, marginBottom: 12 }}>{card.icon}</div>
+              <div style={{ fontWeight: 700, fontSize: 15, color: 'var(--cream)', marginBottom: 8, lineHeight: 1.4 }}>{card.title}</div>
+              <div style={{ fontSize: 13, color: 'rgba(251,249,244,0.6)', lineHeight: 1.7 }}>{card.body}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* CTA strip */}
+        <div style={{
+          background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)',
+          borderRadius: 16, padding: '24px 28px',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          flexWrap: 'wrap', gap: 16,
+        }}>
+          <div>
+            <div style={{ fontWeight: 700, fontSize: 16, color: 'var(--cream)', marginBottom: 4 }}>
+              {isJa ? '開催情報をいち早くお届け' : 'Nhận thông tin sớm nhất'}
+            </div>
+            <div style={{ fontSize: 13, color: 'rgba(251,249,244,0.6)' }}>
+              {isJa ? 'LINEに登録すると日程・テーマをお知らせします。参加は無料です。' : 'Đăng ký LINE để nhận thông báo lịch và chủ đề. Tham gia miễn phí.'}
+            </div>
+          </div>
+          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+            <a
+              href={process.env.NEXT_PUBLIC_LINE_JOBSEEKER || 'https://lin.ee/xUocVyI'}
+              target="_blank" rel="noopener noreferrer"
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: 8,
+                background: '#00B300', color: '#fff', padding: '12px 20px',
+                borderRadius: 12, fontSize: 14, fontWeight: 700, textDecoration: 'none',
+                transition: 'background .2s',
+              }}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.281.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/>
+              </svg>
+              {isJa ? 'LINEで通知を受ける' : 'Nhận thông báo qua LINE'}
+            </a>
+            <a
+              href="https://forms.gle/H4kMy3fibe5oVrKbA"
+              target="_blank" rel="noopener noreferrer"
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: 6,
+                background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)',
+                color: 'var(--cream)', padding: '12px 20px',
+                borderRadius: 12, fontSize: 14, fontWeight: 600, textDecoration: 'none',
+                transition: 'background .2s',
+              }}
+            >
+              {isJa ? '参加希望フォーム →' : 'Điền form đăng ký →'}
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <style>{`
+        @keyframes livePulse {
+          0%,100%{opacity:1;transform:scale(1)}
+          50%{opacity:0.5;transform:scale(1.3)}
+        }
+        @media(max-width:768px){
+          .live-grid{grid-template-columns:1fr!important}
+        }
+      `}</style>
+    </section>
+  );
+}
+
 // ── Section: FAQ ───────────────────────────────────────────────
 function FAQSection() {
   return (
@@ -984,6 +1139,7 @@ function LandingContent({ locale }: { locale: string }) {
       <CourseMap locale={locale}/>
       <Stories/>
       <Pricing locale={locale}/>
+      <LiveStudySection locale={locale}/>
       <FAQSection/>
       <FinalCTA locale={locale}/>
     </div>

@@ -108,7 +108,8 @@ export default function Footer({ locale }: FooterProps) {
           ]}/>
           <FooterCol title="サービス" items={[
             { label: '料金プラン', href: `/${locale}/pricing` },
-            { label: 'AI家庭教師', href: `/${locale}/ai-tutor` },
+            { label: 'Medi先生（AI家庭教師）', href: `/${locale}/ai-tutor` },
+            { label: 'Live勉強会（企画中）', href: `/${locale}#live-study` },
             { label: '就職相談', href: lineUrl, external: true },
             { label: '求職フォーム', href: 'https://forms.gle/H4kMy3fibe5oVrKbA', external: true },
           ]}/>

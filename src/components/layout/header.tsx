@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { Menu, X, MessageSquare, FileText, Bot, Briefcase } from 'lucide-react';
+import { Menu, X, MessageSquare, FileText, Bot, Briefcase, Radio } from 'lucide-react';
 
 interface HeaderProps {
   locale: string;
@@ -112,6 +112,15 @@ export default function Header({ locale }: HeaderProps) {
           >
             {isJa ? '料金' : 'Giá'}
           </Link>
+
+          {/* Live勉強会 準備中 */}
+          <a href="#live-study" title={isJa ? '近日開催予定' : 'Sắp ra mắt'} style={{
+            ...navItemStyle, color: 'rgba(255,80,80,0.7)', cursor: 'pointer', userSelect: 'none', textDecoration: 'none',
+          }}>
+            <Radio size={13} style={{ color: 'rgba(255,80,80,0.65)' }} />
+            {isJa ? 'Live勉強会' : 'Học Live'}
+            {comingSoonBadge(isJa ? '企画中' : 'Sắp ra mắt')}
+          </a>
 
           {/* AIロールプレイ 準備中 */}
           <span title={isJa ? 'まもなく開設予定' : 'Sắp ra mắt'} style={{
@@ -224,6 +233,21 @@ export default function Header({ locale }: HeaderProps) {
           }}>
             <Briefcase size={15} style={{ color: '#00B894' }} />
             {isJa ? '就職相談（LINE）' : 'Tư vấn việc làm (LINE)'}
+          </a>
+          {/* Live勉強会 企画中 */}
+          <a href="#live-study" onClick={() => setMobileOpen(false)} style={{
+            display: 'flex', alignItems: 'center', gap: 8,
+            padding: '12px 0', fontSize: 15, fontWeight: 500,
+            color: 'rgba(255,80,80,0.8)', textDecoration: 'none',
+            borderBottom: '1px solid var(--line)',
+          }}>
+            <Radio size={15} style={{ color: 'rgba(255,80,80,0.7)' }} />
+            {isJa ? 'Live勉強会' : 'Học Live'}
+            <span style={{
+              fontSize: 9, fontWeight: 700, color: 'var(--ink-soft)',
+              background: 'rgba(10,27,61,0.07)', border: '1px solid rgba(10,27,61,0.12)',
+              borderRadius: 4, padding: '1px 5px',
+            }}>{isJa ? '企画中' : 'Sắp ra mắt'}</span>
           </a>
           {/* AIロールプレイ 準備中 */}
           <div style={{

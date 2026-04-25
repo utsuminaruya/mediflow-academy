@@ -2279,6 +2279,635 @@ Step 4: 設問に答える
       xpReward: 40,
     },
   },
+
+  // ===== N5 ひらがな L2 =====
+  'n5-01-2': {
+    courseTitle: { ja: 'N5 ひらがな・カタカナ完全マスター', vi: 'Hoàn thiện Hiragana & Katakana N5' },
+    isLocked: false, requiredPlan: 'free',
+    lesson: {
+      title: 'ひらがな第2回 〜さ行・た行〜',
+      titleTranslation: 'Hiragana Bài 2 - Hàng さ và hàng た',
+      introduction: `前回の「あ行・か行」に続き、今回は「さ行（さしすせそ）」と「た行（たちつてと）」を学びます。さ行は英語の「s」音、た行は「t」音が基本ですが、「し・ち・つ」は注意が必要です。
+
+Tiếp theo "hàng あ・か", lần này học "hàng さ (sa si su se so)" và "hàng た (ta chi tsu te to)". Hàng さ có âm "s", hàng た có âm "t" làm cơ bản, nhưng chú ý đặc biệt với し・ち・つ.`,
+      keyPoints: [
+        'さ行：さ(sa)・し(shi)・す(su)・せ(se)・そ(so)　※し = "shi" 注意',
+        'た行：た(ta)・ち(chi)・つ(tsu)・て(te)・と(to)　※ち=chi, つ=tsu 注意',
+        '「し」は英語の "she" のような音：舌先を上顎の前に近づけて発音',
+        '「つ」は英語にない音：「t」+「su」を素早く一音で発音',
+        '「ち」も独特：英語 "cheese" の "ch" に近い',
+        'カタカナ対応：サ・シ・ス・セ・ソ / タ・チ・ツ・テ・ト',
+      ],
+      vocabulary: [
+        { word: 'さくら', reading: 'さくら', meaning: '桜（hoa anh đào）', example: 'さくらがきれいです' },
+        { word: 'すし', reading: 'すし', meaning: '寿司（sushi）', example: 'おすしを食べる' },
+        { word: 'せかい', reading: 'せかい', meaning: '世界（thế giới）', example: 'せかいじゅう' },
+        { word: 'たべる', reading: 'たべる', meaning: '食べる（ăn）', example: 'ごはんをたべる' },
+        { word: 'ちかい', reading: 'ちかい', meaning: '近い（gần）', example: 'えきがちかい' },
+        { word: 'つくえ', reading: 'つくえ', meaning: '机（bàn）', example: 'つくえのうえ' },
+        { word: 'てがみ', reading: 'てがみ', meaning: '手紙（thư）', example: 'てがみをかく' },
+        { word: 'とけい', reading: 'とけい', meaning: '時計（đồng hồ）', example: 'とけいをみる' },
+      ],
+      examples: [
+        { japanese: 'すしとさしみが好きです。', reading: 'すしとさしみがすきです。', translation: 'Tôi thích sushi và sashimi.' },
+        { japanese: 'つくえのうえにとけいがあります。', reading: 'つくえのうえにとけいがあります。', translation: 'Trên bàn có đồng hồ.' },
+        { japanese: 'せかいじゅうのひとに、ちかいしょうらいたいせつです。', reading: 'せかいじゅうのひとに、ちかいしょうらいたいせつです。', translation: 'Tương lai gần quan trọng với người trên toàn thế giới.' },
+      ],
+      grammarNote: `【さ行・た行の発音まとめ】
+さ=sa　し=shi（!）　す=su　せ=se　そ=so
+た=ta　ち=chi（!）　つ=tsu（!）　て=te　と=to
+
+【介護でよく使う さ・た行の言葉】
+さん（Mr./さん付けで呼ぶ）/ して（〜して下さい）/ すみません
+たすけてください / ちょっとまって / つかまって / てをつないで
+
+Trong điều dưỡng hay dùng: すみません (xin lỗi), たすけて (giúp với), ちょっとまって (đợi một chút)`,
+      quizzes: [
+        {
+          question: '「し」の正しい読みはどれですか？',
+          options: [{ id: 'a', text: 'si' }, { id: 'b', text: 'shi' }, { id: 'c', text: 'chi' }, { id: 'd', text: 'zi' }],
+          correctId: 'b',
+          explanation: '「し」はローマ字で "shi" と書きます。英語の "she" に近い発音です。\n「し」được viết là "shi" trong romaji, phát âm gần giống "she" trong tiếng Anh.',
+          difficulty: 'easy' as const,
+        },
+        {
+          question: '「つ」の正しい読みはどれですか？',
+          options: [{ id: 'a', text: 'tu' }, { id: 'b', text: 'chu' }, { id: 'c', text: 'tsu' }, { id: 'd', text: 'su' }],
+          correctId: 'c',
+          explanation: '「つ」は "tsu" — t音とsu音を合わせた特殊な音です。\n「つ」là "tsu" — âm đặc biệt kết hợp t và su.',
+          difficulty: 'easy' as const,
+        },
+        {
+          question: '「すし」をひらがなで書くと？',
+          options: [{ id: 'a', text: 'しすし' }, { id: 'b', text: 'すし' }, { id: 'c', text: 'すしい' }, { id: 'd', text: 'すいし' }],
+          correctId: 'b',
+          explanation: '寿司は「すし」と書きます。す(su)+し(shi)。\nSushi viết là すし = す (su) + し (shi).',
+          difficulty: 'easy' as const,
+        },
+      ],
+      xpReward: 20,
+    },
+  },
+
+  // ===== N5 ひらがな L3 =====
+  'n5-01-3': {
+    courseTitle: { ja: 'N5 ひらがな・カタカナ完全マスター', vi: 'Hoàn thiện Hiragana & Katakana N5' },
+    isLocked: false, requiredPlan: 'free',
+    lesson: {
+      title: 'ひらがな第3回 〜な行・は行〜',
+      titleTranslation: 'Hiragana Bài 3 - Hàng な và hàng は',
+      introduction: `今回は「な行（なにぬねの）」と「は行（はひふへほ）」を学びます。「ふ」は唇から出る特殊な音、「は行」は語中・語尾で発音が変わることがあります。
+
+Lần này học "hàng な (na ni nu ne no)" và "hàng は (ha hi fu he ho)". Chú ý "ふ" là âm đặc biệt từ môi, và hàng は có thể thay đổi cách đọc ở giữa hay cuối từ.`,
+      keyPoints: [
+        'な行：な(na)・に(ni)・ぬ(nu)・ね(ne)・の(no)',
+        'は行：は(ha)・ひ(hi)・ふ(fu)・へ(he)・ほ(ho)',
+        '「ふ」は英語の "f" ではなく、両唇を近づけて息を出す音（発音注意）',
+        '助詞の「は」= "wa"、「へ」= "e" と発音が変わる',
+        '介護で頻出：「はい」「ひとり」「ふとん」「ほんじつ」',
+        'カタカナ対応：ナ・ニ・ヌ・ネ・ノ / ハ・ヒ・フ・ヘ・ホ',
+      ],
+      vocabulary: [
+        { word: 'なまえ', reading: 'なまえ', meaning: '名前（tên）', example: 'おなまえはなんですか' },
+        { word: 'にほん', reading: 'にほん', meaning: '日本（Nhật Bản）', example: 'にほんごをべんきょうする' },
+        { word: 'ねる', reading: 'ねる', meaning: '寝る（ngủ）', example: 'よるにねる' },
+        { word: 'はなす', reading: 'はなす', meaning: '話す（nói）', example: 'にほんごではなす' },
+        { word: 'ひとり', reading: 'ひとり', meaning: '一人（một mình）', example: 'ひとりでできる' },
+        { word: 'ふとん', reading: 'ふとん', meaning: '布団（chăn đệm）', example: 'ふとんをしく' },
+        { word: 'ほんじつ', reading: 'ほんじつ', meaning: '本日（hôm nay（lịch sự））', example: 'ほんじつのメニュー' },
+        { word: 'のむ', reading: 'のむ', meaning: '飲む（uống）', example: 'くすりをのむ' },
+      ],
+      examples: [
+        { japanese: 'おなまえはなんですか？', reading: 'おなまえはなんですか？', translation: 'Tên bạn là gì?' },
+        { japanese: 'ひとりでふとんにはいれますか？', reading: 'ひとりでふとんにはいれますか？', translation: 'Bạn có thể tự vào chăn đệm không?' },
+        { japanese: 'くすりをのんでください。', reading: 'くすりをのんでください。', translation: 'Hãy uống thuốc đi.' },
+      ],
+      grammarNote: `【は行の発音の注意点】
+通常：は=ha、ひ=hi、ふ=fu、へ=he、ほ=ho
+助詞として：
+  は（テーマ）→ "wa" と発音：「わたし は」
+  へ（方向）→ "e" と発音：「東京 へ」
+
+【「ふ」の発音】
+英語のfとは違い、上の歯を下唇につけない！
+両唇を近づけて、軽くふうっと息を出す感覚。
+
+Phát âm ふ: Không giống f tiếng Anh, không chạm răng vào môi. Thổi hơi nhẹ giữa hai môi.`,
+      quizzes: [
+        {
+          question: '助詞「は」の発音は？',
+          options: [{ id: 'a', text: 'ha' }, { id: 'b', text: 'wa' }, { id: 'c', text: 'ba' }, { id: 'd', text: 'pa' }],
+          correctId: 'b',
+          explanation: '助詞として使う「は」は "wa" と発音します。「わたし は グエンです」→ wa。\nKhi là trợ từ, は đọc là "wa". Ví dụ: "わたし は グエンです"',
+          difficulty: 'medium' as const,
+        },
+        {
+          question: '「ひとり」の意味は？',
+          options: [{ id: 'a', text: '二人' }, { id: 'b', text: '一日' }, { id: 'c', text: '一人' }, { id: 'd', text: '一つ' }],
+          correctId: 'c',
+          explanation: '「ひとり」は「一人（いちにん）」= 1人のこと。介護でよく使う「おひとりで大丈夫ですか？」\n「ひとり」= một người. Hay dùng trong điều dưỡng: "おひとりで大丈夫ですか？"',
+          difficulty: 'easy' as const,
+        },
+      ],
+      xpReward: 20,
+    },
+  },
+
+  // ===== N5 ひらがな L4 =====
+  'n5-01-4': {
+    courseTitle: { ja: 'N5 ひらがな・カタカナ完全マスター', vi: 'Hoàn thiện Hiragana & Katakana N5' },
+    isLocked: false, requiredPlan: 'free',
+    lesson: {
+      title: 'ひらがな第4回 〜ま行・や行・ら行・わ行・ん〜',
+      titleTranslation: 'Hiragana Bài 4 - Hàng ま, や, ら, わ và ん',
+      introduction: `今回でひらがな全46字が揃います。「ま行・や行・ら行・わ行」と特別な文字「ん」を学びます。「ら行」のrは英語のr・lとも異なる独特の音です。また「ん」は唯一の子音単独字です。
+
+Lần này hoàn thành đủ 46 chữ Hiragana. Học hàng ま, や, ら, わ và ký tự đặc biệt ん. Âm "r" của hàng ら khác với r/l tiếng Anh. ん là ký tự phụ âm duy nhất đứng một mình.`,
+      keyPoints: [
+        'ま行：ま(ma)・み(mi)・む(mu)・め(me)・も(mo)',
+        'や行：や(ya)・ゆ(yu)・よ(yo)　※3字のみ',
+        'ら行：ら(ra)・り(ri)・る(ru)・れ(re)・ろ(ro)　※独特のr音',
+        'わ行：わ(wa)・を(wo)　※「を」は助詞専用',
+        'ん：単独の子音字、語末・語中にのみ現れる',
+        '「ら行」のrは舌先を上顎に一度弾く音（フラップ音）',
+      ],
+      vocabulary: [
+        { word: 'まいにち', reading: 'まいにち', meaning: '毎日（mỗi ngày）', example: 'まいにちれんしゅうする' },
+        { word: 'みず', reading: 'みず', meaning: '水（nước）', example: 'みずをのむ' },
+        { word: 'やさしい', reading: 'やさしい', meaning: '優しい（nhẹ nhàng）', example: 'やさしいひと' },
+        { word: 'ゆっくり', reading: 'ゆっくり', meaning: 'ゆっくり（từ từ）', example: 'ゆっくりはなす' },
+        { word: 'よい', reading: 'よい', meaning: '良い（tốt）', example: 'よいてんき' },
+        { word: 'りょうり', reading: 'りょうり', meaning: '料理（nấu ăn）', example: 'りょうりをつくる' },
+        { word: 'われる', reading: 'われる', meaning: '割れる（vỡ）', example: 'コップがわれる' },
+        { word: 'にほん', reading: 'にほん', meaning: '日本（Nhật）', example: 'にほんにいます' },
+      ],
+      examples: [
+        { japanese: 'ゆっくりでいいですよ。', reading: 'ゆっくりでいいですよ。', translation: 'Cứ từ từ thôi nhé. （介護の声かけ）' },
+        { japanese: 'まいにちれんしゅうしましょう。', reading: 'まいにちれんしゅうしましょう。', translation: 'Hãy luyện tập mỗi ngày nhé.' },
+        { japanese: 'みずをのみますか？', reading: 'みずをのみますか？', translation: 'Bạn có muốn uống nước không?' },
+      ],
+      grammarNote: `【ら行の発音のコツ】
+英語のr でも l でもない！
+舌先を上の歯茎のすぐ後ろに当てて、弾く（flap）
+→ スペイン語の "r" に近い感覚
+
+【「を」について】
+「を」は動作の対象を示す助詞専用：
+　みず を のむ（水を飲む）
+　くすり を のむ（薬を飲む）
+発音は "o" （現代語では「お」と同じ発音）
+
+【「ん」の発音】
+語末：にほ ん → 「n」のまま止める
+語中：さんぽ → 「m」に近い
+母音の前：まんえん → 「ng」に近い`,
+      quizzes: [
+        {
+          question: '「ゆっくり」の意味として正しいのは？',
+          options: [{ id: 'a', text: 'はやく' }, { id: 'b', text: 'ゆっくり' }, { id: 'c', text: 'だんだん' }, { id: 'd', text: 'すぐに' }],
+          correctId: 'b',
+          explanation: '「ゆっくり」は "slowly / calmly"。介護現場で「ゆっくりで大丈夫ですよ」と声をかけます。\nゆっくり = từ từ/chậm. Trong điều dưỡng: "ゆっくりで大丈夫ですよ" (Từ từ cũng được đâu)',
+          difficulty: 'easy' as const,
+        },
+        {
+          question: 'ひらがなで「水を飲む」を書くと？',
+          options: [{ id: 'a', text: 'みずはのむ' }, { id: 'b', text: 'みずをのむ' }, { id: 'c', text: 'みずがのむ' }, { id: 'd', text: 'みずにのむ' }],
+          correctId: 'b',
+          explanation: '動作の対象には助詞「を」を使います。「みず を のむ」（水を飲む）。\nDùng trợ từ を cho đối tượng của hành động: みず を のむ',
+          difficulty: 'medium' as const,
+        },
+      ],
+      xpReward: 25,
+    },
+  },
+
+  // ===== N5 ひらがな L5 =====
+  'n5-01-5': {
+    courseTitle: { ja: 'N5 ひらがな・カタカナ完全マスター', vi: 'Hoàn thiện Hiragana & Katakana N5' },
+    isLocked: false, requiredPlan: 'free',
+    lesson: {
+      title: 'ひらがな第5回 〜濁音・半濁音〜',
+      titleTranslation: 'Hiragana Bài 5 - Âm đục (dakuten) và bán đục (handakuten)',
+      introduction: `清音（基本のひらがな）に加え、濁点（゛）や半濁点（°）をつけることで新しい音が生まれます。これを「濁音」「半濁音」といいます。20字以上の新しい音を習得します。
+
+Thêm vào Hiragana cơ bản (seion), dấu " (dakuten) và dấu ° (handakuten) tạo ra các âm mới gọi là "dakuon" và "handakuon". Sẽ học hơn 20 âm mới.`,
+      keyPoints: [
+        'が行：が(ga)・ぎ(gi)・ぐ(gu)・げ(ge)・ご(go)　← か行 ＋ ゛',
+        'ざ行：ざ(za)・じ(ji)・ず(zu)・ぜ(ze)・ぞ(zo)　← さ行 ＋ ゛',
+        'だ行：だ(da)・ぢ(ji)・づ(zu)・で(de)・ど(do)　← た行 ＋ ゛',
+        'ば行：ば(ba)・び(bi)・ぶ(bu)・べ(be)・ぼ(bo)　← は行 ＋ ゛',
+        'ぱ行：ぱ(pa)・ぴ(pi)・ぷ(pu)・ぺ(pe)・ぽ(po)　← は行 ＋ ° （半濁点）',
+        '「じ」は「ぢ」と、「ず」は「づ」と同じ発音（現代語では）',
+      ],
+      vocabulary: [
+        { word: 'がんばる', reading: 'がんばる', meaning: '頑張る（cố gắng）', example: 'がんばってください' },
+        { word: 'ごはん', reading: 'ごはん', meaning: 'ご飯（cơm）', example: 'ごはんをたべる' },
+        { word: 'じかん', reading: 'じかん', meaning: '時間（thời gian）', example: 'じかんをまもる' },
+        { word: 'ずっと', reading: 'ずっと', meaning: 'ずっと（mãi mãi）', example: 'ずっとげんきで' },
+        { word: 'でんわ', reading: 'でんわ', meaning: '電話（điện thoại）', example: 'でんわをかける' },
+        { word: 'びょういん', reading: 'びょういん', meaning: '病院（bệnh viện）', example: 'びょういんにいく' },
+        { word: 'ぶどう', reading: 'ぶどう', meaning: '葡萄（nho）', example: 'ぶどうをたべる' },
+        { word: 'ぽかぽか', reading: 'ぽかぽか', meaning: '暖かい感じ（ấm áp）', example: 'ぽかぽかあたたかい' },
+      ],
+      examples: [
+        { japanese: 'ごはんのじかんですよ。', reading: 'ごはんのじかんですよ。', translation: 'Đến giờ ăn rồi đấy. （介護の声かけ）' },
+        { japanese: 'びょういんにでんわをかけます。', reading: 'びょういんにでんわをかけます。', translation: 'Tôi gọi điện cho bệnh viện.' },
+        { japanese: 'がんばってください！おうえんしています。', reading: 'がんばってください！おうえんしています。', translation: 'Cố lên! Tôi đang cổ vũ bạn.' },
+      ],
+      grammarNote: `【濁音・半濁音のまとめ一覧】
+か→が　き→ぎ　く→ぐ　け→げ　こ→ご
+さ→ざ　し→じ　す→ず　せ→ぜ　そ→ぞ
+た→だ　ち→ぢ　つ→づ　て→で　と→ど
+は→ば　ひ→び　ふ→ぶ　へ→べ　ほ→ぼ
+は→ぱ　ひ→ぴ　ふ→ぷ　へ→ぺ　ほ→ぽ
+
+【介護で頻出の濁音語彙】
+ごはん（ご飯）/ でんわ（電話）/ びょういん（病院）
+ざんぎょう（残業）/ ぶんかい（分解）/ でぐち（出口）`,
+      quizzes: [
+        {
+          question: '「ごはん」をひらがなで書くと？',
+          options: [{ id: 'a', text: 'こはん' }, { id: 'b', text: 'ごはん' }, { id: 'c', text: 'ごばん' }, { id: 'd', text: 'こばん' }],
+          correctId: 'b',
+          explanation: '「ご飯」は「ごはん」。「こ」に濁点がついて「ご」になります。\n「ご飯」viết là ごはん. こ + ゛= ご',
+          difficulty: 'easy' as const,
+        },
+        {
+          question: '半濁点（°）を使う行は？',
+          options: [{ id: 'a', text: 'か行' }, { id: 'b', text: 'さ行' }, { id: 'c', text: 'た行' }, { id: 'd', text: 'は行' }],
+          correctId: 'd',
+          explanation: '半濁点（°）はは行にのみ付きます：ぱぴぷぺぽ\nDấu ° (handakuten) chỉ thêm vào hàng は: ぱぴぷぺぽ',
+          difficulty: 'medium' as const,
+        },
+        {
+          question: '「びょういん」の意味は？',
+          options: [{ id: 'a', text: '銀行' }, { id: 'b', text: '学校' }, { id: 'c', text: '病院' }, { id: 'd', text: '薬局' }],
+          correctId: 'c',
+          explanation: '「びょういん」=「病院」（bệnh viện）。介護現場では頻出の語彙です。\nびょういん = bệnh viện. Từ vựng rất hay gặp trong môi trường điều dưỡng.',
+          difficulty: 'easy' as const,
+        },
+      ],
+      xpReward: 25,
+    },
+  },
+
+  // ===== N5 ひらがな L6 =====
+  'n5-01-6': {
+    courseTitle: { ja: 'N5 ひらがな・カタカナ完全マスター', vi: 'Hoàn thiện Hiragana & Katakana N5' },
+    isLocked: false, requiredPlan: 'free',
+    lesson: {
+      title: 'ひらがな第6回 〜拗音・長音・促音〜',
+      titleTranslation: 'Hiragana Bài 6 - Âm thu nhỏ, âm dài và âm ngừng',
+      introduction: `ひらがなの特殊な使い方を学びます。「きゃ・しゅ・ちょ」などの「拗音」、「おかあさん」のような「長音」、「きって」などの「促音（小さいっ）」は日本語の重要なルールです。
+
+Học cách dùng đặc biệt của Hiragana. "拗音" như きゃ・しゅ・ちょ, "長音" như おかあさん (âm dài), và "促音" (っ nhỏ) như きって là các quy tắc quan trọng của tiếng Nhật.`,
+      keyPoints: [
+        '拗音：小さい「ゃ・ゅ・ょ」を組み合わせる — きゃ・きゅ・きょ / しゃ・しゅ・しょ / ちゃ・ちゅ・ちょ など',
+        '長音：同じ母音を伸ばす — ああ・いい・うう・ええ・おお（おう）',
+        '促音：小さい「っ」 — 次の子音を一瞬止める — きって・ざっし・もっと',
+        '「ぎゃ・びゅ・ぴょ」など濁音・半濁音にも拗音がつく',
+        '介護で重要：「ちょっと」「きって」「ざっし」「しゅっきん」',
+        '長音の「え列+い」と「お列+う」は特別：けいたい(携帯)、おうじ(王子)',
+      ],
+      vocabulary: [
+        { word: 'きゃく', reading: 'きゃく', meaning: '客（khách）', example: 'おきゃくさま' },
+        { word: 'しゃしん', reading: 'しゃしん', meaning: '写真（ảnh）', example: 'しゃしんをとる' },
+        { word: 'ちょっと', reading: 'ちょっと', meaning: 'ちょっと（một chút）', example: 'ちょっとまってください' },
+        { word: 'びょういん', reading: 'びょういん', meaning: '病院（bệnh viện）', example: 'びょういんへいく' },
+        { word: 'きって', reading: 'きって', meaning: '切手（tem）', example: 'きってをはる' },
+        { word: 'ざっし', reading: 'ざっし', meaning: '雑誌（tạp chí）', example: 'ざっしをよむ' },
+        { word: 'しゅっきん', reading: 'しゅっきん', meaning: '出勤（đi làm）', example: 'しゅっきんじかん' },
+        { word: 'にゅういん', reading: 'にゅういん', meaning: '入院（nhập viện）', example: 'にゅういんする' },
+      ],
+      examples: [
+        { japanese: 'ちょっとまってください。', reading: 'ちょっとまってください。', translation: 'Vui lòng đợi một chút. （介護の声かけ）' },
+        { japanese: 'にゅういんのしゅっきんじかんは9じです。', reading: 'にゅういんのしゅっきんじかんは9じです。', translation: 'Giờ đi làm ở nội trú là 9 giờ.' },
+        { japanese: 'しゃしんをとってもいいですか？', reading: 'しゃしんをとってもいいですか？', translation: 'Tôi có thể chụp ảnh không?' },
+      ],
+      grammarNote: `【拗音の組み合わせ一覧（主要）】
+きゃ・きゅ・きょ / ぎゃ・ぎゅ・ぎょ
+しゃ・しゅ・しょ / じゃ・じゅ・じょ
+ちゃ・ちゅ・ちょ
+にゃ・にゅ・にょ
+ひゃ・ひゅ・ひょ / びゃ・びゅ・びょ / ぴゃ・ぴゅ・ぴょ
+みゃ・みゅ・みょ
+りゃ・りゅ・りょ
+
+【促音のコツ】
+「っ」= 次の子音の前で息を止めて一拍置く
+きっ・て（kit-te）/ ざっ・し（zas-shi）/ もっ・と（mot-to）`,
+      quizzes: [
+        {
+          question: '「ちょっとまって」の「っ」は何を表す？',
+          options: [{ id: 'a', text: '長音（伸ばす）' }, { id: 'b', text: '促音（一瞬止める）' }, { id: 'c', text: '濁音' }, { id: 'd', text: '半濁音' }],
+          correctId: 'b',
+          explanation: '小さい「っ」は「促音」。次の子音の前で一拍止めます。ちょっ-と（chot-to）\nっ nhỏ là "促音" (âm ngừng). Ngừng lại một nhịp trước phụ âm tiếp theo.',
+          difficulty: 'medium' as const,
+        },
+        {
+          question: '「にゅういん」の意味は？',
+          options: [{ id: 'a', text: '退院' }, { id: 'b', text: '入院' }, { id: 'c', text: '出勤' }, { id: 'd', text: '通院' }],
+          correctId: 'b',
+          explanation: '「にゅういん」=「入院」(nhập viện)。「にゅ」は拗音 = に+小さいゅ。\nにゅういん = nhập viện. にゅ là âm thu nhỏ = に + ゅ nhỏ.',
+          difficulty: 'easy' as const,
+        },
+      ],
+      xpReward: 25,
+    },
+  },
+
+  // ===== N5 カタカナ L7 =====
+  'n5-01-7': {
+    courseTitle: { ja: 'N5 ひらがな・カタカナ完全マスター', vi: 'Hoàn thiện Hiragana & Katakana N5' },
+    isLocked: false, requiredPlan: 'free',
+    lesson: {
+      title: 'カタカナ第1回 〜ア行〜サ行〜',
+      titleTranslation: 'Katakana Bài 1 - Hàng ア đến hàng サ',
+      introduction: `ひらがなをマスターしたら、次はカタカナです。カタカナは主に外来語・外国人名・医療用語・擬音語に使います。ひらがなと同じ発音で、形だけが違います。
+
+Sau khi thành thạo Hiragana, tiếp theo là Katakana. Katakana chủ yếu dùng cho từ ngoại lai, tên người nước ngoài, thuật ngữ y tế và từ tượng thanh. Phát âm giống Hiragana, chỉ khác hình dạng.`,
+      keyPoints: [
+        'ア行：ア(a)・イ(i)・ウ(u)・エ(e)・オ(o)　← あいうえお と同じ発音',
+        'カ行：カ(ka)・キ(ki)・ク(ku)・ケ(ke)・コ(ko)',
+        'サ行：サ(sa)・シ(shi)・ス(su)・セ(se)・ソ(so)',
+        'カタカナは直線的で角張った形が特徴',
+        '長音記号「ー」：ナース（nurse）、ドア（door）など母音を伸ばす',
+        '医療でよく使うカタカナ：ナース・ケア・スタッフ・サービス・スキル',
+      ],
+      vocabulary: [
+        { word: 'ナース', reading: 'ナース', meaning: '看護師（y tá）', example: 'ナースコール' },
+        { word: 'ケア', reading: 'ケア', meaning: 'ケア（chăm sóc）', example: 'スキンケア' },
+        { word: 'スタッフ', reading: 'スタッフ', meaning: 'スタッフ（nhân viên）', example: 'スタッフ全員' },
+        { word: 'アイス', reading: 'アイス', meaning: 'アイス（kem）', example: 'アイスクリーム' },
+        { word: 'コーヒー', reading: 'コーヒー', meaning: 'コーヒー（cà phê）', example: 'コーヒーをのむ' },
+        { word: 'スキル', reading: 'スキル', meaning: '技能（kỹ năng）', example: 'スキルをあげる' },
+        { word: 'サービス', reading: 'サービス', meaning: 'サービス（dịch vụ）', example: 'かいごサービス' },
+        { word: 'セーター', reading: 'セーター', meaning: 'セーター（áo len）', example: 'セーターをきる' },
+      ],
+      examples: [
+        { japanese: 'ナースコールをおしてください。', reading: 'ナースコールをおしてください。', translation: 'Hãy nhấn chuông gọi y tá. （介護の声かけ）' },
+        { japanese: 'スタッフにきいてください。', reading: 'スタッフにきいてください。', translation: 'Hãy hỏi nhân viên.' },
+        { japanese: 'スキンケアはたいせつです。', reading: 'スキンケアはたいせつです。', translation: 'Chăm sóc da rất quan trọng.' },
+      ],
+      grammarNote: `【カタカナとひらがなの対応】
+あ→ア　い→イ　う→ウ　え→エ　お→オ
+か→カ　き→キ　く→ク　け→ケ　こ→コ
+さ→サ　し→シ　す→ス　せ→セ　そ→ソ
+
+【カタカナの長音「ー」】
+母音を1拍分伸ばす記号
+ナ ー ス（na-a-su = nurse）
+コ ー ヒ ー（ko-o-hi-i = coffee）
+ケ ア（ke-a = care）
+
+【介護施設でよく見るカタカナ掲示】
+ナースステーション / スタッフルーム / サービスセンター`,
+      quizzes: [
+        {
+          question: '「ナース」の意味は？',
+          options: [{ id: 'a', text: '医師' }, { id: 'b', text: '看護師' }, { id: 'c', text: '薬剤師' }, { id: 'd', text: '介護士' }],
+          correctId: 'b',
+          explanation: '「ナース」= nurse = 看護師。英語のnurseをカタカナにしたものです。\n「ナース」= nurse = y tá. Chữ Katakana của từ tiếng Anh "nurse".',
+          difficulty: 'easy' as const,
+        },
+        {
+          question: 'カタカナで長音を表すのは？',
+          options: [{ id: 'a', text: 'っ' }, { id: 'b', text: 'ー' }, { id: 'c', text: 'ん' }, { id: 'd', text: 'ゃ' }],
+          correctId: 'b',
+          explanation: 'カタカナでは「ー」が長音を表します。ナース・コーヒー・サービスなど。\nTrong Katakana, ー là ký hiệu âm dài. Ví dụ: ナース・コーヒー・サービス',
+          difficulty: 'easy' as const,
+        },
+      ],
+      xpReward: 25,
+    },
+  },
+
+  // ===== N5 カタカナ L8 =====
+  'n5-01-8': {
+    courseTitle: { ja: 'N5 ひらがな・カタカナ完全マスター', vi: 'Hoàn thiện Hiragana & Katakana N5' },
+    isLocked: false, requiredPlan: 'free',
+    lesson: {
+      title: 'カタカナ第2回 〜タ行〜ハ行〜',
+      titleTranslation: 'Katakana Bài 2 - Hàng タ đến hàng ハ',
+      introduction: `前回に続き、カタカナの「タ行・ナ行・ハ行」を学びます。医療・介護でよく使う外来語（バイタル・ヘルパー・トイレなど）を中心に覚えましょう。
+
+Tiếp tục học Katakana hàng タ・ナ・ハ. Tập trung vào từ ngoại lai hay dùng trong y tế và điều dưỡng như バイタル・ヘルパー・トイレ.`,
+      keyPoints: [
+        'タ行：タ(ta)・チ(chi)・ツ(tsu)・テ(te)・ト(to)',
+        'ナ行：ナ(na)・ニ(ni)・ヌ(nu)・ネ(ne)・ノ(no)',
+        'ハ行：ハ(ha)・ヒ(hi)・フ(fu)・ヘ(he)・ホ(ho)',
+        '濁音：ダ・ヂ・ヅ・デ・ド / バ・ビ・ブ・ベ・ボ',
+        '半濁音：パ・ピ・プ・ペ・ポ',
+        '医療頻出：バイタル・ヘルパー・トイレ・ナースステーション・パジャマ',
+      ],
+      vocabulary: [
+        { word: 'バイタル', reading: 'バイタル', meaning: 'バイタルサイン（dấu hiệu sinh tồn）', example: 'バイタルをはかる' },
+        { word: 'ヘルパー', reading: 'ヘルパー', meaning: 'ホームヘルパー（người hỗ trợ）', example: 'ヘルパーさん' },
+        { word: 'トイレ', reading: 'トイレ', meaning: 'トイレ（nhà vệ sinh）', example: 'トイレにいく' },
+        { word: 'パジャマ', reading: 'パジャマ', meaning: 'パジャマ（pyjama）', example: 'パジャマにきがえる' },
+        { word: 'テーブル', reading: 'テーブル', meaning: 'テーブル（bàn ăn）', example: 'テーブルにつく' },
+        { word: 'ノート', reading: 'ノート', meaning: 'ノート（vở ghi chép）', example: 'ノートにかく' },
+        { word: 'ベッド', reading: 'ベッド', meaning: 'ベッド（giường）', example: 'ベッドにはいる' },
+        { word: 'ドア', reading: 'ドア', meaning: 'ドア（cửa）', example: 'ドアをしめる' },
+      ],
+      examples: [
+        { japanese: 'バイタルをはかります。たいおん・けつあつ・みゃくはくです。', reading: 'バイタルをはかります。たいおん・けつあつ・みゃくはくです。', translation: 'Tôi đo dấu hiệu sinh tồn. Gồm nhiệt độ, huyết áp và mạch.' },
+        { japanese: 'トイレにいきたいですか？', reading: 'トイレにいきたいですか？', translation: 'Bạn muốn đi vệ sinh không?' },
+        { japanese: 'ベッドにもどりましょう。', reading: 'ベッドにもどりましょう。', translation: 'Hãy quay lại giường nhé.' },
+      ],
+      grammarNote: `【タ行〜ハ行 カタカナ対応】
+た→タ　ち→チ　つ→ツ　て→テ　と→ト
+な→ナ　に→ニ　ぬ→ヌ　ね→ネ　の→ノ
+は→ハ　ひ→ヒ　ふ→フ　へ→ヘ　ほ→ホ
+
+【介護施設でよく使うカタカナ語】
+バイタル（vital signs）
+ヘルパー（helper/care worker）
+トイレ（toilet）
+ベッド（bed）
+テーブル（table）
+パジャマ（pajama/nightwear）
+ノート（notebook/care record）`,
+      quizzes: [
+        {
+          question: '「バイタル」とは何を指す？',
+          options: [{ id: 'a', text: '食事の量' }, { id: 'b', text: '体温・血圧・脈拍などの生命兆候' }, { id: 'c', text: '排泄記録' }, { id: 'd', text: 'ベッドの位置' }],
+          correctId: 'b',
+          explanation: 'バイタル（バイタルサイン）= vital signs = 体温・血圧・脈拍・呼吸数など。介護の基本業務です。\nバイタル = dấu hiệu sinh tồn = nhiệt độ, huyết áp, mạch...',
+          difficulty: 'easy' as const,
+        },
+        {
+          question: '「ベッド」をひらがなで書くと？（発音）',
+          options: [{ id: 'a', text: 'べっど' }, { id: 'b', text: 'べど' }, { id: 'c', text: 'べっと' }, { id: 'd', text: 'べつど' }],
+          correctId: 'a',
+          explanation: '「ベッド」= べっど（促音あり）。カタカナのッはひらがなのっと同じ促音。\nベッド phát âm là べっど (có âm ngừng っ).',
+          difficulty: 'medium' as const,
+        },
+      ],
+      xpReward: 25,
+    },
+  },
+
+  // ===== N5 カタカナ L9 =====
+  'n5-01-9': {
+    courseTitle: { ja: 'N5 ひらがな・カタカナ完全マスター', vi: 'Hoàn thiện Hiragana & Katakana N5' },
+    isLocked: false, requiredPlan: 'free',
+    lesson: {
+      title: 'カタカナ第3回 〜マ行〜ワ行・外来語の読み方〜',
+      titleTranslation: 'Katakana Bài 3 - Hàng マ〜ワ và cách đọc từ ngoại lai',
+      introduction: `カタカナの残りの行「マ行・ヤ行・ラ行・ワ行」を学びます。また、英語をカタカナに変換するルールを覚えると、新しいカタカナ語を見たとき自力で読めるようになります。
+
+Học các hàng còn lại của Katakana: マ・ヤ・ラ・ワ. Và nếu nhớ quy tắc chuyển từ tiếng Anh sang Katakana, bạn có thể tự đọc từ Katakana mới.`,
+      keyPoints: [
+        'マ行：マ(ma)・ミ(mi)・ム(mu)・メ(me)・モ(mo)',
+        'ヤ行：ヤ(ya)・ユ(yu)・ヨ(yo)',
+        'ラ行：ラ(ra)・リ(ri)・ル(ru)・レ(re)・ロ(ro)',
+        'ワ行：ワ(wa)・ヲ(wo)・ン(n)',
+        '英→カタカナ：語末の子音は省く/母音を加える、th→ス/ズ、v→ヴ/ブ',
+        '医療・介護で最重要：リハビリ・マスク・メディカル・モニター・ユニット',
+      ],
+      vocabulary: [
+        { word: 'リハビリ', reading: 'リハビリ', meaning: 'リハビリテーション（phục hồi chức năng）', example: 'リハビリをする' },
+        { word: 'マスク', reading: 'マスク', meaning: 'マスク（khẩu trang）', example: 'マスクをつける' },
+        { word: 'メディカル', reading: 'メディカル', meaning: '医療（y tế）', example: 'メディカルチェック' },
+        { word: 'モニター', reading: 'モニター', meaning: 'モニター（màn hình）', example: 'モニターをみる' },
+        { word: 'ユニット', reading: 'ユニット', meaning: 'ユニット（đơn vị khu）', example: 'ユニットリーダー' },
+        { word: 'ラジオ', reading: 'ラジオ', meaning: 'ラジオ（radio）', example: 'ラジオをきく' },
+        { word: 'ミキサー', reading: 'ミキサー', meaning: 'ミキサー（máy xay）', example: 'ミキサーしょく' },
+        { word: 'ロール', reading: 'ロール', meaning: '役割（vai trò）', example: 'ロールプレイ' },
+      ],
+      examples: [
+        { japanese: 'リハビリのじかんです。がんばりましょう。', reading: 'リハビリのじかんです。がんばりましょう。', translation: 'Đến giờ phục hồi chức năng. Cùng cố gắng nhé.' },
+        { japanese: 'マスクをしてください。かんせんよぼうのため。', reading: 'マスクをしてください。かんせんよぼうのため。', translation: 'Hãy đeo khẩu trang để phòng ngừa lây nhiễm.' },
+        { japanese: 'ミキサーしょくにしますか？', reading: 'ミキサーしょくにしますか？', translation: 'Bạn muốn dùng cơm nghiền máy xay không?' },
+      ],
+      grammarNote: `【マ〜ワ行 カタカナ対応】
+ま→マ　み→ミ　む→ム　め→メ　も→モ
+や→ヤ　ゆ→ユ　よ→ヨ
+ら→ラ　り→リ　る→ル　れ→レ　ろ→ロ
+わ→ワ　を→ヲ　ん→ン
+
+【英語→カタカナ変換のルール】
+語末子音：bed→ベッド / mask→マスク
+th：health→ヘルス / bath→バス
+l と r：どちらも「ラ行」で表す
+er/or(語末)：→「ー」: water→ウォーター
+
+【介護のカタカナ重要語一覧】
+リハビリ / マスク / モニター / ユニット
+ミキサー食 / バイタル / ヘルパー / ケア`,
+      quizzes: [
+        {
+          question: '「リハビリ」とは何の略？',
+          options: [{ id: 'a', text: 'リハビリテーション' }, { id: 'b', text: 'リズムバランス' }, { id: 'c', text: 'リラクゼーション' }, { id: 'd', text: 'リソースマネジメント' }],
+          correctId: 'a',
+          explanation: 'リハビリ = リハビリテーション（rehabilitation）。機能回復訓練のことです。\nリハビリ = リハビリテーション = phục hồi chức năng.',
+          difficulty: 'easy' as const,
+        },
+        {
+          question: '「ミキサー食」とは？',
+          options: [{ id: 'a', text: '冷凍食品' }, { id: 'b', text: '細かく刻んだ食事' }, { id: 'c', text: 'ミキサーで滑らかにした食事' }, { id: 'd', text: '温かい食事' }],
+          correctId: 'c',
+          explanation: 'ミキサー食はミキサー（blender）で食材を滑らかにした流動食。嚥下困難者に提供します。\nMixa食 = thức ăn xay nhuyễn bằng máy, dành cho người khó nuốt.',
+          difficulty: 'medium' as const,
+        },
+      ],
+      xpReward: 25,
+    },
+  },
+
+  // ===== N5 総復習 L10 =====
+  'n5-01-10': {
+    courseTitle: { ja: 'N5 ひらがな・カタカナ完全マスター', vi: 'Hoàn thiện Hiragana & Katakana N5' },
+    isLocked: false, requiredPlan: 'free',
+    lesson: {
+      title: '総復習 〜ひらがな・カタカナ全46字テスト〜',
+      titleTranslation: 'Ôn tập tổng hợp - Kiểm tra toàn bộ 46 chữ Hiragana và Katakana',
+      introduction: `10回のレッスンの集大成です。ひらがな46字・カタカナ46字すべての読み書きと、介護現場でよく使う語彙を総復習します。このレッスンをクリアすれば、日本語の文字の基礎が完成です！
+
+Đây là tổng kết 10 bài học. Ôn tổng hợp toàn bộ 46 chữ Hiragana, 46 chữ Katakana và từ vựng hay dùng trong điều dưỡng. Hoàn thành bài này là bạn đã xong nền tảng chữ tiếng Nhật!`,
+      keyPoints: [
+        'ひらがな46字 完全制覇：あ〜ん、濁音・半濁音・拗音・促音・長音',
+        'カタカナ46字 完全制覇：ア〜ン、外来語・医療用語への応用',
+        '読み書きの総確認：両方向の変換ができるか確認',
+        '介護現場の必須語彙：バイタル・ナース・ケア・トイレ・リハビリ',
+        '発音の注意点総まとめ：し・ち・つ・ふ、濁音・拗音・促音',
+        'おめでとう！このコースで日本語学習の土台が完成しました',
+      ],
+      vocabulary: [
+        { word: 'おつかれさまでした', reading: 'おつかれさまでした', meaning: 'お疲れ様でした（Cảm ơn vì đã vất vả）', example: '（退勤時に）おつかれさまでした' },
+        { word: 'ありがとうございます', reading: 'ありがとうございます', meaning: 'ありがとう（Cảm ơn）', example: 'こころからありがとうございます' },
+        { word: 'すみません', reading: 'すみません', meaning: 'すみません（Xin lỗi/Excuse me）', example: 'すみません、たすけてください' },
+        { word: 'よろしくおねがいします', reading: 'よろしくおねがいします', meaning: 'よろしく（Nhờ vào）', example: 'これからよろしくおねがいします' },
+        { word: 'バイタルチェック', reading: 'バイタルチェック', meaning: '生命兆候確認（kiểm tra dấu hiệu sinh tồn）', example: 'まいあさバイタルチェック' },
+        { word: 'ケアプラン', reading: 'ケアプラン', meaning: '介護計画（kế hoạch chăm sóc）', example: 'ケアプランをたてる' },
+        { word: 'リハビリ', reading: 'リハビリ', meaning: '機能回復訓練（phục hồi chức năng）', example: 'デイサービスでリハビリ' },
+        { word: 'コミュニケーション', reading: 'コミュニケーション', meaning: '意思疎通（giao tiếp）', example: 'りようしゃとのコミュニケーション' },
+      ],
+      examples: [
+        { japanese: 'おはようございます！バイタルをはかりますね。', reading: 'おはようございます！バイタルをはかりますね。', translation: 'Chào buổi sáng! Tôi đo dấu hiệu sinh tồn nhé.' },
+        { japanese: 'ケアプランにしたがって、リハビリをおこないます。', reading: 'ケアプランにしたがって、リハビリをおこないます。', translation: 'Thực hiện phục hồi chức năng theo kế hoạch chăm sóc.' },
+        { japanese: 'りようしゃとのコミュニケーションがいちばんたいせつです。', reading: 'りようしゃとのコミュニケーションがいちばんたいせつです。', translation: 'Giao tiếp với người dùng dịch vụ là quan trọng nhất.' },
+      ],
+      grammarNote: `【ひらがな・カタカナ 総まとめ】
+
+■ ひらがな 全一覧
+清音：あいうえお かきくけこ さしすせそ たちつてと
+     なにぬねの はひふへほ まみむめも やゆよ
+     らりるれろ わをん
+濁音：がぎぐげご ざじずぜぞ だぢづでど ばびぶべぼ
+半濁音：ぱぴぷぺぽ
+拗音：きゃきゅきょ しゃしゅしょ ちゃちゅちょ etc.
+
+■ カタカナ 全一覧
+アイウエオ カキクケコ サシスセソ タチツテト
+ナニヌネノ ハヒフヘホ マミムメモ ヤユヨ
+ラリルレロ ワヲン
+
+■ 介護現場で最重要の語彙
+ひらがな：ごはん・くすり・おふろ・みずをのむ・ゆっくり
+カタカナ：バイタル・ナース・ケア・ベッド・トイレ・リハビリ`,
+      quizzes: [
+        {
+          question: 'カタカナで「リハビリ・テーブル・マスク」をひらがな（発音）に直すと？',
+          options: [
+            { id: 'a', text: 'りはびり・てーぶる・ますく' },
+            { id: 'b', text: 'りあびり・てぶる・ますく' },
+            { id: 'c', text: 'りはびる・てーぶ・ますっく' },
+            { id: 'd', text: 'りはびり・てーぶ・ますく' },
+          ],
+          correctId: 'a',
+          explanation: 'カタカナとひらがなは同じ発音。ー（長音記号）はそのまま伸ばします。\nKatakana và Hiragana đọc giống nhau. ー là dấu kéo dài âm.',
+          difficulty: 'medium' as const,
+        },
+        {
+          question: '介護現場でよく使うカタカナ語として正しいのは？',
+          options: [
+            { id: 'a', text: 'バイタル・ケア・リハビリ' },
+            { id: 'b', text: 'サッカー・テニス・ゴルフ' },
+            { id: 'c', text: 'レストラン・ホテル・カフェ' },
+            { id: 'd', text: 'テレビ・ゲーム・アニメ' },
+          ],
+          correctId: 'a',
+          explanation: '介護現場で頻出：バイタル(vital signs)・ケア(care)・リハビリ(rehabilitation)\nHay gặp trong điều dưỡng: バイタル・ケア・リハビリ',
+          difficulty: 'easy' as const,
+        },
+        {
+          question: '「おつかれさまでした」はどんなときに使う？',
+          options: [
+            { id: 'a', text: '朝のあいさつ' },
+            { id: 'b', text: '仕事終わりや退勤のとき' },
+            { id: 'c', text: '食事の前' },
+            { id: 'd', text: '誰かに会ったとき' },
+          ],
+          correctId: 'b',
+          explanation: '「おつかれさまでした」は仕事終わりや退勤時に使います。上司・同僚どちらにも使えます。\nDùng khi kết thúc ca làm. Dùng được với cả cấp trên và đồng nghiệp.',
+          difficulty: 'easy' as const,
+        },
+      ],
+      xpReward: 50,
+    },
+  },
 };
 
 // Fallback lesson for unknown IDs
@@ -2318,6 +2947,32 @@ const fallbackLesson: LessonData = {
   },
 };
 
+// ── Course lesson lists ──────────────────────────────────────
+const courseLessonMap: Record<string, string[]> = {
+  'n5-01': ['n5-01', 'n5-01-2', 'n5-01-3', 'n5-01-4', 'n5-01-5', 'n5-01-6', 'n5-01-7', 'n5-01-8', 'n5-01-9', 'n5-01-10'],
+};
+
+const lessonShortTitle: Record<string, { ja: string; vi: string }> = {
+  'n5-01':    { ja: 'あ行・か行', vi: 'Hàng あ・か' },
+  'n5-01-2':  { ja: 'さ行・た行', vi: 'Hàng さ・た' },
+  'n5-01-3':  { ja: 'な行・は行', vi: 'Hàng な・は' },
+  'n5-01-4':  { ja: 'ま行〜ん', vi: 'Hàng ま〜ん' },
+  'n5-01-5':  { ja: '濁音・半濁音', vi: 'Âm đục/bán đục' },
+  'n5-01-6':  { ja: '拗音・長音・促音', vi: 'Âm đặc biệt' },
+  'n5-01-7':  { ja: 'カタカナ①', vi: 'Katakana①' },
+  'n5-01-8':  { ja: 'カタカナ②', vi: 'Katakana②' },
+  'n5-01-9':  { ja: 'カタカナ③', vi: 'Katakana③' },
+  'n5-01-10': { ja: '総復習テスト', vi: 'Kiểm tra tổng hợp' },
+};
+
+// Find course ID for a given lesson ID
+function getCourseId(lessonId: string): string | null {
+  for (const [courseId, lessons] of Object.entries(courseLessonMap)) {
+    if (lessons.includes(lessonId)) return courseId;
+  }
+  return null;
+}
+
 export default function LessonPage({ params }: LessonPageProps) {
   const { locale, id } = use(params);
   const t = useTranslations();
@@ -2348,6 +3003,15 @@ export default function LessonPage({ params }: LessonPageProps) {
   const planOrder: Record<string, number> = { free: 0, basic: 1, pro: 2 };
   const effectivelyLocked = planOrder[data.requiredPlan] > planOrder[userPlan];
 
+  // Course-level navigation
+  const courseId = getCourseId(id);
+  const lessonList = courseId ? courseLessonMap[courseId] : null;
+  const lessonIndex = lessonList ? lessonList.indexOf(id) : -1;
+  const lessonNumber = lessonIndex >= 0 ? lessonIndex + 1 : null;
+  const totalLessons = lessonList ? lessonList.length : null;
+  const prevLessonId = lessonList && lessonIndex > 0 ? lessonList[lessonIndex - 1] : null;
+  const nextLessonId = lessonList && lessonIndex < lessonList.length - 1 ? lessonList[lessonIndex + 1] : null;
+
   const handleComplete = (score: number) => {
     const xpEarned = Math.round((score / 100) * lesson.xpReward);
     setEarnedXp(xpEarned);
@@ -2361,6 +3025,7 @@ export default function LessonPage({ params }: LessonPageProps) {
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-8">
+      {/* Header nav */}
       <div className="flex items-center gap-3 mb-6">
         <Link href={`/${locale}/courses`}>
           <Button variant="ghost" size="sm" className="text-gray-500">
@@ -2369,6 +3034,54 @@ export default function LessonPage({ params }: LessonPageProps) {
           </Button>
         </Link>
       </div>
+
+      {/* Lesson progress bar (multi-lesson courses only) */}
+      {lessonNumber && totalLessons && (
+        <div style={{
+          background: 'var(--white)', border: '1px solid var(--line)',
+          borderRadius: 16, padding: '16px 20px', marginBottom: 24,
+        }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
+            <span style={{ fontWeight: 700, fontSize: 14, color: 'var(--ink)' }}>
+              {locale === 'ja'
+                ? `レッスン ${lessonNumber} / ${totalLessons}`
+                : `Bài ${lessonNumber} / ${totalLessons}`}
+            </span>
+            <span style={{ fontSize: 12, color: 'var(--ink-soft)' }}>
+              {locale === 'ja'
+                ? lessonShortTitle[id]?.ja ?? ''
+                : lessonShortTitle[id]?.vi ?? ''}
+            </span>
+          </div>
+          {/* Progress bar */}
+          <div style={{ background: 'var(--line)', borderRadius: 100, height: 6, overflow: 'hidden' }}>
+            <div style={{
+              height: '100%', borderRadius: 100,
+              background: 'linear-gradient(90deg, var(--primary), var(--accent))',
+              width: `${(lessonNumber / totalLessons) * 100}%`,
+              transition: 'width 0.4s ease',
+            }}/>
+          </div>
+          {/* Lesson dots */}
+          <div style={{ display: 'flex', gap: 6, marginTop: 10, flexWrap: 'wrap' }}>
+            {lessonList!.map((lid, idx) => (
+              <Link key={lid} href={`/${locale}/courses/${lid}`} style={{ textDecoration: 'none' }}>
+                <div title={locale === 'ja' ? lessonShortTitle[lid]?.ja : lessonShortTitle[lid]?.vi} style={{
+                  width: 28, height: 28, borderRadius: '50%',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  fontSize: 11, fontWeight: 700,
+                  background: idx < lessonIndex ? 'var(--primary)' : idx === lessonIndex ? 'var(--ink)' : 'var(--line)',
+                  color: idx <= lessonIndex ? '#fff' : 'var(--ink-soft)',
+                  border: idx === lessonIndex ? '2px solid var(--ink)' : '2px solid transparent',
+                  cursor: 'pointer', transition: 'all 0.2s',
+                }}>
+                  {idx + 1}
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Locked */}
       {effectivelyLocked && (
@@ -2410,13 +3123,22 @@ export default function LessonPage({ params }: LessonPageProps) {
             <span className="text-yellow-700 font-bold text-xl">+{earnedXp} XP {t('lesson.xpEarned')}</span>
           </div>
           <div className="flex flex-col sm:flex-row gap-3 justify-center mt-4">
+            {nextLessonId ? (
+              <Link href={`/${locale}/courses/${nextLessonId}`}>
+                <Button className="gap-2">
+                  {locale === 'ja'
+                    ? `次のレッスンへ → ${lessonShortTitle[nextLessonId]?.ja ?? ''}`
+                    : `Bài tiếp theo → ${lessonShortTitle[nextLessonId]?.vi ?? ''}`}
+                </Button>
+              </Link>
+            ) : null}
             <Link href={`/${locale}/courses`}>
               <Button variant="outline">
                 {locale === 'ja' ? 'コース一覧に戻る' : 'Về danh sách khóa học'}
               </Button>
             </Link>
             <Link href={`/${locale}/ai-tutor`}>
-              <Button>
+              <Button variant="outline">
                 {locale === 'ja' ? 'Medi先生に質問する' : 'Hỏi Medi-sensei'}
               </Button>
             </Link>
