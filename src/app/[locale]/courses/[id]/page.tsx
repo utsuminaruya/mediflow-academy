@@ -2908,6 +2908,670 @@ er/or(語末)：→「ー」: water→ウォーター
       xpReward: 50,
     },
   },
+
+  // ===== N5 語彙 L2 色・形・大きさ =====
+  'n5-02-2': {
+    courseTitle: { ja: 'N5 基礎語彙100 〜日常生活〜', vi: 'Từ vựng N5 - 100 từ cuộc sống hàng ngày' },
+    isLocked: false, requiredPlan: 'free',
+    lesson: {
+      title: 'N5語彙 第2回 〜色・形・大きさ〜',
+      titleTranslation: 'Từ vựng N5 Bài 2 - Màu sắc, hình dạng và kích thước',
+      introduction: `色・形・大きさの語彙は、介護現場での状態説明に欠かせません。「皮膚が赤い」「丸い形の薬」「大きい傷」など、ケア記録や申し送りで毎日使います。
+
+Từ vựng về màu sắc, hình dạng và kích thước rất cần thiết để mô tả tình trạng trong điều dưỡng. Như "da đỏ", "thuốc hình tròn", "vết thương lớn" dùng hàng ngày trong ghi chép chăm sóc.`,
+      keyPoints: [
+        '色：あか(赤)・あお(青)・きいろ(黄色)・みどり(緑)・しろ(白)・くろ(黒)・むらさき(紫)・ちゃいろ(茶色)',
+        '形：まるい(丸い)・しかくい(四角い)・さんかくの(三角の)・ながい(長い)・みじかい(短い)',
+        '大きさ：おおきい(大きい)・ちいさい(小さい)・ふとい(太い)・ほそい(細い)・ひろい(広い)・せまい(狭い)',
+        '介護で重要：皮膚の色（あか・むらさき・きいろ）= 異常のサイン',
+        '薬の形：まるい錠剤・カプセル（長い）・粉薬（こなぐすり）',
+        '形容詞の活用：大きい → 大きくない（否定）/ 大きかった（過去）',
+      ],
+      vocabulary: [
+        { word: 'あかい', reading: 'あかい', meaning: '赤い（đỏ）', example: 'かおがあかい' },
+        { word: 'あおい', reading: 'あおい', meaning: '青い（xanh）', example: 'そらがあおい' },
+        { word: 'しろい', reading: 'しろい', meaning: '白い（trắng）', example: 'しろいくすり' },
+        { word: 'おおきい', reading: 'おおきい', meaning: '大きい（to/lớn）', example: 'おおきいへや' },
+        { word: 'ちいさい', reading: 'ちいさい', meaning: '小さい（nhỏ）', example: 'ちいさいじょうざい' },
+        { word: 'まるい', reading: 'まるい', meaning: '丸い（tròn）', example: 'まるいくすり' },
+        { word: 'ながい', reading: 'ながい', meaning: '長い（dài）', example: 'ながいかみ' },
+        { word: 'むらさき', reading: 'むらさき', meaning: '紫（tím）', example: 'むらさきいろのあざ' },
+      ],
+      examples: [
+        { japanese: 'かおがあかくて、ねつがあります。', reading: 'かおがあかくて、ねつがあります。', translation: 'Mặt đỏ và có sốt.' },
+        { japanese: 'あざがむらさきいろになっています。', reading: 'あざがむらさきいろになっています。', translation: 'Vết bầm đã chuyển sang màu tím.' },
+        { japanese: 'まるいじょうざいをひとつのんでください。', reading: 'まるいじょうざいをひとつのんでください。', translation: 'Hãy uống một viên thuốc tròn.' },
+      ],
+      grammarNote: `【い形容詞の活用】
+現在肯定：大きい / まるい
+現在否定：大きくない / まるくない
+過去肯定：大きかった / まるかった
+過去否定：大きくなかった
+
+【介護記録でよく使う色の表現】
+皮膚の色変化：
+  正常 = ふつうの色（bình thường）
+  異常 = あかい（発赤）/ むらさき（内出血・あざ）/ きいろ（黄疸）/ くろずんだ（壊死）
+
+【大きさの比較】
+A は B より 大きい = A lớn hơn B
+A は B と 同じ 大きさ = A và B cùng kích thước`,
+      quizzes: [
+        {
+          question: '「あざがむらさきいろになっている」を介護記録で書くと？',
+          options: [{ id: 'a', text: '打撲痕が紫色に変色している' }, { id: 'b', text: '皮膚が白い' }, { id: 'c', text: '体が大きい' }, { id: 'd', text: '薬が丸い' }],
+          correctId: 'a',
+          explanation: '「あざ」=「打撲痕（だぼくこん）」、「むらさきいろ」=「紫色」。介護記録では漢字表現を使います。\nVết bầm = 打撲痕, màu tím = 紫色.',
+          difficulty: 'medium' as const,
+        },
+        {
+          question: '「おおきい」の反対語は？',
+          options: [{ id: 'a', text: 'ながい' }, { id: 'b', text: 'ちいさい' }, { id: 'c', text: 'まるい' }, { id: 'd', text: 'あかい' }],
+          correctId: 'b',
+          explanation: '「おおきい」の反対は「ちいさい」。大小（だいしょう）= kích thước lớn nhỏ.\nTrái nghĩa của おおきい là ちいさい.',
+          difficulty: 'easy' as const,
+        },
+      ],
+      xpReward: 20,
+    },
+  },
+
+  // ===== N5 語彙 L3 食べ物・飲み物 =====
+  'n5-02-3': {
+    courseTitle: { ja: 'N5 基礎語彙100 〜日常生活〜', vi: 'Từ vựng N5 - 100 từ cuộc sống hàng ngày' },
+    isLocked: false, requiredPlan: 'free',
+    lesson: {
+      title: 'N5語彙 第3回 〜食べ物・飲み物〜',
+      titleTranslation: 'Từ vựng N5 Bài 3 - Thức ăn và đồ uống',
+      introduction: `食事介助は介護の基本業務です。食べ物・飲み物の語彙を覚えると、利用者さんの好み確認・食事量記録・アレルギー対応がスムーズになります。
+
+Hỗ trợ bữa ăn là công việc cơ bản của điều dưỡng. Nhớ từ vựng thức ăn đồ uống giúp xác nhận sở thích, ghi chép lượng ăn và xử lý dị ứng dễ dàng hơn.`,
+      keyPoints: [
+        '主食：ごはん(ご飯)・パン・うどん・そば・おかゆ(お粥)',
+        '副食：さかな(魚)・にく(肉)・やさい(野菜)・たまご(卵)・とうふ(豆腐)',
+        '飲み物：みず(水)・おちゃ(お茶)・ジュース・ぎゅうにゅう(牛乳)・スープ',
+        '食感：やわらかい(柔らかい)・かたい(硬い)・きざみ食・ミキサー食・とろみ',
+        '食事量：ぜんぶ(全部)・はんぶん(半分)・すこし(少し)・たくさん',
+        '禁止食品：アレルギー・きんしょくひん(禁食品)・えんぶん(塩分)制限',
+      ],
+      vocabulary: [
+        { word: 'おかゆ', reading: 'おかゆ', meaning: 'お粥（cháo）', example: 'やわらかいおかゆ' },
+        { word: 'やさい', reading: 'やさい', meaning: '野菜（rau）', example: 'やさいをたべる' },
+        { word: 'たまご', reading: 'たまご', meaning: '卵（trứng）', example: 'たまごりょうり' },
+        { word: 'みず', reading: 'みず', meaning: '水（nước）', example: 'みずをのむ' },
+        { word: 'おちゃ', reading: 'おちゃ', meaning: 'お茶（trà）', example: 'あたたかいおちゃ' },
+        { word: 'はんぶん', reading: 'はんぶん', meaning: '半分（một nửa）', example: 'はんぶんしかたべない' },
+        { word: 'やわらかい', reading: 'やわらかい', meaning: '柔らかい（mềm）', example: 'やわらかいしょくじ' },
+        { word: 'とろみ', reading: 'とろみ', meaning: 'とろみ（độ sánh）', example: 'とろみをつける' },
+      ],
+      examples: [
+        { japanese: 'きょうのゆうしょくは、おかゆとやさいでした。', reading: 'きょうのゆうしょくは、おかゆとやさいでした。', translation: 'Bữa tối hôm nay là cháo và rau.' },
+        { japanese: 'はんぶんしかたべませんでした。のこりはかたづけます。', reading: 'はんぶんしかたべませんでした。のこりはかたづけます。', translation: 'Chỉ ăn được một nửa. Dọn phần còn lại.' },
+        { japanese: 'のみこみがむずかしいので、とろみをつけています。', reading: 'のみこみがむずかしいので、とろみをつけています。', translation: 'Vì nuốt khó nên đã thêm chất làm sánh.' },
+      ],
+      grammarNote: `【食事量の表現】
+ぜんぶ食べた = 全量摂取（toàn phần）
+はんぶん食べた = 半量摂取（nửa phần）
+すこしだけ食べた = 少量摂取（ít）
+食べなかった = 摂取なし（không ăn）
+
+【介護施設の食形態（しょくけいたい）】
+普通食（ふつうしょく）= cơm thường
+きざみ食 = thức ăn thái nhỏ
+ミキサー食 = thức ăn xay nhuyễn
+とろみ食 = thức ăn thêm độ sánh
+経管栄養（けいかんえいよう）= nuôi qua ống
+
+【食事記録の書き方】
+夕食：お粥 / 野菜煮物 / 豆腐 → 半量摂取`,
+      quizzes: [
+        {
+          question: '「とろみ」は何のためにつける？',
+          options: [{ id: 'a', text: '味をよくするため' }, { id: 'b', text: '飲み込みやすくするため' }, { id: 'c', text: '冷ますため' }, { id: 'd', text: '量を増やすため' }],
+          correctId: 'b',
+          explanation: '「とろみ」は嚥下困難（えんげこんなん）の方に飲み込みやすくするために加えます。誤嚥防止が目的。\nThêm độ sánh để người khó nuốt dễ nuốt hơn, phòng ngừa sặc.',
+          difficulty: 'easy' as const,
+        },
+        {
+          question: '「はんぶんしかたべませんでした」の記録として正しいのは？',
+          options: [{ id: 'a', text: '全量摂取' }, { id: 'b', text: '半量摂取' }, { id: 'c', text: '摂取なし' }, { id: 'd', text: '過剰摂取' }],
+          correctId: 'b',
+          explanation: '半分しか食べなかった = 「半量摂取（はんりょうせっしゅ）」と記録します。\nChỉ ăn một nửa = ghi "半量摂取" trong hồ sơ.',
+          difficulty: 'medium' as const,
+        },
+      ],
+      xpReward: 20,
+    },
+  },
+
+  // ===== N5 語彙 L4 体・健康 =====
+  'n5-02-4': {
+    courseTitle: { ja: 'N5 基礎語彙100 〜日常生活〜', vi: 'Từ vựng N5 - 100 từ cuộc sống hàng ngày' },
+    isLocked: false, requiredPlan: 'free',
+    lesson: {
+      title: 'N5語彙 第4回 〜体・健康〜',
+      titleTranslation: 'Từ vựng N5 Bài 4 - Cơ thể và sức khỏe',
+      introduction: `体の部位と健康状態の語彙は、介護現場で最も使う語彙群のひとつです。「どこが痛いですか？」「体温が高い」など、毎日の体調確認で使います。
+
+Từ vựng về bộ phận cơ thể và tình trạng sức khỏe là nhóm từ dùng nhiều nhất trong điều dưỡng. Dùng hàng ngày khi hỏi thăm như "Đau ở đâu?", "Nhiệt độ cao".`,
+      keyPoints: [
+        '体の部位：あたま(頭)・かお(顔)・くび(首)・むね(胸)・おなか(お腹)・せなか(背中)・て(手)・あし(足)',
+        '感覚：いたい(痛い)・かゆい(痒い)・しびれる(痺れる)・だるい(だるい)・むくむ(浮腫む)',
+        '体温・バイタル：ねつ(熱)・けつあつ(血圧)・みゃくはく(脈拍)・たいおん(体温)',
+        '一般症状：せき(咳)・はなみず(鼻水)・ずつう(頭痛)・めまい(めまい)・おうと(嘔吐)',
+        '介護で重要：「どこがいたいですか？」「いつからですか？」「どんないたみですか？」',
+        '記録表現：「右腕に痛みの訴えあり」「体温37.5℃、平熱より高め」',
+      ],
+      vocabulary: [
+        { word: 'あたま', reading: 'あたま', meaning: '頭（đầu）', example: 'あたまがいたい' },
+        { word: 'おなか', reading: 'おなか', meaning: 'お腹（bụng）', example: 'おなかがいたい' },
+        { word: 'いたい', reading: 'いたい', meaning: '痛い（đau）', example: 'あしがいたい' },
+        { word: 'ねつ', reading: 'ねつ', meaning: '熱（sốt）', example: 'ねつがある' },
+        { word: 'せき', reading: 'せき', meaning: '咳（ho）', example: 'せきがつづく' },
+        { word: 'めまい', reading: 'めまい', meaning: 'めまい（chóng mặt）', example: 'めまいがする' },
+        { word: 'だるい', reading: 'だるい', meaning: 'だるい（mệt mỏi）', example: 'からだがだるい' },
+        { word: 'むくむ', reading: 'むくむ', meaning: '浮腫む（phù）', example: 'あしがむくむ' },
+      ],
+      examples: [
+        { japanese: 'どこがいたいですか？みぎのあしですか？', reading: 'どこがいたいですか？みぎのあしですか？', translation: 'Đau ở đâu ạ? Chân phải ạ?' },
+        { japanese: 'たいおんは37.5どで、ねつがすこしあります。', reading: 'たいおんは37.5どで、ねつがすこしあります。', translation: 'Nhiệt độ cơ thể là 37,5 độ, hơi sốt một chút.' },
+        { japanese: 'あしがむくんでいます。いつからですか？', reading: 'あしがむくんでいます。いつからですか？', translation: 'Chân bị phù. Từ khi nào vậy ạ?' },
+      ],
+      grammarNote: `【痛みを聞く表現】
+どこが いたいですか？= Đau ở đâu?
+いつから いたいですか？= Đau từ khi nào?
+どんな いたみですか？= Đau như thế nào?
+  → ずきずき（nhói）/ しくしく（âm ỉ）/ ずっと（liên tục）
+
+【体の左右・上下】
+みぎ = phải / ひだり = trái
+うえ = trên / した = dưới
+まえ = trước / うしろ = sau
+
+【介護記録での症状表現】
+「〜の訴えあり」= than đau/có lời than
+「〜を認める」= nhận thấy
+例：右肩に痛みの訴えあり。発赤・腫脹を認める。`,
+      quizzes: [
+        {
+          question: '利用者さんに「どこがいたいですか？」と聞くとき、適切な日本語は？',
+          options: [{ id: 'a', text: 'いたいですね' }, { id: 'b', text: 'どこがいたいですか？' }, { id: 'c', text: 'いたくないですか？' }, { id: 'd', text: 'いたいとおもいます' }],
+          correctId: 'b',
+          explanation: '「どこがいたいですか？」は場所を確認する正しい質問文。「が」は痛みの場所を強調する助詞。\n「どこがいたいですか？」là câu hỏi đúng để xác nhận vị trí đau.',
+          difficulty: 'easy' as const,
+        },
+        {
+          question: '「あしがむくむ」の医療用語は？',
+          options: [{ id: 'a', text: '骨折（こっせつ）' }, { id: 'b', text: '浮腫（ふしゅ）' }, { id: 'c', text: '発熱（はつねつ）' }, { id: 'd', text: '嘔吐（おうと）' }],
+          correctId: 'b',
+          explanation: '「むくむ」の医療用語は「浮腫（ふしゅ）」。記録では「下肢に浮腫を認める」と書きます。\nむくむ = 浮腫（ふしゅ）= phù. Ghi hồ sơ: "下肢に浮腫を認める".',
+          difficulty: 'medium' as const,
+        },
+      ],
+      xpReward: 20,
+    },
+  },
+
+  // ===== N5 語彙 L5 家・部屋 =====
+  'n5-02-5': {
+    courseTitle: { ja: 'N5 基礎語彙100 〜日常生活〜', vi: 'Từ vựng N5 - 100 từ cuộc sống hàng ngày' },
+    isLocked: false, requiredPlan: 'free',
+    lesson: {
+      title: 'N5語彙 第5回 〜家・部屋・施設〜',
+      titleTranslation: 'Từ vựng N5 Bài 5 - Nhà, phòng và cơ sở',
+      introduction: `介護施設の各場所の名前や家具・設備の語彙を覚えましょう。利用者さんへの場所案内や「トイレに行きますか？」「居室に戻りましょう」などの声かけに使います。
+
+Hãy nhớ tên các địa điểm, đồ nội thất và thiết bị trong cơ sở điều dưỡng. Dùng để hướng dẫn vị trí và gọi hỏi người dùng như "Đi vệ sinh không?" hay "Về phòng thôi nhé".`,
+      keyPoints: [
+        '部屋：いしつ(居室)・しょくどう(食堂)・トイレ・ふろば(風呂場)・ろうか(廊下)・エントランス',
+        '家具：ベッド・テーブル・いす(椅子)・たなす(棚)・まど(窓)・ドア・カーテン',
+        '場所の表現：〜のとなり(隣)・〜のまえ(前)・〜のうしろ(後ろ)・〜のなか(中)・〜のうえ(上)',
+        '移動の声かけ：〜にいきましょう・〜にもどりましょう・〜まであるきましょう',
+        '施設特有：ナースステーション・デイルーム・リハビリ室・受付(うけつけ)',
+        '安全：「ゆっくりあるいてください」「てすりをつかってください」',
+      ],
+      vocabulary: [
+        { word: 'いしつ', reading: 'いしつ', meaning: '居室（phòng ở）', example: 'いしつにもどる' },
+        { word: 'しょくどう', reading: 'しょくどう', meaning: '食堂（phòng ăn）', example: 'しょくどうへいく' },
+        { word: 'ろうか', reading: 'ろうか', meaning: '廊下（hành lang）', example: 'ろうかをあるく' },
+        { word: 'まど', reading: 'まど', meaning: '窓（cửa sổ）', example: 'まどをあける' },
+        { word: 'てすり', reading: 'てすり', meaning: '手すり（tay vịn）', example: 'てすりをつかう' },
+        { word: 'となり', reading: 'となり', meaning: '隣（bên cạnh）', example: 'となりのへや' },
+        { word: 'うけつけ', reading: 'うけつけ', meaning: '受付（lễ tân）', example: 'うけつけにいく' },
+        { word: 'エレベーター', reading: 'エレベーター', meaning: 'エレベーター（thang máy）', example: 'エレベーターをつかう' },
+      ],
+      examples: [
+        { japanese: 'しょくどうはろうかのつきあたりにあります。', reading: 'しょくどうはろうかのつきあたりにあります。', translation: 'Phòng ăn ở cuối hành lang.' },
+        { japanese: 'トイレはエレベーターのとなりです。', reading: 'トイレはエレベーターのとなりです。', translation: 'Nhà vệ sinh ở bên cạnh thang máy.' },
+        { japanese: 'てすりをつかって、ゆっくりあるいてください。', reading: 'てすりをつかって、ゆっくりあるいてください。', translation: 'Hãy dùng tay vịn và đi từ từ nhé.' },
+      ],
+      grammarNote: `【場所を表す助詞】
+〜に あります = ở tại... (vật không di chuyển)
+〜に います = ở tại... (người/động vật)
+〜に いきます = đi đến...
+〜から きます = đến từ...
+
+【位置の表現】
+〜のとなり = bên cạnh
+〜のまえ = phía trước
+〜のうしろ = phía sau
+〜のなか = bên trong
+〜のそと = bên ngoài
+〜のうえ = phía trên
+〜のした = phía dưới
+
+【声かけの型】
+〜に いきましょう = Hãy đi đến...
+〜に もどりましょう = Hãy về...
+〜を つかってください = Hãy sử dụng...`,
+      quizzes: [
+        {
+          question: '「トイレはエレベーターのとなりです」の「となり」の意味は？',
+          options: [{ id: 'a', text: '前' }, { id: 'b', text: '隣・横' }, { id: 'c', text: '上' }, { id: 'd', text: '中' }],
+          correctId: 'b',
+          explanation: '「となり」=「隣」= bên cạnh, kế bên。横並びの位置関係を表します。\n「となり」= 隣 = bên cạnh.',
+          difficulty: 'easy' as const,
+        },
+        {
+          question: '「〜にあります」と「〜にいます」の違いは？',
+          options: [{ id: 'a', text: '同じ意味' }, { id: 'b', text: 'あります=物・場所、います=人・動物' }, { id: 'c', text: 'あります=人、います=物' }, { id: 'd', text: 'どちらも移動に使う' }],
+          correctId: 'b',
+          explanation: '「あります」は物・場所に、「います」は生き物（人・動物）に使います。\nあります dùng cho vật, います dùng cho người/động vật.',
+          difficulty: 'medium' as const,
+        },
+      ],
+      xpReward: 20,
+    },
+  },
+
+  // ===== N5 語彙 L6 仕事・職場 =====
+  'n5-02-6': {
+    courseTitle: { ja: 'N5 基礎語彙100 〜日常生活〜', vi: 'Từ vựng N5 - 100 từ cuộc sống hàng ngày' },
+    isLocked: false, requiredPlan: 'free',
+    lesson: {
+      title: 'N5語彙 第6回 〜仕事・職場〜',
+      titleTranslation: 'Từ vựng N5 Bài 6 - Công việc và nơi làm việc',
+      introduction: `職場でのコミュニケーションに必要な語彙を学びます。「シフト」「申し送り」「研修」など、介護の職場特有の言葉に加え、職場の基本語彙も習得します。
+
+Học từ vựng cần thiết cho giao tiếp nơi làm việc. Ngoài các từ đặc thù của điều dưỡng như "シフト"、"申し送り"、"研修", còn học từ vựng cơ bản về nơi làm việc.`,
+      keyPoints: [
+        '職種：かんごし(看護師)・かいごし(介護士)・かいごふくしし(介護福祉士)・ヘルパー・リーダー',
+        '業務：しごと(仕事)・きんむ(勤務)・シフト・きゅうけい(休憩)・ざんぎょう(残業)',
+        '報告・連絡：もうしおくり(申し送り)・ほうこく(報告)・れんらく(連絡)・かいぎ(会議)',
+        '記録：きろく(記録)・きさい(記載)・サイン・はんこ(判子)・ファイル',
+        '挨拶：「よろしくおねがいします」「おせわになります」「おつかれさまでした」',
+        'N5必須：〜をします・〜があります・〜をおねがいします',
+      ],
+      vocabulary: [
+        { word: 'しごと', reading: 'しごと', meaning: '仕事（công việc）', example: 'しごとをする' },
+        { word: 'きんむ', reading: 'きんむ', meaning: '勤務（ca làm）', example: 'にっきんむ・やきんむ' },
+        { word: 'きゅうけい', reading: 'きゅうけい', meaning: '休憩（nghỉ giải lao）', example: 'きゅうけいじかん' },
+        { word: 'もうしおくり', reading: 'もうしおくり', meaning: '申し送り（bàn giao ca）', example: 'もうしおくりをする' },
+        { word: 'ほうこく', reading: 'ほうこく', meaning: '報告（báo cáo）', example: 'じょうしにほうこく' },
+        { word: 'きろく', reading: 'きろく', meaning: '記録（ghi chép）', example: 'きろくをかく' },
+        { word: 'けんしゅう', reading: 'けんしゅう', meaning: '研修（đào tạo）', example: 'けんしゅうにさんか' },
+        { word: 'リーダー', reading: 'リーダー', meaning: 'リーダー（trưởng nhóm）', example: 'リーダーにほうこく' },
+      ],
+      examples: [
+        { japanese: 'もうしおくりのじかんです。あつまってください。', reading: 'もうしおくりのじかんです。あつまってください。', translation: 'Đến giờ bàn giao ca rồi. Mọi người tập trung nhé.' },
+        { japanese: 'なにかあったら、すぐにリーダーにほうこくしてください。', reading: 'なにかあったら、すぐにリーダーにほうこくしてください。', translation: 'Nếu có gì xảy ra, hãy báo cáo trưởng nhóm ngay.' },
+        { japanese: 'きょうのきんむのきろくをかいてください。', reading: 'きょうのきんむのきろくをかいてください。', translation: 'Hãy viết ghi chép ca làm hôm nay.' },
+      ],
+      grammarNote: `【報告の表現】
+〜がありました = đã xảy ra...
+〜をしました = đã làm...
+〜をほうこくします = báo cáo...
+
+【申し送りの基本フォーマット】
+① 利用者名 + ② 状態/出来事 + ③ 対応 + ④ 注意事項
+
+例：「田中様、本日昼食半量摂取。食欲不振とのこと。
+    夕食時様子確認をお願いします。」
+
+Ví dụ bàn giao: "Ông Tanaka, hôm nay bữa trưa ăn nửa phần.
+Cho biết kém ăn. Nhờ kiểm tra vào bữa tối."
+
+【職場の基本コミュニケーション】
+「〜してもいいですか？」= 許可を求める（Xin phép）
+「〜をおねがいします」= 依頼する（Nhờ vả）
+「わかりました」= 了解（Hiểu rồi）`,
+      quizzes: [
+        {
+          question: '「もうしおくり」とは何をすること？',
+          options: [{ id: 'a', text: '利用者に食事を渡す' }, { id: 'b', text: 'シフトの交代時に情報を引き継ぐ' }, { id: 'c', text: '薬を準備する' }, { id: 'd', text: '入浴介助をする' }],
+          correctId: 'b',
+          explanation: '「申し送り（もうしおくり）」はシフト交代時に、前の担当者が次の担当者に利用者の状態・注意事項を伝えること。\nBàn giao ca là truyền đạt thông tin từ ca trước sang ca sau.',
+          difficulty: 'easy' as const,
+        },
+        {
+          question: '上司に報告するとき正しい表現は？',
+          options: [{ id: 'a', text: 'ねえ、田中さんが転んだよ' }, { id: 'b', text: '田中さんが転倒しました。ご報告します。' }, { id: 'c', text: '田中さん転んじゃった' }, { id: 'd', text: 'まあいいか' }],
+          correctId: 'b',
+          explanation: '職場では「〜しました。ご報告します。」が丁寧な報告の形式。\nTrong công việc, "〜しました。ご報告します。" là cách báo cáo lịch sự.',
+          difficulty: 'medium' as const,
+        },
+      ],
+      xpReward: 20,
+    },
+  },
+
+  // ===== N5 語彙 L7 自然・天気 =====
+  'n5-02-7': {
+    courseTitle: { ja: 'N5 基礎語彙100 〜日常生活〜', vi: 'Từ vựng N5 - 100 từ cuộc sống hàng ngày' },
+    isLocked: false, requiredPlan: 'free',
+    lesson: {
+      title: 'N5語彙 第7回 〜自然・天気・季節〜',
+      titleTranslation: 'Từ vựng N5 Bài 7 - Thiên nhiên, thời tiết và mùa',
+      introduction: `天気・季節の語彙は日常会話の基本です。利用者さんとの会話で「今日はいい天気ですね」「秋が来ましたね」などの雑談ができると、信頼関係が深まります。
+
+Từ vựng về thời tiết và mùa là nền tảng hội thoại hàng ngày. Nếu có thể trò chuyện với người dùng như "Hôm nay thời tiết đẹp nhỉ", "Mùa thu đến rồi nhỉ", sẽ xây dựng được mối quan hệ tin tưởng.`,
+      keyPoints: [
+        '天気：はれ(晴れ)・くもり(曇り)・あめ(雨)・ゆき(雪)・かぜ(風)・かみなり(雷)',
+        '季節：はる(春)・なつ(夏)・あき(秋)・ふゆ(冬)',
+        '気温：あつい(暑い)・さむい(寒い)・あたたかい(暖かい)・すずしい(涼しい)',
+        '自然：やま(山)・うみ(海)・かわ(川)・はな(花)・き(木)・みどり(緑)',
+        '時間表現：あした(明日)・きのう(昨日)・らいしゅう(来週)・せんしゅう(先週)',
+        '雑談の型：「〜ですね」= 同意を求める・「〜がすきです」= 好みを言う',
+      ],
+      vocabulary: [
+        { word: 'はれ', reading: 'はれ', meaning: '晴れ（nắng）', example: 'きょうははれです' },
+        { word: 'あめ', reading: 'あめ', meaning: '雨（mưa）', example: 'あめがふっています' },
+        { word: 'あつい', reading: 'あつい', meaning: '暑い（nóng）', example: 'なつはあつい' },
+        { word: 'さむい', reading: 'さむい', meaning: '寒い（lạnh）', example: 'ふゆはさむい' },
+        { word: 'さくら', reading: 'さくら', meaning: '桜（hoa anh đào）', example: 'さくらがきれい' },
+        { word: 'かぜ', reading: 'かぜ', meaning: '風（gió）', example: 'つよいかぜ' },
+        { word: 'あたたかい', reading: 'あたたかい', meaning: '暖かい（ấm）', example: 'きょうはあたたかい' },
+        { word: 'きせつ', reading: 'きせつ', meaning: '季節（mùa）', example: 'すきなきせつ' },
+      ],
+      examples: [
+        { japanese: 'きょうはいいてんきですね。さんぽにいきましょうか？', reading: 'きょうはいいてんきですね。さんぽにいきましょうか？', translation: 'Hôm nay thời tiết đẹp nhỉ. Đi dạo nhé?' },
+        { japanese: 'さむくなってきましたね。かぜをひかないようにしてください。', reading: 'さむくなってきましたね。かぜをひかないようにしてください。', translation: 'Trời lạnh rồi nhỉ. Hãy giữ sức khỏe không bị cảm nhé.' },
+        { japanese: 'どのきせつがいちばんすきですか？', reading: 'どのきせつがいちばんすきですか？', translation: 'Bạn thích mùa nào nhất ạ?' },
+      ],
+      grammarNote: `【天気の表現】
+〜です = thời tiết là...  (今日は晴れです)
+〜がふっています = đang mưa/tuyết  (雨が降っています)
+〜になりました = đã thành...  (寒くなりました)
+
+【季節と行事】
+春（3〜5月）：さくら・ひなまつり・はなみ
+夏（6〜8月）：あつい・うみ・まつり・はなび
+秋（9〜11月）：すずしい・もみじ・おつきみ
+冬（12〜2月）：さむい・ゆき・クリスマス・おしょうがつ
+
+【雑談のポイント（Care Conversation）】
+利用者さんの故郷や好きな季節を聞く → 思い出を引き出す
+「ベトナムの季節はどうですか？」も話題になる！`,
+      quizzes: [
+        {
+          question: '「さむくなってきましたね」は何を意味する？',
+          options: [{ id: 'a', text: '今日は暑い' }, { id: 'b', text: '段々寒くなってきた' }, { id: 'c', text: '昨日は寒かった' }, { id: 'd', text: '寒くない' }],
+          correctId: 'b',
+          explanation: '「〜くなってきました」= 変化の進行を表します。「寒くなってきた」= だんだん寒くなっている。\n〜くなってきました = đang ngày càng trở nên... (biến đổi dần)',
+          difficulty: 'medium' as const,
+        },
+        {
+          question: '「いいてんきですね」に対する自然な返答は？',
+          options: [{ id: 'a', text: 'はい、そうですね。きもちがいいです。' }, { id: 'b', text: 'いいえ、てんきではありません。' }, { id: 'c', text: 'わかりません。' }, { id: 'd', text: 'てんきがきらいです。' }],
+          correctId: 'a',
+          explanation: '「〜ですね」には「そうですね」で同意するのが自然。さらに感想を加えると会話が続きます。\nNghe "〜ですね" thì trả lời "そうですね" là tự nhiên nhất.',
+          difficulty: 'easy' as const,
+        },
+      ],
+      xpReward: 20,
+    },
+  },
+
+  // ===== N5 語彙 L8 交通・移動 =====
+  'n5-02-8': {
+    courseTitle: { ja: 'N5 基礎語彙100 〜日常生活〜', vi: 'Từ vựng N5 - 100 từ cuộc sống hàng ngày' },
+    isLocked: false, requiredPlan: 'free',
+    lesson: {
+      title: 'N5語彙 第8回 〜交通・移動・方向〜',
+      titleTranslation: 'Từ vựng N5 Bài 8 - Giao thông, di chuyển và phương hướng',
+      introduction: `日本での生活・通勤に必要な交通語彙と、介護現場での移乗・移動介助に使う語彙を学びます。「みぎ・ひだり・まっすぐ」は毎日使います。
+
+Học từ vựng giao thông cần cho cuộc sống và đi làm ở Nhật, cùng từ vựng hỗ trợ di chuyển trong điều dưỡng. みぎ・ひだり・まっすぐ là những từ dùng hàng ngày.`,
+      keyPoints: [
+        '方向：みぎ(右)・ひだり(左)・まっすぐ(直進)・うえ(上)・した(下)・まえ(前)・うしろ(後ろ)',
+        '交通：でんしゃ(電車)・バス・じてんしゃ(自転車)・くるま(車)・タクシー・えき(駅)',
+        '移動：あるく(歩く)・はしる(走る)・のる(乗る)・おりる(降りる)・まがる(曲がる)',
+        '介護の移動介助：いじょう(移乗)・ほこう(歩行)・ほじょ(補助)・ふらつき・てんとう(転倒)',
+        '車椅子：くるまいす(車椅子)・ブレーキ・フットレスト・アームレスト',
+        '安全：「ゆっくりたってください」「てすりにつかまってください」「ふらつきはないですか？」',
+      ],
+      vocabulary: [
+        { word: 'みぎ', reading: 'みぎ', meaning: '右（phải）', example: 'みぎにまがる' },
+        { word: 'ひだり', reading: 'ひだり', meaning: '左（trái）', example: 'ひだりにすすむ' },
+        { word: 'まっすぐ', reading: 'まっすぐ', meaning: 'まっすぐ（thẳng）', example: 'まっすぐいく' },
+        { word: 'あるく', reading: 'あるく', meaning: '歩く（đi bộ）', example: 'ろうかをあるく' },
+        { word: 'くるまいす', reading: 'くるまいす', meaning: '車椅子（xe lăn）', example: 'くるまいすにのる' },
+        { word: 'てんとう', reading: 'てんとう', meaning: '転倒（ngã）', example: 'てんとうをふせぐ' },
+        { word: 'のる', reading: 'のる', meaning: '乗る（lên）', example: 'エレベーターにのる' },
+        { word: 'ふらつき', reading: 'ふらつき', meaning: 'ふらつき（loạng choạng）', example: 'ふらつきがある' },
+      ],
+      examples: [
+        { japanese: 'エレベーターをおりて、みぎにまがってください。', reading: 'エレベーターをおりて、みぎにまがってください。', translation: 'Xuống thang máy rồi rẽ phải nhé.' },
+        { japanese: 'ゆっくりたってください。ふらつきはないですか？', reading: 'ゆっくりたってください。ふらつきはないですか？', translation: 'Đứng từ từ nhé. Có bị loạng choạng không ạ?' },
+        { japanese: 'くるまいすのブレーキをかけてから、おたちください。', reading: 'くるまいすのブレーキをかけてから、おたちください。', translation: 'Sau khi khóa phanh xe lăn rồi hãy đứng dậy nhé.' },
+      ],
+      grammarNote: `【移動介助の声かけ表現】
+「〜にのります」= lên (xe, thang máy...)
+「〜からおります」= xuống
+「ゆっくり〜てください」= Hãy... từ từ
+「〜につかまってください」= Hãy nắm vào...
+「一緒に〜しましょう」= Hãy cùng...
+
+【転倒防止の声かけ】
+「足元に気をつけてください」= Chú ý chân
+「段差がありますよ」= Có bậc thang đó
+「ゆっくりでいいですよ」= Từ từ cũng được
+「私がそばにいますよ」= Tôi đứng bên cạnh đây
+
+【方向を教えるパターン】
+エレベーターを出て → 右に曲がって → 突き当たり = 目的地`,
+      quizzes: [
+        {
+          question: '車椅子から立ち上がる前に最初にすることは？',
+          options: [{ id: 'a', text: 'フットレストをあげる' }, { id: 'b', text: 'ブレーキをかける' }, { id: 'c', text: 'アームレストをはずす' }, { id: 'd', text: 'まっすぐ立つ' }],
+          correctId: 'b',
+          explanation: '車椅子から立つ前は必ずブレーキをかけます。車椅子が動いて転倒するリスクを防ぐため。\nTrước khi đứng dậy từ xe lăn, phải khóa phanh trước để tránh ngã.',
+          difficulty: 'easy' as const,
+        },
+        {
+          question: '「ふらつきはないですか？」は何を確認している？',
+          options: [{ id: 'a', text: '食欲があるか' }, { id: 'b', text: '立ったときにバランスが取れているか' }, { id: 'c', text: '痛みがあるか' }, { id: 'd', text: '眠れているか' }],
+          correctId: 'b',
+          explanation: '「ふらつき」はバランスを崩した状態。転倒リスクの確認に使います。\nふらつき = mất thăng bằng/loạng choạng. Hỏi để kiểm tra nguy cơ ngã.',
+          difficulty: 'easy' as const,
+        },
+      ],
+      xpReward: 20,
+    },
+  },
+
+  // ===== N5 語彙 L9 感情・状態・挨拶 =====
+  'n5-02-9': {
+    courseTitle: { ja: 'N5 基礎語彙100 〜日常生活〜', vi: 'Từ vựng N5 - 100 từ cuộc sống hàng ngày' },
+    isLocked: false, requiredPlan: 'free',
+    lesson: {
+      title: 'N5語彙 第9回 〜感情・状態・気持ち〜',
+      titleTranslation: 'Từ vựng N5 Bài 9 - Cảm xúc, trạng thái và tâm trạng',
+      introduction: `感情・気持ちの語彙は、利用者さんの精神的ケアに欠かせません。「うれしい・かなしい・ふあん・さみしい」など、気持ちを理解し寄り添うための言葉を学びます。
+
+Từ vựng về cảm xúc và tâm trạng rất cần thiết trong chăm sóc tinh thần cho người dùng. Học các từ để hiểu và đồng cảm như うれしい・かなしい・ふあん・さみしい.`,
+      keyPoints: [
+        'ポジティブ：うれしい(嬉しい)・たのしい(楽しい)・しあわせ(幸せ)・あんしん(安心)・げんき(元気)',
+        'ネガティブ：かなしい(悲しい)・さみしい(寂しい)・ふあん(不安)・こわい(怖い)・つらい(辛い)',
+        '状態：つかれた(疲れた)・ねむい(眠い)・おなかがすいた(空いた)・のどがかわいた(渇いた)',
+        '気持ちを聞く：「きもちはどうですか？」「なにかふあんなことはありますか？」',
+        '共感の表現：「そうですか」「たいへんでしたね」「わかります」「がんばりましたね」',
+        '認知症ケア：「だいじょうぶですよ」「そばにいますよ」「ゆっくりしていいですよ」',
+      ],
+      vocabulary: [
+        { word: 'うれしい', reading: 'うれしい', meaning: '嬉しい（vui）', example: 'とてもうれしいです' },
+        { word: 'さみしい', reading: 'さみしい', meaning: '寂しい（cô đơn）', example: 'さみしいきもち' },
+        { word: 'ふあん', reading: 'ふあん', meaning: '不安（lo lắng）', example: 'ふあんなきもち' },
+        { word: 'げんき', reading: 'げんき', meaning: '元気（khỏe mạnh）', example: 'げんきですか？' },
+        { word: 'つかれた', reading: 'つかれた', meaning: '疲れた（mệt）', example: 'からだがつかれた' },
+        { word: 'ねむい', reading: 'ねむい', meaning: '眠い（buồn ngủ）', example: 'ねむいですか？' },
+        { word: 'こわい', reading: 'こわい', meaning: '怖い（sợ）', example: 'こわいきもち' },
+        { word: 'あんしん', reading: 'あんしん', meaning: '安心（yên tâm）', example: 'あんしんしてください' },
+      ],
+      examples: [
+        { japanese: 'きょうはげんきですか？なにかふあんなことはありますか？', reading: 'きょうはげんきですか？なにかふあんなことはありますか？', translation: 'Hôm nay khỏe không? Có điều gì lo lắng không ạ?' },
+        { japanese: 'そばにいますから、あんしんしてください。', reading: 'そばにいますから、あんしんしてください。', translation: 'Tôi đứng bên cạnh đây, hãy yên tâm nhé.' },
+        { japanese: 'たいへんでしたね。よくがんばりましたね。', reading: 'たいへんでしたね。よくがんばりましたね。', translation: 'Vất vả quá nhỉ. Bạn đã cố gắng giỏi lắm.' },
+      ],
+      grammarNote: `【気持ちを聞く・受け止める表現】
+「〜はどうですか？」= ... thế nào ạ?
+「〜なことはありますか？」= Có điều... không?
+「そうですか」= Ra vậy ạ（受け止め）
+「たいへんでしたね」= Vất vả quá nhỉ（共感）
+「がんばりましたね」= Đã cố gắng thật（称賛）
+
+【認知症ケアの基本声かけ】
+「だいじょうぶですよ」= Không sao đâu
+「わたしはここにいます」= Tôi ở đây
+「ゆっくりしていいですよ」= Cứ thoải mái
+「〜さん、おきていますか？」= Tên-さん, tỉnh không?
+
+【感情語彙の使い分け】
+ネガティブな気持ちを否定しない！
+「さみしいんですね。それは当然ですよ。」
+= Cô đơn nhỉ. Điều đó tự nhiên thôi.`,
+      quizzes: [
+        {
+          question: '利用者さんが「ふあんです」と言ったとき、最もよい返答は？',
+          options: [
+            { id: 'a', text: 'ふあんはいけません' },
+            { id: 'b', text: 'そうですか。どんなことがふあんですか？' },
+            { id: 'c', text: 'だいじょうぶです' },
+            { id: 'd', text: 'きにしないでください' },
+          ],
+          correctId: 'b',
+          explanation: '不安を受け止め（そうですか）、具体的な内容を聞く（どんなことが？）のがケアの基本。否定は逆効果。\nTiếp nhận cảm xúc rồi hỏi cụ thể là nguyên tắc chăm sóc. Phủ nhận sẽ phản tác dụng.',
+          difficulty: 'medium' as const,
+        },
+        {
+          question: '「あんしんしてください」の意味は？',
+          options: [{ id: 'a', text: '急いでください' }, { id: 'b', text: '心配しないでください' }, { id: 'c', text: '静かにしてください' }, { id: 'd', text: '起きてください' }],
+          correctId: 'b',
+          explanation: '「安心する」= không lo lắng nữa / yên tâm. 介護でよく使う声かけです。\nあんしんする = yên tâm, không lo nữa.',
+          difficulty: 'easy' as const,
+        },
+      ],
+      xpReward: 20,
+    },
+  },
+
+  // ===== N5 語彙 L10 総復習 =====
+  'n5-02-10': {
+    courseTitle: { ja: 'N5 基礎語彙100 〜日常生活〜', vi: 'Từ vựng N5 - 100 từ cuộc sống hàng ngày' },
+    isLocked: false, requiredPlan: 'free',
+    lesson: {
+      title: 'N5語彙 第10回 〜総復習・介護100語完全テスト〜',
+      titleTranslation: 'Từ vựng N5 Bài 10 - Ôn tập tổng hợp & Kiểm tra 100 từ điều dưỡng',
+      introduction: `全9回で学んだN5基礎語彙を総復習します。数字・時間・色・食事・体・職場・天気・移動・感情 — 介護現場で毎日使う100語を確認しましょう！
+
+Ôn tập toàn bộ từ vựng N5 đã học trong 9 bài. Số đếm, thời gian, màu sắc, bữa ăn, cơ thể, nơi làm việc, thời tiết, di chuyển, cảm xúc — Kiểm tra 100 từ dùng hàng ngày trong điều dưỡng!`,
+      keyPoints: [
+        '数字・時間：いち〜じゅう・なんじ・まいにち・あさ・よる・じかん',
+        '色・形：あかい・あおい・しろい・まるい・おおきい・ちいさい',
+        '食事：ごはん・おかゆ・くすり・のむ・たべる・はんぶん・とろみ',
+        '体・健康：あたま・おなか・いたい・ねつ・せき・むくむ・めまい',
+        '職場・施設：しごと・きんむ・もうしおくり・いしつ・ろうか・てすり',
+        '感情・声かけ：げんき・ふあん・さみしい・あんしん・ゆっくり・そばにいます',
+      ],
+      vocabulary: [
+        { word: 'おつかれさまでした', reading: 'おつかれさまでした', meaning: 'お疲れ様（Cảm ơn vì đã vất vả）', example: 'きんむのあとに' },
+        { word: 'よろしくおねがいします', reading: 'よろしくおねがいします', meaning: 'よろしく（Nhờ vào）', example: 'はじめてあうとき' },
+        { word: 'ありがとうございます', reading: 'ありがとうございます', meaning: 'ありがとう（Cảm ơn）', example: 'かんしゃするとき' },
+        { word: 'すみません', reading: 'すみません', meaning: 'すみません（Xin lỗi）', example: 'てつだいをたのむとき' },
+        { word: 'だいじょうぶ', reading: 'だいじょうぶ', meaning: '大丈夫（ổn không）', example: 'だいじょうぶですか？' },
+        { word: 'ゆっくり', reading: 'ゆっくり', meaning: 'ゆっくり（từ từ）', example: 'ゆっくりでいいですよ' },
+        { word: 'きをつけて', reading: 'きをつけて', meaning: '気をつけて（cẩn thận）', example: 'あしもとにきをつけて' },
+        { word: 'がんばって', reading: 'がんばって', meaning: '頑張って（cố lên）', example: 'がんばってください' },
+      ],
+      examples: [
+        { japanese: 'おはようございます。きょうもよろしくおねがいします。バイタルをはかりますね。', reading: 'おはようございます。きょうもよろしくおねがいします。バイタルをはかりますね。', translation: 'Chào buổi sáng. Hôm nay cũng nhờ mọi người nhé. Tôi đo dấu hiệu sinh tồn nhé.' },
+        { japanese: 'おなかがいたいですか？ねつもあるみたいです。ナースにほうこくします。', reading: 'おなかがいたいですか？ねつもあるみたいです。ナースにほうこくします。', translation: 'Đau bụng không? Có vẻ cũng sốt nữa. Tôi báo y tá nhé.' },
+        { japanese: 'ゆっくりたってください。ふらつきはないですか？そばにいますから、あんしんしてください。', reading: 'ゆっくりたってください。ふらつきはないですか？そばにいますから、あんしんしてください。', translation: 'Đứng từ từ nhé. Có loạng choạng không? Tôi đứng bên cạnh nên hãy yên tâm nhé.' },
+      ],
+      grammarNote: `【N5語彙100語 総まとめ】
+
+■ 数字・時間
+いち〜じゅう・ひとつ〜とお・なんじ・〜ふん
+まいにち・あした・きのう・あさ・ひる・よる
+
+■ 色・形・大きさ
+あかい・あおい・きいろい・しろい・くろい
+おおきい・ちいさい・まるい・ながい
+
+■ 食事・健康
+ごはん・おかゆ・くすり・みず・おちゃ
+たべる・のむ・いたい・ねつ・せき
+
+■ 職場・施設
+しごと・きんむ・もうしおくり・きろく
+いしつ・しょくどう・ろうか・てすり
+
+■ 感情・声かけ
+うれしい・さみしい・ふあん・げんき
+ゆっくり・だいじょうぶ・あんしん・がんばって
+
+■ 介護の基本フレーズ BEST 10
+1. おはようございます
+2. どこがいたいですか？
+3. ゆっくりでいいですよ
+4. てすりにつかまってください
+5. バイタルをはかります
+6. ごはんのじかんです
+7. くすりをのんでください
+8. そばにいますよ
+9. リーダーにほうこくします
+10. おつかれさまでした`,
+      quizzes: [
+        {
+          question: '介護現場で最も大切なコミュニケーションとして正しいのは？',
+          options: [
+            { id: 'a', text: '利用者の気持ちを無視して効率よく業務をこなす' },
+            { id: 'b', text: '利用者の言葉に耳を傾け、気持ちに寄り添う' },
+            { id: 'c', text: '専門用語だけを使って説明する' },
+            { id: 'd', text: '笑顔を見せない' },
+          ],
+          correctId: 'b',
+          explanation: '介護の基本は「傾聴・共感・寄り添い」。利用者の気持ちを大切にするコミュニケーションが最重要。\nNguyên tắc điều dưỡng là "lắng nghe, đồng cảm, đồng hành".',
+          difficulty: 'easy' as const,
+        },
+        {
+          question: '利用者が「ねつがあります。おなかもいたい」と訴えた場合の行動は？',
+          options: [
+            { id: 'a', text: '様子を見てそのまま放置する' },
+            { id: 'b', text: 'バイタルを測定してリーダー・看護師に報告する' },
+            { id: 'c', text: '自己判断で薬を渡す' },
+            { id: 'd', text: '次のシフトの人に伝える' },
+          ],
+          correctId: 'b',
+          explanation: '発熱＋腹痛は医療的判断が必要。バイタル測定→すぐにリーダー・看護師に報告が正しい手順。\nSốt + đau bụng cần đánh giá y tế. Đo dấu hiệu sinh tồn → báo cáo trưởng nhóm/y tá ngay.',
+          difficulty: 'medium' as const,
+        },
+        {
+          question: '「ゆっくりでいいですよ」はどのような場面で使う？',
+          options: [
+            { id: 'a', text: '利用者が急いでいるとき' },
+            { id: 'b', text: '利用者が焦っているときに安心させるため' },
+            { id: 'c', text: '遅刻したとき' },
+            { id: 'd', text: '仕事が終わったとき' },
+          ],
+          correctId: 'b',
+          explanation: '「ゆっくりでいいですよ」は利用者が焦ったり不安なとき、安心させる声かけ。転倒防止にも効果的。\nDùng để trấn an khi người dùng vội vàng hay lo lắng. Cũng hiệu quả phòng ngã.',
+          difficulty: 'easy' as const,
+        },
+      ],
+      xpReward: 50,
+    },
+  },
 };
 
 // Fallback lesson for unknown IDs
@@ -2950,6 +3614,7 @@ const fallbackLesson: LessonData = {
 // ── Course lesson lists ──────────────────────────────────────
 const courseLessonMap: Record<string, string[]> = {
   'n5-01': ['n5-01', 'n5-01-2', 'n5-01-3', 'n5-01-4', 'n5-01-5', 'n5-01-6', 'n5-01-7', 'n5-01-8', 'n5-01-9', 'n5-01-10'],
+  'n5-02': ['n5-02', 'n5-02-2', 'n5-02-3', 'n5-02-4', 'n5-02-5', 'n5-02-6', 'n5-02-7', 'n5-02-8', 'n5-02-9', 'n5-02-10'],
 };
 
 const lessonShortTitle: Record<string, { ja: string; vi: string }> = {
@@ -2963,6 +3628,16 @@ const lessonShortTitle: Record<string, { ja: string; vi: string }> = {
   'n5-01-8':  { ja: 'カタカナ②', vi: 'Katakana②' },
   'n5-01-9':  { ja: 'カタカナ③', vi: 'Katakana③' },
   'n5-01-10': { ja: '総復習テスト', vi: 'Kiểm tra tổng hợp' },
+  'n5-02':    { ja: '数字・時間', vi: 'Số & Thời gian' },
+  'n5-02-2':  { ja: '色・形・大きさ', vi: 'Màu sắc & Hình dạng' },
+  'n5-02-3':  { ja: '食べ物・飲み物', vi: 'Đồ ăn & Đồ uống' },
+  'n5-02-4':  { ja: '体・健康', vi: 'Cơ thể & Sức khỏe' },
+  'n5-02-5':  { ja: '家・部屋・施設', vi: 'Nhà & Cơ sở' },
+  'n5-02-6':  { ja: '仕事・職場', vi: 'Công việc' },
+  'n5-02-7':  { ja: '自然・天気・季節', vi: 'Tự nhiên & Thời tiết' },
+  'n5-02-8':  { ja: '交通・移動・方向', vi: 'Giao thông & Hướng đi' },
+  'n5-02-9':  { ja: '感情・状態・気持ち', vi: 'Cảm xúc & Trạng thái' },
+  'n5-02-10': { ja: '総復習テスト', vi: 'Kiểm tra tổng hợp' },
 };
 
 // Find course ID for a given lesson ID
