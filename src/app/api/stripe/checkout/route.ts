@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { stripe } from '@/lib/stripe/stripe';
 import { createClient } from '@/lib/supabase/server';
 
 export async function POST(request: NextRequest) {
@@ -10,6 +9,15 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid plan' }, { status: 400 });
     }
 
+    // Stripe secret key のバリデーション
+    const secretKey = process.env.STRIPE_SECRET_KEY;
+    if (!secretKey || secretKey.includes('placeholder') || !secretKey.startsWith('sk_')) {
+      return NextResponse.json(
+        { error: 'stripe_not_configured' },
+        { status: 503 }
+      );
+    }
+
     const priceId =
       plan === 'basic'
         ? process.env.STRIPE_BASIC_PRICE_ID
@@ -17,7 +25,7 @@ export async function POST(request: NextRequest) {
 
     if (!priceId || priceId.includes('placeholder')) {
       return NextResponse.json(
-        { error: 'Stripe is not configured. Please contact support.' },
+        { error: 'stripe_not_configured' },
         { status: 503 }
       );
     }
@@ -33,24 +41,28 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://mediaca.vercel.app';
+    // Requestのoriginを使う（localhost対策）
+    const origin = request.headers.get('origin')
+      || process.env.NEXT_PUBLIC_APP_URL
+      || 'https://mediaca.vercel.app';
+
+    // Stripe を動的インポート（プレースホルダー時に throw させない）
+    const Stripe = (await import('stripe')).default;
+    const stripe = new Stripe(secretKey, { apiVersion: '2025-02-24.acacia' as Parameters<typeof Stripe>[1]['apiVersion'] });
 
     const session = await stripe.checkout.sessions.create({
       mode: 'subscription',
       line_items: [{ price: priceId, quantity: 1 }],
-      success_url: `${appUrl}/${locale}/dashboard?checkout=success&plan=${plan}`,
-      cancel_url: `${appUrl}/${locale}/pricing?checkout=cancelled`,
-      metadata: {
-        userId: user.id,
-        plan,
-      },
+      success_url: `${origin}/${locale}/dashboard?checkout=success&plan=${plan}`,
+      cancel_url: `${origin}/${locale}/pricing?checkout=cancelled`,
+      metadata: { userId: user.id, plan },
       subscription_data: {
         trial_period_days: 7,
         metadata: { userId: user.id, plan },
       },
       allow_promotion_codes: true,
       billing_address_collection: 'auto',
-      payment_method_collection: 'always', // カードは必須（無料期間後に自動課金）
+      payment_method_collection: 'always',
       ...(user.email ? { customer_email: user.email } : {}),
     });
 

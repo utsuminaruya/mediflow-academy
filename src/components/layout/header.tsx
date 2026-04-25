@@ -93,7 +93,7 @@ export default function Header({ locale }: HeaderProps) {
             onMouseLeave={e => { const el = e.currentTarget; el.style.color = 'var(--ink-soft)'; el.style.background = 'transparent'; }}
           >
             <Bot size={13} style={{ color: '#0066CC' }} />
-            {isJa ? 'AI家庭教師' : 'Gia sư AI'}
+            {isJa ? 'Medi先生' : 'Medi-sensei'}
           </Link>
 
           {/* 就職相談 */}
@@ -202,7 +202,7 @@ export default function Header({ locale }: HeaderProps) {
           {/* Active links */}
           {[
             { href: `/${locale}/courses`,   label: isJa ? 'コース' : 'Khóa học', icon: null },
-            { href: `/${locale}/ai-tutor`,  label: isJa ? 'AI家庭教師' : 'Gia sư AI', icon: <Bot size={15} style={{ color: '#0066CC' }} /> },
+            { href: `/${locale}/ai-tutor`,  label: isJa ? 'Medi先生' : 'Medi-sensei', icon: <Bot size={15} style={{ color: '#0066CC' }} /> },
             { href: `/${locale}/pricing`,   label: isJa ? '料金' : 'Giá', icon: null },
           ].map(item => (
             <Link key={item.href} href={item.href} onClick={() => setMobileOpen(false)} style={{

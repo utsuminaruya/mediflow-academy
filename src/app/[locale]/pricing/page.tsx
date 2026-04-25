@@ -111,6 +111,9 @@ export default function PricingPage({ params }: PricingPageProps) {
       const data = await response.json();
       if (data.url) {
         window.location.href = data.url;
+      } else if (data.error === 'stripe_not_configured') {
+        // Stripe未設定 → LINE へ誘導
+        window.open(lineUrl, '_blank');
       } else {
         setCheckoutError(
           locale === 'ja'

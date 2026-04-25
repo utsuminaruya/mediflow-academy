@@ -51,13 +51,14 @@ export default function AiTutorPage({ params }: AiTutorPageProps) {
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const prevMessageCount = useRef(1); // ウェルカムメッセージの1件から開始
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
+  // 新しいメッセージが追加された時だけスクロール（初期ロード時はスクロールしない）
   useEffect(() => {
-    scrollToBottom();
+    if (messages.length > prevMessageCount.current) {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }
+    prevMessageCount.current = messages.length;
   }, [messages]);
 
   // ユーザーデータをSupabaseから取得
@@ -219,7 +220,25 @@ export default function AiTutorPage({ params }: AiTutorPageProps) {
     }
   };
 
-  const quickQuestions = [t('quickQ1'), t('quickQ2'), t('quickQ3')];
+  const quickQuestions = locale === 'ja' ? [
+    { icon: '📖', label: '文法', text: '「〜ていただけますか」の使い方と例文を教えて' },
+    { icon: '💬', label: '会話練習', text: '介護施設での自己紹介の練習をしたい' },
+    { icon: '🏥', label: '介護の言葉', text: '介護現場でよく使う敬語フレーズを10個教えて' },
+    { icon: '✍️', label: '作文添削', text: '「昨日、患者さんのお風呂を手伝いました」をもっと丁寧に直して' },
+    { icon: '📝', label: 'JLPT対策', text: 'N3の文法「〜によって」をわかりやすく解説して' },
+    { icon: '🤝', label: '敬語変換', text: '「ちょっと待って」を丁寧な敬語に直して' },
+    { icon: '🔤', label: '漢字の読み方', text: '介護の書類によく出る漢字の読み方を教えて' },
+    { icon: '🗣️', label: '発音・ひらがな', text: '「褥瘡（じょくそう）」などケアの難しい漢字を練習したい' },
+  ] : [
+    { icon: '📖', label: 'Ngữ pháp', text: 'Giải thích cách dùng「〜ていただけますか」với ví dụ' },
+    { icon: '💬', label: 'Hội thoại', text: 'Luyện tự giới thiệu tại cơ sở điều dưỡng' },
+    { icon: '🏥', label: 'Từ điều dưỡng', text: 'Dạy 10 mẫu kính ngữ thường dùng trong điều dưỡng' },
+    { icon: '✍️', label: 'Sửa văn', text: 'Sửa câu「昨日、患者さんのお風呂を手伝いました」thành lịch sự hơn' },
+    { icon: '📝', label: 'Ôn JLPT', text: 'Giải thích ngữ pháp N3「〜によって」dễ hiểu bằng tiếng Việt' },
+    { icon: '🤝', label: 'Kính ngữ', text: 'Chuyển「ちょっと待って」thành kính ngữ lịch sự' },
+    { icon: '🔤', label: 'Hán tự', text: 'Kanji thường gặp trong hồ sơ điều dưỡng là gì?' },
+    { icon: '🗣️', label: 'Phát âm', text: 'Luyện đọc từ khó như「褥瘡」trong chăm sóc điều dưỡng' },
+  ];
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-6 flex flex-col h-[calc(100vh-4rem)]">
@@ -316,16 +335,27 @@ export default function AiTutorPage({ params }: AiTutorPageProps) {
 
       {/* クイック質問 */}
       {messages.length === 1 && !isLimitReached && (
-        <div className="flex flex-wrap gap-2 mb-3">
-          {quickQuestions.map((q, i) => (
-            <button
-              key={i}
-              onClick={() => handleSend(q)}
-              className="text-sm bg-blue-50 text-[#0066CC] border border-blue-200 px-3 py-1.5 rounded-full hover:bg-blue-100 transition-colors"
-            >
-              {q}
-            </button>
-          ))}
+        <div className="mb-3">
+          <p className="text-xs text-gray-400 mb-2 px-1">
+            {locale === 'ja' ? '💡 こんな質問から始めてみよう' : '💡 Thử bắt đầu với câu hỏi này'}
+          </p>
+          <div className="grid grid-cols-2 gap-2">
+            {quickQuestions.map((q, i) => (
+              <button
+                key={i}
+                onClick={() => handleSend(q.text)}
+                className="text-left bg-white border border-gray-200 rounded-xl px-3 py-2.5 hover:border-[#0066CC] hover:bg-blue-50 transition-all group"
+              >
+                <div className="flex items-center gap-1.5 mb-1">
+                  <span className="text-base leading-none">{q.icon}</span>
+                  <span className="text-xs font-semibold text-[#0066CC] bg-blue-50 px-1.5 py-0.5 rounded-full group-hover:bg-blue-100">
+                    {q.label}
+                  </span>
+                </div>
+                <p className="text-xs text-gray-600 leading-relaxed line-clamp-2">{q.text}</p>
+              </button>
+            ))}
+          </div>
         </div>
       )}
 
